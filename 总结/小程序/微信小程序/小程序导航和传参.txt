@@ -1,0 +1,137 @@
+
+ 一、声明式导航
+
+	------导航到非tabBar页面
+
+		例：<navigator url="/pages/about/about">跳转到 about 页面</navigator>
+
+		注意：
+		
+			1、url 属性设置需要跳转的路径，路径应该以 / 开头
+
+			2、路径必须提前在 app.json 的 pages 节点下声明
+
+			3、当open-type的值为redirect时表示的是关闭当前页面，跳转到应用内的某个页面。但是不允许跳转到 tabbar 页面。
+
+	------导航到 tabBar 页面
+
+		概念：navigator组件单纯使用 url 属性，无法导航到 tabBar 页面，必须需要结合 open-type 属性进行导航。
+
+		例：<navigator url="/pages/person/person" open-type="switchTab">跳转到 tabBar 页面</navigator>
+
+		注意：
+
+			1、open-type属性值默认为navigate，表示只能跳转到非tabBar页面。当为switchTab表示只能跳转到tabBar页面
+
+			2、需在 app.json 的 tabBar 字段定义的页面
+
+	------非tabBar和tabBar页面都能跳转
+
+		设置open-type的值为：reLaunch
+
+		注意：
+			当跳转到指定页面后，左上角的返回按钮变为返回首页。
+
+	------后退导航
+
+		概念：小程序如果要后退到上一页面或多级页面，需要把 open-type 设置为 navigateBack ，同时使用 delta 属性指定后退的层数
+
+		例：
+			<navigator open-type='navigateBack' delta='1'> 返回上一页 </navigator> 
+
+			<navigator open-type='navigateBack' delta='2'> 返回上上一页 </navigator>
+
+		注意：delta表示返回的页面数，默认为1。如果 delta的值 大于现有页面数，则返回到首页。
+
+ 二、编程式导航
+
+	------导航到 非tabBar 页面 
+
+		概念：
+
+			1、wx.navigateTo()方法，可以跳转到应用内的某个页面。 但是不能跳到 tabbar 页面。
+
+			2、wx.redirectTo()方法，关闭当前页面，跳转到应用内的某个页面。但是不允许跳转到 tabbar 页面。
+
+		例：
+			wx.navigateTo({ url: "" })
+
+			wx.redirectTo({ url: "" })
+
+		注意：url 属性设置需要跳转的路径，路径应该以 / 开头且路径必须提前在 app.json 的 pages 节点下声明
+
+	------导航到 tabBar 页面
+
+		概念：wx.switchTab()方法跳转到 tabBar 页面，并关闭其他所有非 tabBar 页面
+
+		例；wx.switchTab({ url: "" })
+
+		注意：需在 app.json 的 tabBar 字段定义的页面
+
+	------非tabBar和tabBar页面都能跳转
+
+		概念：wx.reLaunch()关闭所有页面，打开到应用内的某个页面
+
+		例：wx.reLaunch({ url: "" })
+
+	------后退导航
+
+		概念：关闭当前页面，返回上一页面或多级页面。可通过 getCurrentPages 获取当前的页面栈，决定需要返回几层。
+
+		例：wx.reLaunch({ delta: 1 //默认值 })
+
+ 三、导航传参
+
+	概念：导航的路径后可以带参数，参数与路径之间使用 ? 分隔，参数键与参数值用 = 相连，不同参数用 & 分隔；如 'path?key=value&key2=value2'
+
+	例：
+
+		1、声明式传参
+
+			<navigator open-type="reLaunch" url="/pages/goods/goods?id={{id}}"></navigator>
+
+		2、编程式传参
+		
+			wx.reLaunch({ url: `/pages/goods/goods?id=${this.data.id}` })
+	注意：
+
+		1、不管是声明式还是编程式导航在路径后都可以带参数，除wx.switchTag()例外
+
+		2、在编程式导航中 使用 wx.switchTag()不能在url中路径后不能带参数。
+
+ 四、获取导航传递的参数有两种：
+
+	第一种是通过 页面的生命周期函数 onLoad 函数的形参获取，该函数有一个默认形参，该形参为一个对象，对象内包含传递参数
+
+	第二种是通过 getCurrentPages()方法
+
+		getCurrentPages：获取当前页面栈。数组中第一个元素为首页的实例对象，最后一个元素为当前页面实例对象，因为当前页是由首页直接跳转
+
+	过来的。
+
+		例：
+
+			1、调用该方法
+
+				let arr = getCurrentPages() 
+		
+			2、获取当前页面的实例对象
+
+				const curPage = arr[arr.length - 1]
+
+			3、获取传递的参数
+				
+				let params = curPage.__displayReporter.query
+		
+			注意：
+
+				1、该方法不需要通过this调用，返回的是一个数组
+
+				2、params为一个对象，对象包含的是传递的参数
+
+				2、不要尝试修改页面栈，会导致路由以及页面状态错误。
+			
+				3、不要在 App.onLaunch 的时候调用 getCurrentPages()，此时 page 还没有生成。
+
+
+	

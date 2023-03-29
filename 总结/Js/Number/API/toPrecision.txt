@@ -1,0 +1,7 @@
+
+
+	toPrecision(precision) 方法以指定的精度返回该数值对象的字符串表示。
+
+	precision 可选
+
+		一个用来指定有效数个数的整数。

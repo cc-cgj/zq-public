@@ -1,0 +1,72 @@
+
+	注意
+
+		热模块更新是针对一个或多个依赖文件的重新编译后将依赖文件通过socket请求发送到浏览器
+
+		当配置好后默认还是刷新整个浏览器，只有通过accept进行标记的文件才会进行热模块更新
+
+	配置
+
+		module.exports = {
+
+			target:"web", //web/node
+		
+			devServer:{
+
+				hot:true	
+			
+			}
+
+		}
+
+	使用：
+
+		//main.js
+			
+		import { sum } from "./function.js";
+				
+			if(module.hot){
+    
+				module.hot.accept("./function.js",function (){
+        
+					console.log("热模块更新了",arguments);
+    
+				})
+
+			}
+
+	API
+
+		accept
+
+			注意：使用该Api时模块需要先引用才会触发
+
+			module.hot.accept(
+  
+				dependencies, // 可以是一个字符串或字符串数组
+  
+				callback // 用于在模块更新后触发的函数
+  
+				errorHandler // (err, { moduleId, dependencyId }) => {}
+
+
+			);
+
+
+			// or
+
+			import.meta.webpackHot.accept(
+  
+				dependencies, // 可以是一个字符串或字符串数组
+  
+				callback, // 用于在模块更新后触发的函数
+  
+				errorHandler // (err, {moduleId, dependencyId}) => {}
+
+			);
+
+			
+				
+				
+
+		

@@ -1,0 +1,23 @@
+
+
+	执行局部依赖命令
+
+		例:
+
+			1、./node_modules/.bin/webpack
+
+			2、npx webpack
+
+	webpack 默认打包的文件为index.js 生成的为dist 
+	
+		npx webpack --entry './src/main.js' --output-path './build'
+
+	编译less文件
+
+		// npm i less ---> node_modules/lessc 文件夹
+	
+		npx lessc ./test.less >(最新可忽略) demo.css
+				
+		
+
+			

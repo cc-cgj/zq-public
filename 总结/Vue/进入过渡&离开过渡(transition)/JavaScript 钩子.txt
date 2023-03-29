@@ -1,0 +1,75 @@
+
+	一、语法	
+
+		<transition
+  
+			@before-enter="beforeEnter"
+  	
+			@enter="enter"
+  		
+			@after-enter="afterEnter"
+  
+			@enter-cancelled="enterCancelled"
+  
+			@before-leave="beforeLeave"
+  
+			@leave="leave"
+  
+			@after-leave="afterLeave"
+  
+			@leave-cancelled="leaveCancelled"
+  	
+			:css="false"
+			>
+  
+				<!-- ... -->
+
+		</transition>
+
+		// ...
+
+		methods: {
+
+			// --------
+  			// ENTERING
+  			// --------
+  
+  			beforeEnter(el) { // ... },
+  
+			// 当与 CSS 结合使用时，回调函数 done 是可选的
+  
+			enter(el, done) { done() },
+  
+			afterEnter(el) { },
+  
+			enterCancelled(el) { },
+
+  			// --------
+  			// 离开时
+  			// --------
+
+  			beforeLeave(el) { },
+  
+			// 当与 CSS 结合使用时，回调函数 done 是可选的
+  			
+			leave(el, done) { done() },
+  
+			afterLeave(el) { },
+  
+			// leaveCancelled 只用于 v-show 中
+  
+			leaveCancelled(el) {}
+
+		}
+
+	注意
+
+		1、这些钩子函数可以结合 CSS transitions/animations 使用，也可以单独使用。
+
+		2、当只用 JavaScript 过渡的时候，在 enter 和 leave 钩中必须使用 done 进行回调。否则，它们将被同步调用，过渡会立即完成。
+		
+		3、添加 :css="false"，也会让 Vue 会跳过 CSS 的检测，除了性能略高之外，这可以避免过渡过程中 CSS 规则的影响。
+
+
+	
+

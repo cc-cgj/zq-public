@@ -1,0 +1,38 @@
+
+
+	一、概念
+
+		1、让一个对象可响应。Vue 内部会用它来处理 data 函数返回的对象。
+
+		2、返回的对象可以直接用于渲染函数和计算属性内，
+
+		3、并且会在发生变更时触发相应的更新。也可以作为最小化的跨组件状态存储器
+
+	二、语法
+
+		Vue.observable( {Object} object )2.x 
+
+	三、示例：
+		
+		import Vue from 'vue'
+
+		const state = Vue.observable({ count: 0 })
+
+		const Demo = {
+  
+			render(h) {
+    
+				return h('button', {
+      
+					on: { click: () => { state.count++ }}
+    
+
+				}, `count is: ${state.count}`)
+  			}
+		}
+
+		链接：https://cn.vuejs.org/v2/api/#Vue-observable
+
+		注意：该属性组件实例无法访问，可通过Vue.prototype定义
+
+		

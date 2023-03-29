@@ -1,0 +1,178 @@
+
+一、vue生命周期  //调用vue构造函数实参内的默认方法
+
+	概念：vue操作DOM时一共分为八个阶段，每个阶段对应着一个钩子函数。
+
+	------beforeCreate
+
+		概念：在data数据和methods方法还未初始化且所触发的钩子函数,在这个钩子函数里，只是刚初始化一个Vue空的实例对象，你拿不到实例里
+
+	的任何东西，比如data和methods和事件监听等。
+
+		语法：new Vue({ el:"",data:{},beforeCreate:function(){} })
+
+		注意：该阶段的钩子函数是自调用的
+		
+	------created
+
+		概念：该阶段data数据和methods方法以初始化所触发的钩子函数，在钩子函数里，可以获取到Vue实例里的data数据和methods方法、
+
+	watch/event事件回调等。		
+			
+		语法：new Vue({ el:"",data:{ msg:"hello world" },created:function(){} })
+
+		注意：该阶段的钩子函数是自调用的
+
+	------beforeMount
+
+		概念：该阶段内存里渲染好了模板，即虚拟DOM，但未挂载到页面中。在钩子函数里能获取到Vue实例里的data数据和mothods方法、watch/event
+
+	事件回调等。
+
+		语法：new Vue({ el:"",data:{},beforeMount:function(){} })
+
+		注意：该阶段的钩子函数是自调用的
+
+	------mounted
+
+		概念：该阶段已经将保存在内存中的DOM替换到页面的DOM中。在钩子函数里即可以获取data数据和mothods方法、watch/event事件回调等。又
+
+	可以获取到页面中的DOM。
+
+		语法：new Vue({ el:"#app",data:{},mounted:function(){} })
+
+		注意：该阶段的钩子函数是自调用的
+
+		总结：
+
+			1、执行顺序：beforeCreate、created、beforeMount、mounted
+
+			2、在created、beforeMount修改数据时是不会触发beforeUpdate和update这两个钩子函数的，因为该阶段是对data数据的初始化所以
+
+		修改data数据才不会触发。
+		
+			3、在mounted钩子函数内，修改data数据会触发beforeUpdate和update这两个钩子函数。
+
+			4、如要要通过某些插件操作页面上的DOM节点，最早是在mounted中进行
+
+			5、执行完mounted阶段，则表示Vue实例已经初始化完毕了，此时该组件从创建阶段进入到运行阶段。		
+
+	------beforeUpdate 
+
+		概念：该阶段获取到的 data 数据是最新的，但页面中的显示的数据还是旧的。
+
+		语法：new Vue({ el:"#app",data:{},beforeUpdate:function(){} })
+
+		注意：当data数据发生修改导致页面发生改变时触发
+	
+	------update
+
+		概念：该阶段获取到的 data 数据是最新的，且根据获取到的最新data数据，在内存中重新渲染一份最新的内存DOM树，然后将最新的内存DOM树，
+
+	重新替换页面中的DOM节点，这时候，就完成了数据从data( Model层 ) -> view( 视图层 )的更新。
+	
+		语法：new Vue({ el:"#app",data:{},updated:function(){} })
+
+		注意：
+
+			1、当data数据发生修改导致页面发生改变时触发
+
+			2、执行完update函数之后则表示运行阶段已经结束。
+			
+	------beforeDistroy
+
+		概念: 该阶段挂载的页面DOM、vue实例、data数据、methods方法等都可以被访问，Vue实例还没有真正销毁。
+
+		语法：new Vue({ el:"#app",data:{},beforeDistroy:function(){} })
+
+		注意：
+
+			1、当销毁当前挂载的vue实例时触发
+
+			1、beforeDestroy和destroyed一般通过手动触发$destroy来调用
+
+			2、该阶段表示Vue实例对象进入了销毁阶段。
+
+
+	------distroyed
+
+		概念：该阶段表示当前vue实例已经被完全销毁，此时当前Vue实例对象所有data数据、methods方法等都无法被访问。
+
+		语法：new Vue({ el:"#app",data:{},distroyed:function(){} })
+
+		注意：当销毁当前挂载的vue实例对象时触发
+
+
+	-----errorCaptured ( 2.5.0+ 新增 )
+
+		概念：
+
+			在捕获一个来自后代组件的错误时被调用。此钩子会收到三个参数：错误对象、发生错误的组件实例以及一个包含错误来源信息的字符串。此钩
+		子可以返回 false 以阻止该错误继续向上传播。
+
+		注意：
+
+			你可以在此钩子中修改组件的状态。因此在捕获错误时，在模板或渲染函数中有一个条件判断来绕过其它内容就很重要；不然该组件可能会进入
+		
+		一个无限的渲染循环。
+
+	-----renderTracked ( 3.x 新增 )
+
+		概念：跟踪虚拟 DOM 重新渲染时调用。钩子接收 debugger event 作为参数。此事件告诉你哪个操作跟踪了组件以及该操作的目标对象和键。
+
+		例：  
+
+			data() { return { cart: 0 } },
+  
+			renderTracked({ key, target, type }) {
+    
+				console.log({ key, target, type })
+    
+				/* 当组件第一次渲染时，这将被记录下来: */
+    						
+				//{ key: "cart", target: { cart: 0 }, type: "get" }
+    
+  			},
+
+	-----renderTriggered ( 3.x 新增 )
+
+		概念：
+
+			当虚拟 DOM 重新渲染被触发时调用。和 renderTracked 类似，接收 debugger event 作为参数。此事件告诉你是什么操作触发了重新渲染，以
+		及该操作的目标对象和键。
+
+		用法：
+
+			<div id="app">
+  
+				<button v-on:click="addToCart">Add to cart</button>
+  
+				<p>Cart({{ cart }})</p>
+			</div>
+
+			const app = createApp({ data() { return { cart: 0 } },
+  
+				renderTriggered({ key, target, type }) { console.log({ key, target, type }) },
+  			
+				methods: {
+    				
+					addToCart() {
+      						
+						this.cart += 1
+      
+						/* 这将导致 renderTriggered 被调用*/
+        				
+						// { key: "cart", target: { cart: 1 }, type: "set" }
+      				
+    					}
+  			
+				}
+
+			})
+
+			app.mount('#app')
+
+		
+
+
+

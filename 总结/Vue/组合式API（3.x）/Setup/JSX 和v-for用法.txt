@@ -1,0 +1,59 @@
+
+	一、JSX
+	
+		export default {
+  
+			setup() {
+    
+				const root = ref(null)
+
+				// render
+
+    				return () =>
+      
+					h('div', { ref: root })
+
+    				// with JSX
+    
+				return () => <div ref={root} />
+  			}
+		}
+
+
+	二、v-for 中的用法
+
+		<template>
+  
+			<div v-for="(item, i) in list" :ref="el => { if (el) divs[i] = el }"> {{ item }} </div>
+
+		</template>
+
+		<script>
+  
+			import { ref, reactive, onBeforeUpdate } from 'vue'
+
+  			export default {
+    
+				setup() {
+      
+					const list = reactive([1, 2, 3])
+      
+					const divs = ref([])
+
+      					// 确保在每次更新之前重置ref
+      
+					onBeforeUpdate(() => {
+        
+						divs.value = []
+      					})
+
+      					return {
+        
+						list,
+        				
+						divs
+      					}
+    				}
+  			}
+	
+		</script>

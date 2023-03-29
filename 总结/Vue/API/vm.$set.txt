@@ -1,0 +1,37 @@
+
+
+	一、概念
+
+		向响应式对象中添加一个 property，并确保这个新 property 同样是响应式的，且触发视图更新。它必须用于向响应式对象上添加新 property，因为
+
+ Vue 无法探测普通的新增 property (比如 this.myObject.newProperty = 'hi')	
+
+	二、例
+		
+		vm.set( target, propertyName/index, value )//注意：target可以是数组
+
+	三、参数
+
+		target：{Object | Array} 
+
+		propertyName/index：{string | number}
+
+		value：{any}
+
+	四、注意
+	
+		1、这是全局 Vue.set 的别名。
+
+		2、对象不能是 Vue 实例，或者 Vue 实例的根数据对象。
+
+		3、有时你可能需要为已有对象赋值多个新 property，比如使用 Object.assign() 或 _.extend()。但是，这样添加到对象上的新 property 不会触发更
+	
+	新。在这种情况下，你应该用原对象与要混合进去的对象的 property 一起创建一个新的对象。
+
+			// 而不是 `Object.assign(this.someObject, { a: 1, b: 2 })`
+
+			this.someObject = Object.assign({}, this.someObject, { a: 1, b: 2 })
+
+
+
+	

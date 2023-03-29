@@ -1,0 +1,11 @@
+
+
+	swiper{
+	
+		border-radius:20rpx;
+	
+		overflow:hidden;
+
+		transform:translateY(0);
+
+	}

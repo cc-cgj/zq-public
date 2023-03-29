@@ -1,0 +1,13 @@
+
+
+	$destroy()
+
+	概念：销毁当前挂载的vue实例，包括子实例。
+
+	语法：vm.$destroy()
+
+	注意：
+
+		1、vue实例消失了，但DOM依旧会被渲染
+		
+		2、beforeCreate、created、beforeMount三个钩子函数依旧可以操作data数据和获取data数据。

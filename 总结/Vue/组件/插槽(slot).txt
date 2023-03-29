@@ -1,0 +1,262 @@
+
+	一、组件插槽的基本使用
+
+		概念：在组件标签中插入内容必须在组件注册中添加插槽。插槽可以定义默认值，默认值可以是{{变量名}}或html标签，如果组件标签有多个值，
+
+	同时放入到组件注册进行替换时，会将插槽内的内容全部替换
+
+		语法：	
+
+			Vue.component('cpt',{
+
+				template:`<div><slot>默认值</slot></div>`		
+
+			})
+
+		
+
+	二、具名插槽
+
+		概念：将指定替换插槽的内容。组件注册时在插槽(slot)标签中添加name属性，再添加内容到组件标签时，通过向html标签内添加slot="属性名"
+
+	来指定替换的插槽
+
+		语法：
+
+			<cpt>
+
+				<div name="属性名">我要替换的是具名插槽的内容</div>
+			
+						/
+
+				 <template v-slot:属性名>
+   				
+					 <h1>我要替换的是具名插槽的内容</h1>
+ 
+				 </template>
+
+				注意：v-slot:default表示的是替换默认插槽的内容
+					
+
+			</cpt>
+
+			Vue.component('cpt',{
+
+				template:`<div>
+					
+						<slot><h2>hello world</h2></slot>
+
+						<slot name="属性名">默认值</slot>
+
+					</div>`		
+
+			})
+
+	
+		注意：
+
+			1、具名插槽可以有多个，且都可以将默认内容显示在组件标签内，即显示在页面上
+	
+			2、当注册组件时同时具有name属性的slot标签和没有name属性的slot标签时，在组件标签中添加内容时，会替换不具有name属性的slot
+
+		标签的内容
+
+			3、替换name属性的slot标签的内容需要在添加组件标签内容时向html标签内添加slot="属性名"才能替换具有name属性的slot标签的内容
+
+
+	三、作用域插槽
+
+		概念：让子组件的data数据可以在组件标签(挂载DOM元素内使用组件标签)内使用。通过在slot标签内动态绑定自定义属性，将所要使用的data数
+
+	据赋值给该属性
+
+-------在挂载的DOM元素内使用插值表达式将数据渲染到页面或使用指令如v-for循环变量时
+
+	首先会找Vue实例的data中的数据，若没有则找计算属性computed中的方法，若也没有则会报错
+
+
+		语法：
+
+			Vue.component('cpt',{
+
+				data:()=>{ msg:"hello",user:{ name:'张三' } }
+
+				template:`<div>
+					
+					<slot><h2>hello world</h2></slot>
+
+					<slot name="属性名">默认值</slot>
+
+					<slot :data(自定义)="msg"> 
+
+						<h1>{{msg}}</h1>
+			
+					</slot>	
+
+					//  具名作用域插槽
+
+					<slot :data(自定义)="user" name = "other" > 
+
+						<h1>{{ user.name }}</h1>
+			
+					</slot>	
+
+					
+						
+				</div>`		
+
+			})
+
+		注意：
+
+			在组件标签内使用数据时需要在组件标签内添加template标签，然后为该标签添加slot-scope属性，此时就可以在该标签内使用子组件的
+
+		数据了。
+
+			如：
+				<cpn>
+
+					<template slot-scope = "obj(随便取)">
+
+						{{ obj.msg }}
+
+					</template>
+
+						/
+
+					<template v-slot:default = "obj(随便取)"> //默认作用域插槽,当没具名作用域插槽时:default可以省略
+
+						{{ obj.msg }}
+
+					</template>
+				
+
+					<template v-slot:other = "{ user } / { user = { name: '李四' } }"> //具名作用域插槽
+
+									   / 用于插槽 prop 是 undefined 的情形	
+						{{  user.name  }}
+
+					</template>
+				
+					//slot-scope的属性值为一个对象，包含的slot标签中自定义属性接收的data数据。
+
+				</cpn>
+
+			注意：
+	
+				1、v-slot 指令自 Vue 2.6.0 起被引入，提供更好的支持 slot 和 slot-scope attribute 的 API 替代方案。
+
+				2、动态具名作用域插槽名 v-slot:[dynamicSlotName] / #dynamicSlotName
+
+				3、v-slot 也有缩写，即把参数之前的所有内容 (v-slot:) 替换为字符 #。例如 v-slot:header 可以被重写为 #header
+				
+				4、v-slot缩写#只在其有参数的时候才可用,#="{ item }"则为发出警告，改为 #.default = '{ item }'
+
+				4、在接下来所有的 2.x 版本中 slot 和 slot-scope attribute 仍会被支持，但已经被官方废弃且不会出现在 Vue 3 中。
+				
+				5、默认插槽的缩写语法不能和具名插槽混用，因为它会导致作用域不明确
+
+					例：
+
+						<!-- 无效，会导致警告 -->
+
+						<todo-list v-slot="slotProps">
+  
+							<i class="fas fa-check"></i>
+  
+							<span class="green">{{ slotProps.item }}</span>
+  
+  							<template v-slot:other="otherSlotProps">
+    
+								slotProps 在此处不可用
+  
+							</template>
+
+						</todo-list>
+
+
+				6、只要出现多个插槽，请始终为所有的插槽使用完整的基于 <template> 的语法：
+				
+					例：
+
+						<todo-list v-slot="slotProps">
+			
+							 <template v-slot:default="slotProps">
+  
+								<i class="fas fa-check"></i>
+  
+								<span class="green">{{ slotProps.item }}</span>
+
+							 </template>
+  
+  							<template v-slot:other="otherSlotProps">
+    
+								slotProps 在此处不可用
+  
+							</template>
+
+						</todo-list>
+	
+					
+
+				6、v-slot(#) 只能添加在 <template> 上，但当被提供的内容只有默认插槽时，组件的标签才可以被当作插槽的模板来使用
+
+					例：
+
+						<todo-list v-slot:default="slotProps">
+  
+							<i class="fas fa-check"></i>
+  
+							<span class="green">{{ slotProps.item }}</span>
+						
+						</todo-list>
+
+
+	四、解构插槽 Prop
+
+		概念：
+
+			1、作用域插槽的内部工作原理是将你的插槽内容包括在一个传入单个参数的函数里：function (slotProps) { // ... 插槽内容 ... }
+
+			2、这意味着 v-slot 的值实际上可以是任何能够作为函数定义中的参数的 JavaScript 表达式。因此你也可以使用 ES2015 解构 来传入具体的
+		插槽 prop
+
+		例：
+
+			基本使用：
+
+				<todo-list v-slot="{ item }">
+  
+					<span class="green">{{ item }}</span>
+
+				</todo-list>
+
+			重命名：
+				
+				<todo-list v-slot="{ item: todo }">
+  
+					<span class="green">{{ todo }}</span>
+
+				</todo-list>
+
+			插槽 prop 是 undefined 的情形：
+
+				<todo-list v-slot="{ item = 'Placeholder' }">
+  
+					<span class="green">{{ item }}</span> //Placeholder
+
+				</todo-list>
+
+	五、动态插槽名
+
+		<base-layout>
+  
+			<template v-slot:[dynamicSlotName]>
+    			
+				...
+  			</template>
+
+		</base-layout>
+
+				
+

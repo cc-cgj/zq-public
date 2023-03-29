@@ -1,0 +1,219 @@
+
+
+	2.x( 2.2.0+ 新增 )
+
+		https://cn.vuejs.org/v2/guide/components-custom-events.html#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BB%84%E4%BB%B6%E7%9A%84-v-model
+
+		一、model选项
+	
+			一个组件上的 v-model 默认会利用名为 value 的 prop 和名为 input 的事件，但是像单选框、复选框等类型的输入控件
+
+		可能会将 value attribute 用于不同的目的。model 选项可以用来避免这样的冲突：
+
+			Vue.component('base-checkbox', {
+  			
+				model: { prop: 'checked',event: 'change' },
+				
+				props: { checked: Boolean },
+  				
+				template: `
+    
+					<input type="checkbox" 
+	
+						v-bind:checked="checked" v-on:change="$emit('change', $event.target.checked)" />
+
+				`})
+
+
+		二、例
+
+			<base-checkbox v-model="bool" />
+
+				没有声明model选项：
+
+					<base-checkbox :value="bool" @update:bool=" bool= $event " />
+
+				有声明model选项:
+			
+					<base-checkbox :`model的prop值`="bool" @model的event值:bool=" bool= $event " />
+				
+			data(){ return { bool:true } }
+
+		三、注意
+
+			1、仍然需要在组件的 props 选项里声明 value(默认) 或者model选项指定的'prop'。
+
+			2、当没有设定model选项时，子组件默认为props:['value']和$emit('input'),父组件为 <cpt v-model="msg" @input=""/>
+			
+			3、组件上只能使用一个 v-model
+
+	3.x
+
+		https://v3.cn.vuejs.org/guide/migration/v-model.html#%E6%A6%82%E8%A7%88
+
+
+		一、概念
+
+			1、在 3.x 中，自定义组件上的 v-model 相当于传递了 modelValue prop 并接收抛出的 update:modelValue	
+			
+			2、若需要更改 model 的名称，现在我们可以为 v-model 传递一个参数，以作为组件内 model 选项的替代
+
+		二、注意
+
+			1、这也可以作为 .sync 修饰符的替代，而且允许我们在自定义组件上使用多个 v-model。
+
+			2、除了像 .trim 这样的 2.x 硬编码的 v-model 修饰符外，现在 3.x 还支持自定义修饰符
+
+		三、例
+
+			1、默认
+
+				父组件：
+
+					<ChildCpt v-model="pageTitle" /> 
+
+					<!-- 是以下的简写： -->
+
+					<ChildCpt :modelValue="pageTitle" @update:modelValue="pageTitle = $event" />
+
+				子组件：
+
+					props:['modelValue']
+
+					emits: ['update:modelValue'],  
+
+					<input :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" />
+
+
+					//通过computed property 的功能来定义 getter 和 setter。
+					
+					props:['modelValue']
+
+					emits: ['update:modelValue'],  
+
+					<input v-model="value" />
+
+					 computed: {
+    
+						value: {
+      
+							get() {  return this.modelValue },
+      
+							set(value) {  this.$emit('update:modelValue', value) }
+    
+						}
+  					}
+					
+   
+			2、指定model名称
+
+				父组件：
+
+					<ChildComponent v-model:title="pageTitle" v-model:content="pageContent" />
+
+					<!-- 是以下的简写： -->
+
+					<ChildComponent 
+
+						:title="pageTitle"
+  
+						@update:title="pageTitle = $event" :content="pageContent" 
+
+						@update:content="pageContent = $event"
+
+					/>
+
+				子组件：
+
+					props:['title','content']
+
+					emits: ['update:title','update:content'],  
+
+					<input :value="title" @input="$emit('update:title', $event.target.value)" />
+
+					
+
+		四、v-model 修饰符
+
+			概念：添加到组件 v-model 的修饰符将通过 modelModifiers prop 提供给组件：
+
+			注意：
+			
+				1、当组件的 created 生命周期钩子触发时，modelModifiers prop 会包含 capitalize，且其值为 true——因为 
+
+			capitalize 被设置在了写为 v-model.capitalize="myText" 的 v-model 绑定上。
+
+				2、对于带参数的 v-model 绑定，生成的 prop 名称将为 arg + "Modifiers"：
+
+
+			例：
+
+				1、默认：
+
+					父组件：<my-component v-model.capitalize="myText"></my-component>
+				
+					子组件：
+
+						app.component('my-component', {
+  
+							props: {  modelValue: String, modelModifiers: { default: () => ({}) } },
+  
+							emits: ['update:modelValue'],
+  				
+							template: `
+    
+								<input type="text" :value="modelValue" 
+
+									@input="emitValue" />`,
+  
+							created() { console.log(this.modelModifiers) // { capitalize: true } }
+
+							methods:{
+
+						 		emitValue(e) {
+      
+									let value = e.target.value
+      
+									if (this.modelModifiers.capitalize) {
+        
+										value = value.charAt(0).toUpperCase() + value.slice(1)
+      	
+									}
+      						
+									this.$emit('update:modelValue', value)
+    
+								}
+
+							}
+
+						})
+
+					
+
+						
+
+				2、指定model名称
+
+					父组件：<my-component v-model:description.capitalize="myText"></my-component>
+
+					子组件：
+
+						props: ['description', 'descriptionModifiers'],
+  
+						emits: ['update:description'],
+
+						created() {
+    
+							console.log(this.descriptionModifiers) // { capitalize: true }
+  
+						}
+
+			
+
+
+
+
+
+		
+
+、		

@@ -1,0 +1,123 @@
+
+
+	/**  index.wxml  **/
+
+		<view style="height: 0;" class="collapse-wrapper" animation="{{animation}}">
+
+			<view class="collapse-wrapper__content">
+
+				<slot />
+
+			</view>
+
+		</view>
+
+	/**  index.wxss  **/
+
+		.collapse-wrapper{ overflow:hidden; }
+
+
+	/**  index.js  **/
+
+	var getRect = function getRect(context, selector) {
+  
+		return new Promise(function (resolve) {
+    
+			wx.createSelectorQuery()
+      
+				.in(context)
+      					
+				.select(selector)
+      
+				.boundingClientRect()
+      
+				.exec(function (rect) {
+        
+					if (rect === void 0) { rect = []; }
+        
+					return resolve(rect[0]);
+      
+				});
+  		});
+	}
+
+
+	Page({
+		
+
+		data:{ show:false,animation:"" },
+
+		async toggleShow( e ){
+
+			const height = await getRect(this, `.collapse-wrapper_content`).then(function (rect) {
+      
+				return rect.height;
+    			
+			})
+    
+		var animation = wx.createAnimation({
+      
+			duration: 0,
+      
+			timingFunction: 'ease-in-out',
+    
+		});
+    
+
+		this.setData({
+      
+			show: !this.data.show
+    
+		}, () => {
+      
+			if (this.data.show) {
+        
+				if (height === 0) {
+          
+					animation.height('auto').top(1).step();
+        
+				} else {
+          
+					animation
+            
+					.height(height)
+            
+					.top(1)
+            			
+					.step({
+              
+						// duration: mounted ? 300 : 1,
+              			
+						duration: 300
+            
+					}).height('auto')
+            
+					.step();
+        
+				}
+        	
+				this.setData({ animation: animation.export()});
+        
+				return 
+
+      				} 
+      	
+				animation.height(height).top(0).step({
+        
+					duration: 1
+      
+				}).height(0).step({
+        
+					duration: 300,
+      
+				});
+      
+				this.setData({ animation: animation.export()})
+    
+	
+			})
+
+
+		}
+
+	})

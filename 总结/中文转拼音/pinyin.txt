@@ -1,0 +1,5 @@
+
+
+	https://github.com/hotoo/pinyin
+
+	npm install pinyin@alpha --save

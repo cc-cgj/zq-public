@@ -1,0 +1,52 @@
+
+	一、多个元素过渡
+
+		<transition>
+  
+			<button v-if="docState === 'saved'" key="saved"> Edit </button>
+  
+			<button v-else-if="docState === 'edited'" key="edited"> Save </button>
+  
+			<button v-else-if="docState === 'editing'" key="editing"> Cancel </button>
+
+		</transition>
+	
+		//等价于
+
+		<transition>
+  
+			<button :key="docState"> {{ buttonMessage }} </button> 
+
+		</transition>
+
+		// ...
+	
+		computed: {
+  
+			buttonMessage() {
+    
+				switch (this.docState) {
+      
+					case 'saved': return 'Edit'
+      
+					case 'edited': return 'Save'
+      
+					case 'editing': return 'Cancel'
+    				}
+  			}
+		}
+
+		注意：一个离开过渡的时候另一个开始进入过渡。这是 <transition> 的默认行为 —— 进入和离开同时发生。
+
+	二、过渡模式
+
+		in-out: 新元素先进行过渡，完成之后当前元素过渡离开。
+
+		out-in: 当前元素先进行过渡，完成之后新元素过渡进入。
+
+		例：
+			
+			<transition name="fade" mode="out-in"> <!-- ... the buttons ... --> </transition>
+
+
+	

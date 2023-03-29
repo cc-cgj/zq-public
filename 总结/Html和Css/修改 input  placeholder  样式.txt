@@ -1,0 +1,9 @@
+
+
+	.placehoder-custom::-webkit-input-placeholder {
+  
+		color: #babbc1;
+  
+		font-size: 12px;
+
+	}

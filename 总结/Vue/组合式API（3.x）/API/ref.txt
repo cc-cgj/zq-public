@@ -1,0 +1,13 @@
+
+
+	<!-- vm.$refs.p 会是 DOM 节点 -->
+
+		<p ref="p">hello</p>
+
+	<!-- vm.$refs.child 会是子组件实例 -->
+
+		<child-component ref="child"></child-component>
+
+	<!-- 当动态绑定时，我们可以将 ref 定义为回调函数，显式地传递元素或组件实例 -->
+
+		<child-component :ref="(el) => child = el"></child-component>

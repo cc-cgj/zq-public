@@ -1,0 +1,19 @@
+
+
+	em:以父亲或祖父往上的字体大小为基准
+
+		例：
+
+			html:font-size：24px;
+
+			父：font-size：12px;
+	
+			子：width：2em; //24px
+
+	rem：以跟标签html的字体大小为标准
+
+			html:font-size：24px;
+
+			父：font-size：12px;
+	
+			子：width：2rem; //48px

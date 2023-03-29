@@ -1,0 +1,145 @@
+
+
+	一。在动态组件上使用 keep-alive	
+
+	<component v-bind:is="msg"></component> 
+
+		//动态组件,msg为data内的属性，值为注册的组件名(name属性值)或一个组件的选项对象，通过修改变量的值来切换所显示的组件
+
+		注意：通过修改msg修改显示的组件时，Vue 都创建了一个新的 currentTabComponent 实例，不管显示的组件是旧的还是新的。
+
+	通过<keep-alive> 元素将其动态组件包裹起来。它们第一次被创建的时候缓存下来，即来回切换两个不同组件时，两个组件的状态都会保存
+
+	例：
+
+		<!-- 失活的组件将会被缓存！-->
+
+		<keep-alive> 
+			
+			<component :is="currentTabComponent"></component> 
+
+		</keep-alive>
+
+	二、异步组件
+
+		// 打包时会单独生成一个文件chunk-hash.js来保存异步组件
+
+		2.x
+
+			异步组件是通过将组件定义为返回 Promise 的函数来创建的：
+
+				const asyncModal = () => import('./Modal.vue')
+
+			带有选项的更高阶的组件语法：
+
+				const asyncModal = {
+  
+					component: () => import('./Modal.vue'),
+  
+					delay: 200,
+  
+					timeout: 3000,
+  
+					error: ErrorComponent,
+  
+					loading: LoadingComponent
+
+				}
+
+		3.x
+
+			概念：
+
+				1、在大型应用中，我们可能需要将应用分割成小一些的代码块（代码分包），并且只在需要的时候才从服务器加载一个模		
+			块。为了实现这个效果，Vue 有一个defineAsyncComponent 方法
+			
+				2、新的 defineAsyncComponent 助手方法，用于显式地定义异步组件
+
+				3、component 选项被重命名为 loader
+
+				4、Loader 函数本身不再接收 resolve 和 reject 参数，且必须返回一个 Promise
+
+				5、由于函数式组件被定义为纯函数，因此异步组件需要通过将其包裹在新的 defineAsyncComponent 助手方法中来显式地定义
+
+			例：
+
+				import { defineAsyncComponent } from 'vue'
+
+				import ErrorComponent from './components/ErrorComponent.vue'
+
+				import LoadingComponent from './components/LoadingComponent.vue'
+
+				// 不带选项的异步组件
+				
+				const asyncModal = defineAsyncComponent(() => import('./Modal.vue'))
+
+				// 带选项的异步组件
+
+				const asyncModalWithOptions = defineAsyncComponent({
+  
+					loader: () => import('./Modal.vue'),
+  
+					delay: 200, // 在显示loadingComponent之前，等待多长时间加载loader,默认200ms
+  
+					timeout: 3000,
+  
+					errorComponent: ErrorComponent,
+  
+					loadingComponent: LoadingComponent
+
+					suspensible：boolean,//定义组件是否可挂起 | 默认值：true
+									
+					onError(
+    
+						error: Error, //错误信息对象
+    
+						retry: () => void, //一个函数，用于指示当promise加载器 reject 时，加载器是否应该重试
+    
+						fail: () => void,//一个函数，指示加载器程序结束退出
+    
+						attempts: number //允许的最大重试次数
+  					
+					){
+						
+						if(error.message.match(/fetch/&&attempts<=3){
+						
+							//请求发生错误时重试，最多可尝试3次
+
+							retry(）
+
+						}else{
+
+							// 注意，retry/fail 就像promise的resolve/reject一样：
+
+							// 必须调用其中一个才能继续错误处理
+
+							fail()
+
+						}
+
+					}
+			
+				})
+
+		注意：
+
+			Vue Router 支持一个类似的机制来异步加载路由组件，也就是俗称的懒加载。尽管类似，但是这个功能和 Vue 所支持的异步组件是不同的。
+		
+		当用 Vue Router 配置路由组件时，你不应该使用 defineAsyncComponent。
+
+
+		此外，与 2.x 不同，loader 函数不再接收 resolve 和 reject 参数，且必须始终返回 Promise。
+
+			例：
+
+				// 2.x 版本
+
+				const oldAsyncComponent = (resolve, reject) => { /* ... */ }
+
+				// 3.x 版本
+
+				const asyncComponent = defineAsyncComponent( () =>   new Promise((resolve, reject) => { /* ... */ }) )
+			
+
+
+		

@@ -1,0 +1,51 @@
+
+
+
+	一、概念
+
+		Object.defineProperties() 方法直接在一个对象上定义新的属性或修改现有属性，并返回该对象。
+
+	二、语法
+
+		Object.defineProperties(obj, props)
+
+
+	三、参数
+
+		obj：在其上定义或修改属性的对象。
+
+		props：
+
+			要定义其可枚举属性或修改的属性描述符的对象。对象中存在的属性描述符主要有两种：数据描述符和访问器描述符
+
+		（更多详情，请参阅Object.defineProperty()
+
+	四、例
+
+		var obj = {};
+
+		Object.defineProperties(obj, {
+  
+			'property1': {
+    
+				value: true,
+    
+				writable: true
+  			},
+  
+			'property2': {
+    
+				value: 'Hello',
+    
+				writable: false
+  			}
+  
+			// etc. etc.
+		});
+
+		console.log( obj.property1 ) //true
+
+		obj.property2 = 'hello world'
+
+		console.log( obj.property2 ) //Hello
+		

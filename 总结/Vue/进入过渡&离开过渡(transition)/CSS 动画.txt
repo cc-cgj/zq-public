@@ -1,0 +1,51 @@
+
+
+	一、概念
+
+		CSS 动画用法同 CSS 过渡，区别是在动画中 v-enter-from 类名在节点插入 DOM 后不会立即删除，而是在 animationend 事件触发时删除。
+
+	二、例
+
+		注意：下面是一个例子，为了简洁起见，省略了带前缀的 CSS 规则
+
+		<div id="demo">
+  
+			<button @click="show = !show">Toggle show</button>
+  
+			<transition name="bounce">
+    
+				<p v-if="show"> hello world </p>
+   
+  			</transition>
+				
+		</div>
+
+		const Demo = {
+  
+			data() { return { show: true } }
+		}
+
+		Vue.createApp(Demo).mount('#demo')
+
+		.bounce-enter-active {
+  
+			animation: bounce-in 0.5s;
+			
+		}
+
+		.bounce-leave-active {
+  
+			animation: bounce-in 0.5s reverse;
+
+		}
+				
+		@keyframes bounce-in {
+  
+			0% { transform: scale(0); }
+  
+			50% { transform: scale(1.25); }
+    				
+			100% { transform: scale(1); }
+  
+  		}
+

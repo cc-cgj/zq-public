@@ -1,0 +1,13 @@
+
+
+	这个判断必须放进tab子页面的js的onShow方法里面（比如首页，就放进首页的js文件里面，我的，就放在我的页面的js文件里）
+
+
+	if(typeof this.getTabBar==='function'&&this.getTabBar()){
+      
+		this.getTabBar().setData({
+        
+			selected:0
+     		})
+    
+	}

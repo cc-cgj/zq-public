@@ -1,0 +1,168 @@
+
+
+
+一、侦听器 watch  //调用vue构造函数，实参内的默认属性
+
+	概念：监听vue实例里data中的数据，当data中属性值发生改变时触发
+
+	语法： 
+
+		new Vue({
+
+			el:"div",
+
+			data:{ msg:"" },
+
+			watch:{
+	
+				msg:{  handler( val,arg ){ console.log(val)//{ name:"ls" } },//所触发的函数，函数名是固定写法  }			
+
+			}
+		
+		})
+
+	用法：
+
+			1、watch: {  msg( newV,oldV ){} }//函数式
+
+			2、watch: {  msg:{ handle(){} } } //对象式
+
+			3、watch: {  msg:[ 'methodNameFn',function handle(){  } ] } //数组式
+
+			4、watch: { 'obj.msg'(){} } //对象属性
+
+			//不支持侦听数组中的某一项
+			
+
+	参数：
+
+		msg：vue实例里data中的属性名
+
+		val：表示data中属性改变后的值
+
+		arg：表示data中属性改变之前的值。
+
+		deep：普通的watch方法无法监听到对象内部属性的改变，即data内的属性的属性值为一个对象时，对象中又包含属性，此时若对象内的属性值
+
+	发生改变，watch是监听不到的，所以需要通过声明该属性来监听到data内属性中的属性和方法。
+		
+		immediate：watch有一个特点，就是当值第一次绑定的时候，不会执行监听函数，只有值发生改变才会执行。如果我们需要在最初绑定值的时
+	
+	候也执行函数，则就需要用到immediate属性。
+
+	注意：
+
+		1、当值第一次绑定的时候也需要监听且需要监听对象内的属性时需要将deep和immediate属性设置为true
+	
+		例：
+
+			new Vue({
+
+				el:"div",
+
+				data:{ msg:{ name:"zs" } },
+
+				watch:{
+	
+					msg:{
+		
+						handler( val,arg ){ console.log(val)//{ name:"ls" } },//所触发的函数，函数名是固定写法
+		
+						deep: true,
+
+						immediate: true		 
+				    
+					}		
+
+				}
+		
+			})
+
+		2、当你有一些数据需要随着其它数据变动而变动时，watch 很容易被滥用——特别是如果你之前使用过 AngularJS。然而，通常更好的做法
+
+	是使用计算属性而不是命令式的 watch 回调。
+
+二、过滤器  filter  //调用vue构造函数，实参内的默认属性，常用于格式化日期
+
+	概念：过滤插值表达式内的值，当插值表达式内的值后插入|符号加过滤器名时触发一个回调函数，过滤器分为局部过滤器和全局过滤器
+
+	语法：
+
+		------全局过滤器
+
+			Vue.filter("过滤器名",function(val,arg){
+
+				return "所有的vue实例都可以使用"
+			})
+			
+
+		------局部过滤器 //只能在类名为app的DOM元素内使用
+
+			new Vue({ 
+
+				   el:".app",
+	
+				   data:{ msg:"hello world" },
+		
+				   filters:{ 
+					
+					过滤器名:function(val,arg){
+					
+						return  val.charAt(0).toUpperCase() + val.slice(1) 
+				
+					}
+
+				   }						
+
+			       })
+
+	参数：
+
+		val：表示的是插值表达式内的值
+
+		arg：表示的是调用时传入的参数 例：{{msg|format("date")}}
+
+
+	使用方法：
+	
+		无参：{{ msg | 过滤器名 }}
+
+		有参：{{ msg | 过滤器名(new Date) }}
+	
+	注意：
+
+		1、使用过滤器必须要在回调函数内return过滤后的值，若回调函数内没有return值，则会将插值表达式内的值清空，即在页面上显示的是空白。
+
+		2、当没有参数时，会默认将插值表达式内的值传进去,可通过arguments(伪数组)来查看。
+
+			//arguments：系统提供的一个数组对象，里面存放的是函数调用时传进来的实参
+			
+		3、从 Vue 3.0 开始，过滤器已移除，且不再支持。
+
+
+
+		
+
+------------------------------------------额外------------------------------------------
+
+
+一、toUpperCase() 
+
+	概念：方法用于把字符串转换为大写。
+
+	语法：str.toUpperCase()
+
+	返回值：一个新的字符串
+ 
+二、toLowerCase()
+	
+	概念：方法用于把字符串转换为小写。
+
+	语法：str.toLowerCase()
+
+	返回值：一个新的字符串
+
+
+
+
+		

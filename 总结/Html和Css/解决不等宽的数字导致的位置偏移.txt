@@ -1,0 +1,6 @@
+
+
+	1、font-variant-numeric CSS 属性控制数字，分数和序号标记的替代字形的使用。tabular-nums 启用表格数字显示。使数字等宽，易于像表格那样对齐。等同
+于 OpenType 特性 tnum。
+
+	2、font-feature-settings: "tnum"

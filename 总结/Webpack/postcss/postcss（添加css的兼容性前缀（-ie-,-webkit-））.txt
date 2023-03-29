@@ -1,0 +1,42 @@
+
+
+	概念
+
+		post-css是一个通过js来转换样式的工具
+
+		需要借助于post-css对应的插件才能实现（autoprefixer、postcss-preset-env）
+
+	安装
+
+		npm i postcss -D //核心工具
+
+		npm i postcss-cli -D //命令行需要使用的
+
+	安装插件
+
+		npm i autoprefixer -D
+
+	使用
+
+		npx postcss --use autoprefixer -o end.css(生成的文件) ./src/css/style.css（要编译的文件路径）
+
+
+	插件
+
+		postcss-preset-env
+
+			概念：
+
+				使用postcss-preset-env不需要使用autoprefixer
+
+				将现代的css特性转变为大多数浏览器认识的css，并且会根据目标浏览器或者运行时环境添加所需的polyfill
+
+			安装
+				
+				npm i postcss-preset-env -D
+
+			使用
+
+				参考postcss.config.js
+
+				

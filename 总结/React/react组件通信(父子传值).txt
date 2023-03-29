@@ -1,0 +1,126 @@
+
+	
+ 一、父组件传递数据给子组件
+
+	1、在父类中使用子组件标签中设置自定义属性来传递数据
+
+		class Parent extends React.Component{
+
+			state = { msg:"hello world" }
+					
+			render(){ return < Son aa(自定义) = { this.state.msg } />  }
+		}
+
+	2、子类使用props获取
+		
+		class Parent extends React.Component{
+
+			ComponentDidMount(){
+			
+				console.log( this.props.aa ) // hello world -------this指向的是子组件的类对象
+
+			}
+
+			 render() { return (<></>) }
+
+		}
+	注意：
+	
+		1、传递的数据在子类中无法进行修改
+
+		2、当父组件传递的数据发生变化时，子组件接收的数据也会发生改变	
+
+ 二、子组件传递数据给父组件 (调用父组件的函数传值)
+
+	1、在父类中使用子组件标签设置自定义属性来传递函数
+
+		class Parent extends React.Component{
+
+			state = { msg:"hello world" }
+
+			parentMethods（sonParams）{ console.log(sonParams)//我是子组件的数据 }
+					
+			render(){ return < Son aa(自定义) = { this.state.parentMethods } />  }
+		}
+
+	2、子类中通过触发子类函数使用props调用父类传递的函数及传参
+	
+		class Son extends React.Component{
+
+			state = { sonMsg:"我是子组件的数据" }
+
+			ComponentDidMount(){
+
+				this.props.aa( this.state.sonMsg ) //调用父组件的函数
+
+			}
+
+			 render() { return (<></>) }
+
+		}
+	注意：
+
+		1、当传递过来的属性值为一个父类中的方法时，使用 this.props.在子组件中设置属性名() 可以触发父类中的函数
+
+		2、若子传递给父的为一个复杂数据类型时，在父中修改传递的数据子中的该数据也会发生改变
+		
+		3、若子传递给父的为子state里的数据，修改传递的数据，子中的state数据不会改变
+
+		4、触发的父组件的函数时  this默认指向的是 传递给子组件参数的那个对象，即子组件的props对象，因为是props调用了父组件的方法。
+
+	解决方法：在父组件中使用子组件标签传递方法时修改this的指向。如使用this.父组件方法.bind(this)或箭头函数
+
+ 三、设置props传递属性的类型
+
+	1、引入 校验 模块 import PropTypes from 'prop-types'
+
+	2、对组件的props进行校验 
+
+	 例:  class Son extends React.Component{ render(){ return {this.props.msg} } }
+
+	// 设置默认属性
+		
+		Son.defaultProps = {
+  		
+			msg: 'hello world'
+
+
+		}
+
+	// 设置类型检查
+			
+		Son.propTypes = {
+  
+			msg: PropTypes.string, //从父组件传递的msg必须为string类型
+
+			arr: PropTypes.array, //从父组件传递的msg必须为Array类型
+  
+			fn: PropTypes.func, //从父组件传递的fn必须为function类型
+  
+			name: PropTypes.string.isRequired // name为必须传的，类型必须为string
+
+		}
+
+
+	//通过static定义
+
+		 class Son extends React.Component{ 
+
+			static defaultProps = {
+
+				...
+			}
+
+			static propTypes = {
+	
+				...
+				
+			}
+
+			render(){ return {this.props.msg} } 
+
+
+		}
+
+
+	

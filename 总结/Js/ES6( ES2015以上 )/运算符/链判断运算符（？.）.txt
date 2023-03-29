@@ -1,0 +1,28 @@
+
+
+	一、概念
+
+
+		?.也是ES2020 引入，有人称为链判断运算符（optional chaining operator）
+
+		?.直接在链式调用的时候判断，判断左侧的对象是否为null或undefined，如果是的，就不再往下运算，返回undefined，如果不是，则返回右侧的值
+
+	二、例
+
+			let obj1 = null
+
+			obj1?.aa //undefined
+
+			obj1 = { aa:1 }
+
+			obj1?.aa //1
+
+	三、注意
+
+		常见写法
+
+			obj?.prop  对象属性
+
+			obj?.[expr]  对象属性
+
+			func?.(...args)  函数或对象方法的调用

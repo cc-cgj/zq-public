@@ -1,0 +1,4 @@
+<zml-nav bgColor="{{cMain}}">
+  <zml-nav-btn slot="leftBtn" homepage="/pages/index/index/index" color="#fff"></zml-nav-btn>
+  <view slot="center" class="page-title">页面名称</view>
+</zml-nav>

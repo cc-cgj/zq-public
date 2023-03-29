@@ -1,0 +1,50 @@
+
+	
+
+	一、Number()
+
+		Undefined  // NAN
+
+		Null //0
+
+		true //1
+
+		false /0
+
+		// 空字符串转为0
+
+		Number('') // 0
+
+		// 对象：通常转换成NaN(除了只包含单个数值的数组)
+
+		Number({a: 1}) // NaN
+
+		Number([1, 2, 3]) // NaN
+
+		Number([5]) // 5
+
+		Number([]) //0
+
+	二、String()
+
+		//对象
+
+		String({a: 1}) // "[object Object]"
+
+		String([1, 2, 3]) // "1,2,3"
+		
+	三、Boolean()
+
+		Boolean(NaN) // false		
+			
+		Boolean({}) // true
+
+		Boolean([]) // true
+
+		Boolean(new Boolean(false)) // true
+
+	四、隐式转换
+
+		NaN // false
+
+		'5' + [] // "5"

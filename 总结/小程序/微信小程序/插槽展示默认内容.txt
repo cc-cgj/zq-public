@@ -1,0 +1,53 @@
+
+	一、输入框
+
+	wxml
+
+		<view class = "van-field__control" >
+
+			<slot />
+
+		
+		</view>
+
+		<input class = "van-field__control" />
+
+
+
+	wxss
+
+		.van-field__control:empty+.van-field__control{ display:block; }
+
+		.van-field__control{ display:none; }
+	
+
+	二、日历
+
+		wxml
+
+			<view class="van-calendar__header-title"><slot name="title"></slot></view>
+    
+			<view class="van-calendar__header-title">{{ title }}</view>
+
+		wxss
+
+			.van-calendar__header-title:empty+.van-calendar__header-title {
+    
+				display: block!important;
+
+			}
+
+			.van-calendar__header-title+.van-calendar__header-title, .van-calendar__header-title:empty {
+    
+				display: none;
+
+			}
+
+
+		
+		
+
+
+	
+
+	

@@ -1,0 +1,25 @@
+
+
+	一、概念
+
+		构造由type为构造函数/类的实例(new)组成的类型。
+
+	二、语法
+
+		InstanceType<typeof Person>
+
+	三、应用场景
+
+		在vue设置的变量的类型为组件实例
+
+			.vue
+
+			//tempalte
+
+			<MyComponent ref="MyComponentRef" />
+
+			//script
+
+			import MyComponent from './components/my-compnent.vue'
+			
+			const MyComponentRef = ref<InstanceType <typeof MyComponent>>()

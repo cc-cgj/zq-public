@@ -1,0 +1,5 @@
+
+
+	3..toString() //"3"
+
+	// 3.toString() 实际上被JS引擎解析成 (3.)toString(),但是如果你这么写 (3).toString()，人为加上括号，这就是合法的。

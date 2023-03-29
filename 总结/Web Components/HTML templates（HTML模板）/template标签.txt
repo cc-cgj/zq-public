@@ -1,0 +1,29 @@
+
+
+	一、属性
+
+		1、content
+			
+			在js中template标签对应的dom对象存在content属性，对应的属性值是一个dom节点，节点的nodeName是#document-fragment。通过
+	
+	该属性可以获取template标签中的内容，template对象.content可以调用getElementById、querySelector、querySelectorAll方法来获取里面的子节	
+	
+	点。
+
+		2、innerHTML
+
+			可以获取template标签中的html。
+
+	二、注意
+
+		template里可以包含style标签，且具有作用域
+
+			<template id="element-details-template">
+  
+				<style>
+  
+					details {font-family: "Open Sans Light",Helvetica,Arial}
+	
+				</style>
+
+			<template>

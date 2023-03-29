@@ -1,0 +1,30 @@
+
+
+	Content-Disposition
+
+		这个响应头可以决定内容是 预览 还是 下载。
+
+
+	Content-Disposition: inline
+
+		此时，消息体会以页面的一部分或者整个页面的形式展示。（预览）
+
+	Content-Disposition: attachment
+
+		消息体应该被下载，默认文件名和 url 格式有关。
+
+	Content-Disposition: attachment; filename="filename.jpg"
+
+		消息体应该被下载，默认文件名可指定。
+
+	例	
+
+		axios({
+
+			headers{
+
+				"Content-Disposition": 'attachment; filename="chunge.json"'
+		
+			}
+	
+		})

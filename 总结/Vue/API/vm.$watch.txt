@@ -1,0 +1,169 @@
+
+
+	https://cn.vuejs.org/v2/api/#%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95-%E6%95%B0%E6%8D%AE
+
+	2.x
+
+		一、$watch
+
+			概念：观察 Vue 实例上的一个表达式或者一个函数计算结果的变化。回调函数得到的参数为新值和旧值。表达式只接受简单的键路径。对于
+
+		更复杂的表达式，用一个函数取代。
+
+			例：
+				// 键路径
+
+					vm.$watch('a.b.c', function (newVal, oldVal) { // 做点什么 })
+
+				// 函数
+				
+					vm.$watch(
+  
+						function () {
+    				
+							// 表达式 `this.a + this.b` 每次得出一个不同的结果时
+    						
+							// 处理函数都会被调用。
+   						
+						 	// 这就像监听一个未被定义的计算属性
+   							
+							return this.a + this.b
+  
+						},
+  
+						function (newVal, oldVal) { // 做点什么 },
+		
+						{ deep:true,immediate:true }
+
+					)
+	
+				//vm.$watch 返回一个取消观察函数，用来停止触发回调：
+
+					var unwatch = vm.$watch('a', cb)
+		
+					unwatch()
+
+			注意：
+
+				1、在变更 (不是替换) 对象或数组时，旧值将与新值相同，因为它们的引用指向同一个对象/数组。Vue 不会保留变更之前值的副本。
+
+				2、注意在带有 immediate 选项时，你不能在第一次回调时取消侦听给定的 property。
+
+				3、如果你仍然希望在回调内部调用一个取消侦听的函数，你应该先检查其函数的可用性：if (unwatch) unwatch()
+
+	//https://v3.cn.vuejs.org/guide/reactivity-computed-watchers.html#watch
+
+	概念：侦听器数据源可以是返回值的 getter 函数，也可以直接是 ref、一个响应式对象(reactive)或多个数据源组成的数组
+
+	//直接给 watch() 传入一个响应式对象，会隐式地创建一个深层侦听器（deep=true）——该回调函数在所有嵌套的变更时都会被触发：
+
+		const obj = reactive({ count: 0 })
+
+		watch(obj, (newValue, oldValue) => {
+  
+			// 在嵌套的属性变更时触发
+  
+			// 注意：`newValue` 此处和 `oldValue` 是相等的
+  
+			// 因为它们是同一个对象！	
+		})
+
+		watch(
+  
+			() => state.someObject,
+  
+			() => {
+    
+				// 仅当 state.someObject 被替换时触发
+  			}
+		)
+
+obj.count++
+
+	侦听多个值
+
+		解决同步更改多个值只会触发一次侦听器
+		
+		2.x
+
+			注意：多个同步更改只会触发一次侦听器，可通过await this.$nextTick()等待侦听器在下一步改变之前运行。
+
+			this.$watch(
+			
+				() => `${this.firstName}${this.lastName}`,
+
+				(newValues, prevValues) => { console.log(newValues,'-', prevValues) }
+
+				// John  -  
+
+				// John Smith - John
+    
+			)
+
+			this.$watch(
+			
+				() => [ this.firstName,this.firstName ],
+
+				(newValues, prevValues) => { console.log(newValues, prevValues) }
+
+				// ['John', ''] - ['', '']
+
+				//  ['John', 'Smith'] - ['John', '']
+    
+			)
+
+
+			 async changeValues() {
+      
+				this.firstName = 'John'
+      		
+				***** await this.$nextTick()
+      
+				this.lastName = 'Smith'
+    
+			}
+
+
+		3.x 可通过设置flush: 'sync'/ nextTick
+
+			import { ref,watch,nextTick } from 'vue'
+
+			const firstName = ref('')
+
+			const lastName = ref('')
+
+
+			watch([firstName, lastName], (newValues, prevValues) => {
+  
+					console.log(newValues, prevValues)
+
+			},{ flush: 'sync'})
+
+
+			firstName.value = 'John' // logs: ["John", ""] ["", ""]
+
+			lastName.value = 'Smith' // logs: ["John", "Smith"] ["John", ""]
+
+			const changeValues = () => {
+    
+				firstName.value = 'John'
+
+				***** await nextTick()
+    
+				lastName.value = 'Smith'
+    
+				// 打印 ["John", "Smith"] ["", ""]
+  
+			}
+
+			
+
+			
+
+			
+
+			
+		
+
+
+

@@ -1,0 +1,57 @@
+
+
+	https://developer.mozilla.org/zh-CN/docs/Web/API/CustomEvent
+
+	一、概念
+
+		CustomEvent 事件是由程序创建的，可以有任意自定义功能的事件。
+
+	二、构造函数
+
+		CustomEvent()  创建一个自定义事件。
+
+	三、属性
+
+		CustomEvent.detail 只读 任何时间初始化时传入的数据
+
+
+	四、语法
+
+		// 添加一个适当的事件监听器
+
+		ele.addEventListener("cat", function(e) { process(e.detail) })
+
+		// 创建并分发事件
+
+		var event = new CustomEvent("cat", { 
+
+			bubbles:true,
+
+			cancelable:false,
+
+			detail:{"hazcheeseburger":true }} 
+
+		)
+
+		ele.dispatchEvent(event)
+
+
+	五、参数
+		
+		type：
+
+			事件的类型名称。
+
+		bubbles
+
+			一个布尔值,表明该事件是否会冒泡。
+
+		cancelable
+
+			一个布尔值,表明该事件是否可以被取消。
+
+		detail
+	
+			当事件初始化时传递的数据。
+
+		

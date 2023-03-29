@@ -1,0 +1,95 @@
+
+
+
+	一、概念
+
+		使用Object.create()是将对象继承到原型链上，然后可以通过对象实例的__proto__属性进行访问原型链上的属性
+
+
+	二、参数
+
+		proto：新创建对象的原型对象。
+
+		propertiesObject
+			
+			可选。需要传入一个对象，该对象的属性类型参照Object.defineProperties()的第二个参数。如果该参数被指定且不为 undefined，
+
+		该传入对象的自有可枚举属性(即其自身定义的属性，而不是其原型链上的枚举属性)将为新创建的对象添加指定的属性值和对应的属性描述符。
+
+	三、返回值
+
+		一个新对象，带着指定的原型对象和属性。
+
+
+	四、注意
+
+		1、如果proto参数不是 null 或非原始包装对象，则抛出一个 TypeError 异常。
+
+		2、proto为null时则不会默认继承原型链
+
+	例
+
+		const obj1 = Object.create(null)
+	
+		const obj2 = Object.create({})
+
+		obj1.toString() //报错
+
+		obj2.toString() //"[object Object]"
+
+		const obj3 = Object.create({},{
+
+			 p: {
+    				
+				value: 42,
+    
+				writable: true,
+    
+				enumerable: true,
+   
+	 			configurable: true
+  			},
+		
+			c:{ value:[ { aa:1 } ] }
+
+		})
+
+		const obj4 = Object.create(obj3)
+
+	 	obj4.__proto__.p = 111  
+
+		obj4.__proto__.c[0].aa = 222
+
+		obj3// { p:42,c:[ { aa:222 } ] }
+
+		obj4.__proto__// { p:111,c:[ { aa:222 } ] }
+
+
+
+	另写法：
+
+
+		function createObject1(o){ 
+
+			var newObj = {}
+
+			Object.setPrototypeOf(newObj,o)
+
+			return newObj
+			
+		}
+
+		
+		function createObject2(o){
+
+			function Fn(){}
+
+			Fn.prototype = o
+
+			var newObj = new Fn()
+
+			return newObj
+
+		}
+
+		

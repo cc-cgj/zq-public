@@ -1,0 +1,11 @@
+
+
+	导出：
+
+		export interface AxiosInstance<T>{}  
+
+	导入
+
+		import type { AxiosInstance } from 'axios' 
+
+		//type可省略，不能用interface

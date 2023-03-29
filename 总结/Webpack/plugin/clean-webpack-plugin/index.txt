@@ -1,0 +1,33 @@
+
+
+	通过webpack打包时，需要手动删除dist文件夹
+
+	我们可以通过clean-webpack-plugin 
+
+	npm i clean-webpack-plugin -D
+
+	使用：// webpack.config.js
+
+		const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+
+		module.exports = {
+
+			plugins :[
+
+				new CleanWebpackPlugin()
+
+			]
+
+
+		} 
+
+
+	注意：
+
+		 "webpack": "^5.74.0",
+	
+		 "clean-webpack-plugin": "^4.0.0"
+
+		该版本是直接替换，不会先删除原来打包的文件
+
+		

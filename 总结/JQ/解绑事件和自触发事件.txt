@@ -1,0 +1,22 @@
+
+
+
+	一、jQuery事件解绑
+		
+		------off()：
+			
+			语法：
+				1、解绑匹配元素的所有事件:$("targetNode").off()
+				2、解绑匹配元素的指定事件:$("targetNode").off("click")
+		
+	二、自动触发事件 
+			
+		------事件类型()
+				
+			语法：$("targetNode").click()//触发匹配元素的点击事件
+
+			注意：js和jq都适用
+		
+		-------trigger(参数) //参数是必须的，jq适用
+		
+			语法：$("targetNode").trigger("click")//触发匹配元素的点击事件

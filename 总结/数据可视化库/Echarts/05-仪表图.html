@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>05-仪表图</title>
+		<script src="lib/echarts.min.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div class="box" style="width: 600px;height: 400px;margin: 100px auto;"></div>
+		<script type="text/javascript">
+			var myCharts = echarts.init(document.querySelector(".box"))
+			
+			var option = {
+				series:[
+					{
+						type:"gauge",
+						data:[
+							{
+								value:97,
+								// 指针样式
+								itemStyle:{
+									color:"pink"
+								}
+							},
+							{
+								value:57,
+								// 指针样式
+								itemStyle:{
+									color:"yellow"
+								}
+							}
+						],
+						// 表盘最大值
+						max:200,
+						// 表盘最小值
+						min:10
+					}
+					
+				]
+			}
+			
+			myCharts.setOption(option)
+		</script>
+	</body>
+</html>

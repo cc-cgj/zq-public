@@ -1,0 +1,21 @@
+
+
+	使用：// webpack.config.js
+
+		const { HtmlWebPackPlugin } = require('html-webpack-plugin');
+
+		module.exports = {
+
+			plugins :[
+
+				new HtmlWebPackPlugin({
+            
+					title:"hello world",//打包前index.hteml ---> <title><%= htmlWebpackPlugin.options.title %></title>
+            
+					template:"./public/index.hteml"//为打包的index.html文件指定模板（可选）
+        			})
+
+			]
+
+
+		} 

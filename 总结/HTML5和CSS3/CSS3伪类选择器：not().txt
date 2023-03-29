@@ -1,0 +1,53 @@
+
+
+	一、概念
+
+		CSS 伪类 :not() 用来匹配不符合一组选择器的元素。由于它的作用是防止特定的元素被选中，它也被称为反选伪类（negation pseudo-class）。
+
+	注意
+
+		1、:not() 伪类不能被嵌套，这意味着 :not(:not(...)) 是无效的。
+
+		2、由于伪元素不是简单的选择器，他们不能被当作 :not() 中的参数，形如 :not(p::before) 这样的选择器将不会工作。
+
+		3、可以利用这个伪类写一个完全没有用处的选择器。例如， :not(*) 匹配任何非元素的元素，因此，这个规则将永远不会被应用。
+
+		4、可以利用这个伪类提高规则的优先级。例如， #foo:not(#bar) 和 #foo 会匹配相同的元素，但是前者的优先级更高。
+
+		5、:not(.foo) 将匹配任何非 .foo 的元素，包括 <html> 和 <body>。
+
+		6、这个选择器只会应用在一个元素上，无法用它来排除所有父元素。比如， body :not(table) a 依旧会应用到表格元素 <table> 内部的 <a> 上, 因为 
+	<tr>将会被 :not(table) 这部分选择器匹配。
+
+	例
+		
+		HTML
+
+			<p>我是一个段落。</p>
+
+			<p class="fancy">我好看极了！</p>
+
+			<div>我「不是」一个段落。</div>
+
+		CSS
+
+			.fancy { text-shadow: 2px 2px 3px gold; }
+
+			/* 类名不是 `.fancy` 的 <p> 元素 */
+
+			p:not(.fancy) { color: green; }
+	
+			/* 非 <p> 元素 */
+			
+			body :not(p) { text-decoration: underline; }
+
+			/* 既不是 <div> 也不是 <span> 的元素 */
+
+			body :not(div):not(span) { font-weight: bold; }
+
+			/* 类名不是 `.crazy` 或 `.fancy` 的元素 */
+
+			/* 注意，此语法尚未获广泛支持。 */
+
+			body :not(.crazy, .fancy) { font-family: sans-serif; }
+

@@ -1,0 +1,53 @@
+
+一、location对象(系统对象)
+
+	概念：window对象给我们提供了一个location属性来获取或设置窗体的URL，并且可以用于解析URL，因为这个属性返回的是一个对象，所以该属性也称为
+
+location对象。
+
+	------URL(统一资源定位符)
+	
+		1、是互联网上标准资源的地址。互联网上的每一个文件都有一个唯一的url，它包含的信息指出文件的位置以及浏览器应该怎么处理它。
+
+		2、URL的语法格式：
+
+			    protocol://host[:port]/path[?query]#fragment
+
+			例：http://www.baidu.com/index.html?name=zs&age=18#link
+
+		3、参数：
+
+			1、protocol:通信协议，常用的http，ftp，maito等
+
+			2、host：主机(域名)
+
+			3、port：端口号可选，如http默认为80
+
+			4、path：路径，由零后多个"/"符号隔开的字符串，一般用来表示主机上的一个目录或文件地址
+
+			5、query：参数表示是以键值对的形式，通过&符号分隔开，?后面的内容
+
+			6、fragment：片段，#后面的内容，常用于链接或锚点
+
+二、location对象的属性
+
+	1、location.href：获取或者设置整个URL(重点)
+
+	2、location.host：返回主机(域名)
+
+	3、location.port：返回端口号，没设置则返回空字符串
+
+	4、location.pathname：返回路径
+
+	5、location.search：返回参数(返回网页地址(url)?号后面的值，包括?号且该值为一个字符串)(重点)
+
+	6、location.hash：获取或者设置片段,即锚(#)后面的内容	
+
+三、location对象的常见方法
+
+	1、location.assign("地址")：跟href一样，可以自动跳转页面(也称为重定向页面)
+
+	2、location.replace("地址")：替换当前页面，因为替换当前缓存在历史里（客户端）的项目，所以不能前进和后退页面
+	
+	3、location.reload(参数)：重新加载页面，相当于刷新按钮，参数为true时为强制刷新(强制刷新，即重新从服务器拿数据过来)
+

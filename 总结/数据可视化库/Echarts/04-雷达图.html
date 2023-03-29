@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>04-雷达图</title>
+		<script src="lib/echarts.min.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div class="box" style="width: 600px;height: 400px;margin: 100px auto;"></div>
+	</body>
+	<script type="text/javascript">
+		const myCharts = echarts.init(document.querySelector(".box"))
+		
+		// 定义各个维度的最大值
+		var dataMax = [ 
+			{ name: '易用性', max: 100 },
+			{ name: '功能', max: 100 },
+			{ name: '拍照', max: 100 },
+			{ name: '跑分', max: 100 },
+			{ name: '续航', max: 100 } ,
+		]
+		
+		const option = {
+			// 设置雷达
+			radar:{
+				// 指向的数据
+				indicator:dataMax,
+				// 绘制的类型
+				shape:"circle"       //'polygon' | 'circle' === 多边形 | 圆形
+			},
+			series:[
+				{
+					type:"radar",
+					// 显示数值
+					label:{
+						show:true
+					},
+					// 区域面积
+					areaStyle:{},
+					data:[
+						{
+							name:"华为",
+							value:[80, 90, 80, 82, 90]
+						},
+						{
+							name:"小米",
+							value:[40, 52, 55, 40, 38]
+						}
+					]
+				}
+			]
+		}
+		
+		myCharts.setOption(option)
+	</script>
+</html>

@@ -1,0 +1,22 @@
+
+	一、概念
+
+		1、在很多情况下，Vue 可以自动得出过渡效果的完成时机。
+
+		2、默认情况下，Vue 会等待其在过渡效果的根元素的第一个 transitionend 或 animationend 事件
+	
+	
+	二、适用场景
+
+		1、然而也可以不这样设定——比如，我们可以拥有一个精心编排的一系列过渡效果，其中一些嵌套的内部元素相比于过渡效果的根元素有延迟的或更长的		
+	过渡效果。
+
+		2、在这种情况下你可以用 <transition> 组件上的 duration prop 定制一个显性的过渡持续时间 (以毫秒计)
+
+		例
+
+			<transition :duration="1000">...</transition>
+
+			你也可以定制进入和移出的持续时间：
+
+			<transition :duration="{ enter: 500, leave: 800 }">...</transition>

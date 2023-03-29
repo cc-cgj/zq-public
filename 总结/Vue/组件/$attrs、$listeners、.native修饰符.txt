@@ -1,0 +1,200 @@
+
+	
+	详情介绍：https://v3.cn.vuejs.org/guide/component-attrs.html#attribute-%E7%BB%A7%E6%89%BF
+
+	3.x与2.x的区别：https://v3.cn.vuejs.org/guide/migration/attrs-includes-class-style.html#_2-x-%E8%A1%8C%E4%B8%BA
+				
+	一、2.x
+
+		$attrs：包含使用组件时定义在组件上的自定义属性的对象，包括id
+
+			console.log( this.$attrs ) // { data-status: "activated" }
+
+			注意： 
+
+				1、class 和 style 不属于 $attrs，它们仍然会被应用到组件的根元素中
+
+				2、包含的属性会自动过滤掉props定义的值
+
+			基础：
+
+				概念：当组件返回单个根节点时，非 prop attribute 将自动添加到根节点的 attribute 中。
+
+				例：
+
+					子组件：<template> <div></div> </template>
+
+
+					父组件: <cpt data-status="activated" /> // <div data-status="activated"></div>
+
+
+			进阶：//将自定义属性手动绑定到指定节点上
+
+				概念：
+			
+					1、如果你不希望组件的根元素继承 attribute，你可以在组件的选项中设置 inheritAttrs: false。
+
+				默认为true。
+	
+				
+					2、例如：禁用 attribute 继承的常见情况是需要将 attribute 应用于根节点之外的其他元素，
+
+				可通过v-bind="$attrs"来绑定
+
+				例：
+
+					子组件：<template> <div> <span v-bind="$attrs" /> </div> </template>
+
+					父组件：
+
+						<template> 
+
+							<cpt data-status="activated" /> 
+							
+							//<div> <span data-status="activated" /> </div>
+		
+						</template>
+
+						<script> export default { inheritAttrs:false } </script>
+
+
+		$listeners:包含使用组件时定义在组件上的所有事件函数的对象
+
+			注意：
+
+				1、3.x该属性被移除
+
+				2、当组件返回单个根节点时，不会默认将事件绑定到根节点上，需要通过on="$listeners"来注册事件
+
+				3、包含自定义事件
+
+			例：
+
+				子组件：<template> <el-button v-on="$listeners">点击</el-button> </template> // 1111
+
+				父组件： <cpt @click=" fn(){ console.log( 111 ) } " /> 
+
+				console.log( this.$listeners ) // { click(){ console.log( 111 ) } }
+
+				console.log( this.$listeners.click() ) // 111 
+
+			将事件绑定到指定元素的推荐写法：
+
+				 computed: {
+   			
+					inputListeners: function () {
+      
+						var vm = this
+      
+						// `Object.assign` 将所有的对象合并为一个新对象
+      				
+						return Object.assign({},
+        			
+							// 我们从父级添加所有的监听器
+        
+							this.$listeners,
+       				
+							 // 然后我们添加自定义监听器，或覆写一些监听器的行为
+      
+        						{ 
+
+								// 覆盖或者添加其他事件及其处理函数
+          
+								input(固定写法): function (event) {
+           
+							 		vm.$emit('input', event.target.value)
+          
+								}
+        
+							}
+     
+						 )
+    					},
+
+				 template: ` <label> {{ label }} 
+
+						<input v-bind="$attrs" v-bind:value="value" v-on="inputListeners">
+
+					</label>`
+
+	二、3.x
+
+		1、与2.x区别
+
+			$attrs属性包含style 和 class ，删除$listeners属性，注册的事件处理函数整合到$attrs中
+		
+
+		2、多个根节点上的 Attribute 继承
+
+			概念
+
+				与单个根节点组件不同，具有多个根节点的组件不具有自动 attribute fallthrough (隐式贯穿) 行为。如果未显式绑定 $attrs，
+
+			将发出运行时警告。
+
+			例
+
+				父组件
+
+				子组件
+
+					// 这将发出警告
+
+					app.component('custom-layout', {
+  
+						template: `
+    
+							<header>...</header>
+    								
+							<main>...</main>
+    
+							<footer>...</footer>
+  						`
+					})
+
+					// 没有警告，$attrs 被传递到 <main> 元素
+
+					app.component('custom-layout', {
+  
+						template: `
+    
+							<header>...</header>
+    
+							<main v-bind="$attrs">...</main>
+    
+							<footer>...</footer>
+  						`
+					})
+
+
+
+	三、native （3.x移除）
+
+		概念：将原生事件绑定到组件
+
+		例：
+
+			你可能有很多次想要在一个组件的根元素上直接监听一个原生事件。这时，你可以使用 v-on 的 .native 修饰符：
+
+				<base-input v-on:focus.native="onFocus"></base-input>
+
+				base-input： <input  type="checkbox" />
+
+
+	
+			
+
+			
+
+
+			
+				
+
+				
+
+			
+
+
+
+		
+				

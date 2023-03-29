@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>03-地图</title>
+	<script src="lib/echarts.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="lib/jquery-1.12.4.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>
+	<div class="box" style="width: 600px;height: 400px;margin: 100px auto;"></div>
+	<script type="text/javascript">
+		// 城市空气质量表
+		var airData = [
+			{ name: '北京', value: 39.92 }, 
+			{ name: '天津', value: 39.13 }, 
+			{ name: '上海', value: 31.22 }, 
+			{ name: '重庆', value: 66 }, 
+			{ name: '河北', value: 147 }, 
+			{ name: '河南', value: 113 }, 
+			{ name: '云南', value: 25.04 }, 
+			{ name: '辽宁', value: 50 }, 
+			{ name: '黑龙江', value: 114 }, 
+			{ name: '湖南', value: 175 }, 
+			{ name: '安徽', value: 117 }, 
+			{ name: '山东', value: 92 }, 
+			{ name: '新疆', value: 84 }, 
+			{ name: '江苏', value: 67 }, 
+			{ name: '浙江', value: 84 }, 
+			{ name: '江西', value: 96 }, 
+			{ name: '湖北', value: 273 }, 
+			{ name: '广西', value: 59 }, 
+			{ name: '甘肃', value: 99 }, 
+			{ name: '山西', value: 39 }, 
+			{ name: '内蒙古', value: 58 }, 
+			{ name: '陕西', value: 61 }, 
+			{ name: '吉林', value: 51 }, 
+			{ name: '福建', value: 29 }, 
+			{ name: '贵州', value: 71 }, 
+			{ name: '广东', value: 38 }, 
+			{ name: '青海', value: 57 }, 
+			{ name: '西藏', value: 24 },
+			{ name: '四川', value: 58 }, 
+			{ name: '宁夏', value: 52 }, 
+			{ name: '海南', value: 54 }, 
+			{ name: '台湾', value: 88 }, 
+			{ name: '香港', value: 66 }, 
+			{ name: '澳门', value: 77 }, 
+			{ name: '南海诸岛', value: 55 },
+		]
+		// 运行时需要运行在模拟服务器上(即不能直接在文件夹内打开该文件)，否则会有跨域错误
+		$.get('./lib/map/china.json', function (rps) {
+			// 注册可用的地图，必须在包括 geo 组件或者 map 图表类型的时候才能使用
+			echarts.registerMap('chinaMap', rps)
+
+			const myEcharts = echarts.init(document.querySelector(".box"))
+
+			// 散点的所有坐标数据
+			const scatterData = [
+				{
+					value: [117.283042, 31.86119] // 散点的坐标, 使用的是经纬度
+				},
+				{
+					value:[112.574425,26.89906]
+				}
+			]
+					
+
+			const options = {
+				// 地理坐标系组件，地理坐标系组件用于地图的绘制
+				geo: {
+					// 类型为地图
+					type: "map",//map是一个固定的值
+
+					map: "chinaMap",// 注册的地图名，跟registerMap中的第一个参数保持一致
+					// 缩放拖动，默认为false
+					roam: true,
+					// 名称显示，用于说明图形的一些数据信息，比如值、名称等
+					label: {
+						// 是否显示标签
+						show: true
+					},
+					zoom: 1.2,//// 地图的缩放比例, 大于1代表放大, 小于1代表缩小
+					// center:[87.617733, 43.792818] // 当前视角的中心点，用经纬度表示
+				},
+				series:[
+					// 将 series 下的数据和 geo 关联起来
+					{
+						type:"map",
+						data:airData,
+						geoIndex:0
+					},
+					// 涟漪散点图
+					{
+						type:"effectScatter",
+						data:scatterData,
+						coordinateSystem:"geo",	
+						// 涟漪效果
+						rippleEffect:{
+							// 程度
+							scale:5
+						}
+					}
+				],
+				// 视觉映射组件，主要使用在地图或者饼图中。例：让不同城市显示的颜色不同
+				visualMap:{
+					min:0,
+					max:300,
+					// 不同城市的value值不同，显示的颜色不同
+					inRange:{
+						// 颜色的范围
+						color:["white","red"]
+					},
+					// 是否显示拖拽用的手柄（手柄能拖拽调整选中范围）
+					calculable:true
+				}
+
+			}
+
+			myEcharts.setOption(options)
+		})
+
+
+
+
+
+
+	</script>
+</body>
+
+</html>

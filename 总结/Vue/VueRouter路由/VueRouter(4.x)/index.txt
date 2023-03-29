@@ -1,0 +1,28 @@
+
+
+	const lastRoute = {
+  
+		path: '/:pathMatch(.*)*',
+  
+		redirect: '/exception/404',
+  
+		meta: {
+    
+			title: '找不到页面'
+  		}
+	};
+	
+	导航到不存在的页面
+
+	// /exception/404  --> .vue
+
+		route.params.pathMatch 
+
+	注意
+
+		括号后面的 * 则是转为数组
+
+		
+		/:pathMatch(.*) -->  导航/aa/bb -->  route.params.pathMatch // 'aa/bb'
+
+		/:pathMatch(.*)* -->  导航/aa/bb -->  route.params.pathMatch // ['aa','bb']

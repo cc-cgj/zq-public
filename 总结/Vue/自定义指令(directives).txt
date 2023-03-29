@@ -1,0 +1,199 @@
+
+一、Vue构造函数的默认方法
+
+	1、directive()
+
+		概念：自定义指令 
+
+		//指令函数能够接受所有合法的 JavaScript 表达式。<div v-demo="{ color: 'white', text: 'hello!' }"></div>
+		
+		语法：
+
+			1、全局指令
+	
+				Vue.directive("指令名",{
+					
+					fn:function(el,binding){
+					
+
+					}
+				})
+
+			2、局部指令 //该自定义指令只能在id为app的元素中使用
+
+				new Vue({
+
+					el:"#app",
+				
+					directives:{
+
+						指令名:{
+						  	
+						    fn:	function( el,binding,vnode ){
+
+
+						    }					    
+	
+						}
+						
+					}
+				
+				})
+
+		参数：
+
+			fn：
+
+				bind：只调用一次，指令第一次绑定到元素时调用。在这里可以进行一次性的初始化设置。
+
+				inserted：被绑定元素插入父节点时调用 (仅保证父节点存在，但不一定已被插入文档中)。
+				
+				update：所在组件的 VNode 更新时调用，但是可能发生在其子 VNode 更新之前。指令的值可能发生了改变，也可
+
+			能没有。但是你可以通过比较更新前后的值来忽略不必要的模板更新
+				
+				componentUpdated：指令所在组件的 VNode 及其子 VNode 全部更新后调用。
+
+				unbind：只调用一次，指令与元素解绑时调用。
+
+				// 3.x
+
+				created - 新增！在元素的 attribute 或事件监听器被应用之前调用。
+	
+					// created(el, binding, vnode, prevVnode) {}, // 新增
+
+				bind → beforeMount
+
+				inserted → mounted
+
+				beforeUpdate：新增！在元素本身被更新之前调用，与组件的生命周期钩子十分相似。
+
+				update → 移除！该钩子与 updated 有太多相似之处，因此它是多余的。请改用 updated。
+
+				componentUpdated → updated
+	
+				beforeUnmount：新增！与组件的生命周期钩子类似，它将在元素被卸载之前调用。
+
+				unbind -> unmounted
+			
+			el：指令所绑定的元素，可以用来直接操作 DOM。
+
+			binding：
+		
+				一个对象，它包含以下属性：
+				
+					name：指令名，不包括 v- 前缀。
+
+					value：指令的绑定值
+
+			vnode：
+
+				Vue 编译生成的虚拟节点,可访问组件实例,而在Vue 3 中，实例现在是 binding 参数的一部分
+
+				2.x:
+		
+					console.log( vnode.context )
+
+				3.x:
+
+					console.log( binding.instance )
+
+					
+
+
+		使用方法：
+
+			两种：
+
+				<div v-指令名 = "指令的绑定值"></div> 
+
+				<div v-指令名></div> 
+
+		动态指令参数：
+
+			<div v-pin:[direction]="200"> pin fixed </div>
+				
+			data(){ return {  direction: 'right', } },
+			
+			directives: {
+    
+				pin: {
+      
+					bind(el, binding, vnode) {
+        
+						console.log( binding.arg ) //"right"
+      					}
+    				}
+  			}
+
+		函数简写:
+
+			1、概念
+	
+				当 inserted/mounted 和 update/updated 时触发相同行为，而不关心其他的钩子函数。那么你可以通过将这个回调函数传递给指令来
+			实现
+
+			2、例
+
+				directives: {
+    
+					pin: {
+      
+						bind(el, binding, vnode) {
+        
+							console.log( binding.arg ) //"right"
+      						},
+						
+						update(el, binding){
+
+							console.log( binding.arg ) //"right"
+		
+						}
+					
+    					}
+
+  				}
+
+				/**  简写方式 **/
+
+				directives: {
+    
+					pin(el, binding){
+
+						console.log( binding.arg ) //"right"
+					
+    					}
+
+  				}	
+
+		在组件中使用
+			
+			概念
+
+				1、和非 prop 的 attribute 类似，当在组件中使用时，自定义指令总是会被应用在组件的根节点上。
+
+				2、和 attribute 不同，指令不会通过 v-bind="$attrs" 被传入另一个元素。
+			
+				3、在Vue 3.x 中有了片段支持以后，组件可能会有多个根节点。当被应用在一个多根节点的组件上时，指令会被忽略，并且会抛出一个			
+			警告。
+
+			例
+
+				<my-component v-demo="test"></my-component>
+
+				app.component('my-component', {
+  
+					template: `
+    
+						<div> // v-demo 指令将会被应用在这里
+      
+							<span>My component content</span>
+    
+						</div>
+  					`
+				})
+			
+		
+
+			
+

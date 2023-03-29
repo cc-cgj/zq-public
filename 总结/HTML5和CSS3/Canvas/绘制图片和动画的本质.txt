@@ -1,0 +1,57 @@
+
+一、动画的本质
+
+	1、canvas制作2d动画本质就是让对象某个属性发生改变
+
+	2、如果需要正向和反向移动 添加 方向 direction = 1; // ‐1 反向
+
+二、绘制图片
+	
+	------js创建img对象的两种方式
+	
+		DOM创建
+			
+			var img = document.createElement("img")
+
+			img.src = "图片路径"
+		
+		实例系统构造函数
+		
+			var img = new Image()
+
+			img.src = "图片路径"
+
+			//注意：一般需要在onload事件里绘制图片
+
+	------基本使用
+	
+			语法：ctx.drawImage(img,x,y)
+
+			参数：
+				img：为img对象
+			     	x,y：绘制图片到画布的坐标
+
+	------设置图片的高度和宽度
+			
+			语法：ctx.drawImage(img,x,y,width,height)
+
+			参数：
+				img：img对象
+
+				x,y：绘制图片到画布的坐标
+
+				width，height：图片在画布显示的宽度和高度
+
+	------图片裁剪
+
+			语法：ctx.drawImage(img,imgX,imgY,sWidth,sHeight,x,y,width,height)
+
+			参数：
+				imgX,imgY：被裁剪图片的起始位置，即在图片中的x,y坐标
+
+				sWidth,sHeight：裁剪的宽度和高度
+
+				x,y：绘制图片到画布的坐标
+
+				width，height：图片在画布中显示的宽度和高度
+

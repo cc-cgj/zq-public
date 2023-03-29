@@ -1,0 +1,17 @@
+
+
+	一、插入数据：insert into 表名 (字段列表) values("值列表");
+
+		例：insert into stu (name,age) values ('张三','20');
+
+	二、删除数据：delete from 表名 where 条件;
+
+		例：delete from stu where id=4;//删除stu表中id为4的一行记录
+			
+	三、查询数据：select * from 表名 where 条件; // *：表示所有的字段。也可以只查询字段1和字段2，之间用逗号分隔
+
+		例：select * from stu where id=4;//查询表stu中id=4的一行记录中的所有数据,若没有条件则返回的是表中所有数据的集合
+
+	四、修改数据：update 表名 set 字段名1="值1",字段名2="值2" where 条件
+				
+		例：update stu set name="李四" where name="张三";//将表stu中name为张三改为李四

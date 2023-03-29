@@ -1,0 +1,34 @@
+
+
+	一、触屏事件概述
+
+		移动端浏览器兼容性较好，我们不需要考虑以前 JS 的兼容性问题，可以放心的使用原生 JS 书写效果，但是移动端 也有自己独特的地方。
+
+	比如触屏事件 touch（也称触摸事件），Android和 IOS 都有。	
+
+		touch 对象代表一个触摸点。触摸点可能是一根手指，也可能是一根触摸笔。触屏事件可响应用户手指（或触控 笔）对屏幕或者触控板操作。	
+
+	二、touchstart 
+
+		概念：手指触摸到一个DOM元素时触发
+
+		语法：ele.addEventListener( 'touchstart',function( e ){ console.log( e ) } )
+
+		注意：事件对象跟js原生的事件对象有所不同，如点击的位置信息保存在 e.targetTouches[0]里
+
+	三、touchmove
+		
+		概念：手指在一个DOM元素上滑动时触发
+
+		语法：ele.addEventListener( 'touchmove',function( e ){ console.log( e ) } )
+
+		注意：事件对象跟js原生的事件对象有所不同，如点击的位置信息等保存在 e.targetTouches[0]里
+
+	四、touchend
+
+		概念：手指从一个DOM元素上移开时触发
+
+		语法：ele.addEventListener( 'touchend',function( e ){ console.log( e ) } )
+
+		注意：事件对象跟js原生的事件对象有所不同，如点击的位置信息等保存在 e.targetTouches[0]里		
+	

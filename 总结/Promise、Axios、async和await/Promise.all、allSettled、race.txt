@@ -1,0 +1,47 @@
+
+	一、all
+
+		例：
+
+			async ()=>{
+
+				const [ res1,res2 ] = await Promise.all( [ Promise.reslove(1),Promise.reslove(2) ] )
+
+				console.log( res1,res2 ) //1,2		
+
+
+			}
+
+	二、allSettled
+
+		例：
+
+			async ()=>{
+
+				const [ res1,res2 ] = await Promise.allSettled( [ Promise.reslove(1),Promise.reject( new Error( 'error' )) ] )
+
+				console.log( res1,res2 ) //{ status:'fulfilled',value:1 },{ status:'rejected',value:'error' }	
+
+			}
+
+	三、rece
+	
+		例：
+
+			async ()=>{
+
+				const [ res1,res2 ] = await Promise.all( [ Promise.reslove( setTimeOut(()=>1,1) ),Promise.reslove(2) ] )
+
+				console.log( res1,res2 ) //2,1	
+
+			}
+
+
+
+	四、Promise.all和Promise.allSettled和Promise.rece的区别：
+
+		1、Promise.all 将在 Promises 数组中的其中一个 Promises 失败后立即失败。
+
+		2、Promise.allSettled将永远不会失败，一旦数组中的所有 Promises 被完成或失败，它就会完成。
+
+		3、Promise.race([p1, p2, p3])里面哪个结果获得的快，就返回那个结果，不管结果本身是成功状态还是失败状态。

@@ -1,0 +1,57 @@
+
+
+	概念：
+
+		将对应(文件夹下所有文件)/文件复制到打包后的文件夹中
+
+	安装：
+		npm i copy-webpack-plugin -D
+
+	使用：// webpack.config.js
+
+		const CopyWebpackPlugin = require("copy-webpack-plugin");
+
+		module.exports = {
+
+			plugins :[
+
+				new CopyWebpackPlugin({
+
+
+					patterns:[
+
+						{
+
+							from: "./public",//所要复制的本地文件夹路径 
+
+							to:"./public",//复制的文件在打包后生成的文件夹的public文件夹中
+
+							globOptions:{
+
+								ignore:[
+							
+									"**/index.html" //指定忽略文件夹/文件
+
+									// **/: 强调忽略复制的文件夹目录下所有为index.html的文件
+
+									// 如果当前文件夹只包含忽略文件会抛出错误
+
+							//ERROR in unable to locate 'D:/前端资料/总结/Webpack/demo/public/**/*' glob
+				
+								]
+
+							}
+
+						}
+
+					]
+
+				})
+
+			]
+
+
+		} 
+		
+
+		

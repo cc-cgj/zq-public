@@ -1,0 +1,6 @@
+
+
+	 instanceof 运算符是用来测试一个对象在其原型链构造函数上是否具有 prototype 属性，
+
+
+	null 值并不是以 Object 原型创建出来的，所以 null instanceof Object 返回 false。

@@ -1,0 +1,36 @@
+
+
+
+	el-form的model主要用于表单验证的，也就是配合el-form的rules和el-form-item的prop来使用的。
+
+		model的值为表单双向绑定的值，是一个对象
+
+	
+	
+	
+
+	自定义校验 callback 必须被调用，否则validate()方法在表单验证时可能只调用一次
+
+	
+	<------  使用正则验证  ------>
+
+	
+	<el-form  :model="form">
+
+
+		<el-form-item  prop="field" :rules="[
+
+			{ required: true, message: '手机号不能为空' },
+        
+			{ pattern: /^1(3|4|5|7|8|9)\d{9}$/, message: '手机号格式错误', trigger: 'blur' }
+
+		]"  >
+	
+			<el-input v-model.number="form.field" type="age" autocomplete="off" />
+
+
+		</el-form-item>
+
+	</el-form>
+
+	

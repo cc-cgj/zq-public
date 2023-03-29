@@ -1,0 +1,85 @@
+
+
+	https://vuex.vuejs.org/zh/guide/hot-reload.html#%E5%8A%A8%E6%80%81%E6%A8%A1%E5%9D%97%E7%83%AD%E9%87%8D%E8%BD%BD
+
+	
+	一、概念：
+
+		使用 webpack 的 Hot Module Replacement API (opens new window)，Vuex 支持在开发过程中热重载 mutation、module、action 和 getter。
+
+	你也可以在 Browserify 中使用 browserify-hmr (opens new window)插件。
+
+		对于 mutation 和模块，你需要使用 store.hotUpdate()
+
+
+	二、例：
+
+	// store.js
+
+		import Vue from 'vue'
+
+		import Vuex from 'vuex'
+
+
+		// 加载所有模块。
+
+		function loadModules() {
+  
+			const context = require.context("./modules", false, /([a-z_]+)\.js$/i)
+
+  			const modules = context.keys().map((key) => ({ key, name: key.match(/([a-z_]+)\.js$/i)[1] }))
+    
+						.reduce((modules, { key, name }) => ({
+        
+							...modules,
+        
+							[name]: context(key).default
+      
+						}),{})
+
+  
+			return { context, modules }
+
+		}
+
+
+		const { context, modules } = loadModules()
+
+
+		Vue.use(Vuex)
+
+		const store = new Vuex.Store({ modules })
+
+		if (module.hot) {
+  
+			// 在任何模块发生改变时进行热重载。
+  
+			module.hot.accept(context.id, () => {
+    
+				const { modules } = loadModules()
+
+				store.hotUpdate({ modules })
+ 
+			})
+
+			<------------- 相当于 ----------->
+			
+			module.hot.accept( [ './state/state','./mutations/mutations' ], () => {
+    
+				 const  newState =require('./state/state').default;
+      			
+				const  newmutations =require('./mutations/mutations').default;
+
+				const  newmoudules =require('./moudules/moudules').default;
+
+				store.hotUpdate({ state:newState, mutations:newmutations,moudules:newmoudules })
+ 
+			})
+			
+
+		}
+
+	注意：
+		
+		1、context.id：执行环境的id，返回的是一个字符串,主要用在module.hot.accept,应该是热加载
+

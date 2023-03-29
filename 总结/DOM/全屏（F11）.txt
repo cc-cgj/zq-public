@@ -1,0 +1,27 @@
+
+
+	const elementHTML = document.documentElement;
+	
+  	//W3C
+	if (elementHTML.requestFullscreen) {
+    		
+		elementHTML.requestFullscreen();
+
+	//FireFox
+  
+	} else if (elementHTML.mozRequestFullScreen) {
+    	
+		elementHTML.mozRequestFullScreen();
+  
+	//Chrome等
+	} else if (elementHTML.webkitRequestFullscreen) {
+    
+		elementHTML.webkitRequestFullscreen();
+  
+	//IE11
+	} else if (elementHTML.msRequestFullscreen) {
+    
+		elementHTML.msRequestFullscreen();
+  	}
+
+	注意：默认只能通过用户操作才能全屏,如按钮点击事件才能实现全屏

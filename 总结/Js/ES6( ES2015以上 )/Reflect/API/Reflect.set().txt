@@ -1,0 +1,65 @@
+
+
+	一、概念
+
+		静态方法 Reflect.set() 工作方式就像在一个对象上设置一个属性。
+
+	二、语法
+
+		Reflect.set(target, propertyKey, value[, receiver])
+
+	三、参数
+
+		target：设置属性的目标对象。
+
+		propertyKey：设置的属性的名称。
+
+		value：设置的值。
+
+		receiver：如果遇到 setter，receiver则为setter调用时的this值。
+
+	四、返回值
+
+		返回一个 Boolean 值表明是否成功设置属性。
+
+	五、异常
+
+		抛出一个 TypeError，如果目标不是 Object。
+
+	注意
+
+		1、Reflect.set 方法允许你在对象上设置属性。它的作用是给属性赋值并且就像 property accessor 语法一样，但是它是以函数的方式。
+
+	例
+
+		// Object
+			
+		var obj = {};
+
+		Reflect.set(obj, "prop", "value"); // true
+
+		obj.prop; // "value"
+
+		// Array
+
+		var arr = ["duck", "duck", "duck"];
+
+		Reflect.set(arr, 2, "goose"); // true
+
+		arr[2]; // "goose"
+
+		// It can truncate an array.
+
+		Reflect.set(arr, "length", 1); // true
+	
+		arr; // ["duck"];
+
+		// With just one argument, propertyKey and value are "undefined".
+
+		var obj = {};
+
+		Reflect.set(obj); // true
+
+		Reflect.getOwnPropertyDescriptor(obj, "undefined");// { value: undefined, writable: true, enumerable: true, configurable: true } 
+
+		

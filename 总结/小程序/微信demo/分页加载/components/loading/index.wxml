@@ -1,0 +1,13 @@
+<!--index.wxml-->
+<view class="loading">
+    <view wx:if="{{isLoading}}">
+        加载中...
+    </view>
+    <view wx:if="{{isEnd && !isEmpty}}">
+        没有更多了
+    </view>
+    <view wx:if="{{isEmpty && !isLoading}}">
+        <image src="./empty_default.png" style="width: 165px;height: 124px" />
+        <view class="textTip">{{emptyTip}}</view>
+    </view>
+</view>

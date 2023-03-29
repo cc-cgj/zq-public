@@ -1,0 +1,43 @@
+
+
+	//安装websocket 
+
+		npm i ws -s
+
+	//引入websocket 
+
+		const websocket = require('ws')
+
+
+	// 创建一个服务器
+
+
+	const ws = new websocket.Server({
+	
+		// 设置端口号，一般设置为9998
+	
+			port:9998
+
+
+	})
+
+
+	// 监听客户端连接
+
+	ws.on('connection',client => {
+	
+		console.log("有客户端连接...")
+	
+		// 监听是否有客户端发送数据
+	
+		client.on('message',msg => {
+		
+			console.log('这是客户端发送的数据：'+ msg)
+		
+		// 发送给客户端的数据
+		
+			client.send('客户端的数据')
+		
+		})
+	
+	})

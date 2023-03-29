@@ -1,0 +1,34 @@
+
+
+	const _toString = Object.prototype.toString
+
+
+	console.log( _toString() ) //'[object Object]'
+
+	console.log( _toString.call( [] ) ) //'[object Array]'
+
+	console.log( _toString.call( "" ) ) //'[object String]'
+	
+	console.log( _toString.call( 0 ) ) //'[object Number]'
+
+
+	注意：
+
+		通过该方法来区分数组和对象的类型
+
+		console.log( typeof [] ) //'object'
+
+		console.log( typeof {} ) //'object'
+
+		console.log( [] instanceof Array )  //true
+
+		console.log( [] instanceof Object )  //true
+
+		console.log( {} instanceof Object )  //true
+
+	
+	
+
+
+
+	

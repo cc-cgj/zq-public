@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>06-饼图</title>
+		<script src="lib/echarts.min.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+		
+		</style>
+	</head>
+	<body>
+		<div class="box" style="width: 600px;height: 400px;margin: 100px auto;"></div>
+		
+		<div class="visually-hidden"></div>
+	
+		<script type="text/javascript">
+			var myEchart = echarts.init(document.querySelector(".box"))
+
+			// 饼图数据
+			var pieData = [
+				{
+					value: 11231,
+					name: "淘宝",
+				},
+				{
+					value: 22673,
+					name: "京东"
+				},
+				{
+					value: 6123,
+					name: "唯品会"
+				},
+				{
+					value: 8989,
+					name: "1号店"
+				},
+				{
+					value: 6700,
+					name: "聚美优品"
+				},
+			]
+
+			var option = {
+				series: [{
+					type: "pie",
+					data: pieData,
+					label: {
+						show: true,
+						// 格式化显示的文字
+						formatter: function(arg) {
+							return `${arg.name}(${arg.percent}%)`
+						}
+					},
+					// 设置为南丁格尔图：每一个扇形的半径随着数据的大小而不同, 数值占比越大, 扇形的半径也就越大
+					roseType: "radius",
+					// 选中效果
+					selectedMode: "multiple", //single | multiple === 单个 | 多个
+					// 选中扇区的偏移距离
+					selectedOffset: 30,
+					// 设置为圆环
+					radius: ["30%", "80%"] //数组的第一项是内半径，第二项是外半径, 通过 Array , 可以将饼图设置为圆环图
+
+					// radius:"20%" ,//表示外半径为可视区尺寸（容器高宽中较小一项）的 20% 长度。
+
+					// radius:20 //直接指定外半径值
+				}]
+			}
+
+			myEchart.setOption(option)
+			
+			
+			var obj = {
+				b:11,
+				obj1:{
+					aa:1
+				}
+			}
+			var arr = [1,2]
+			
+			const {b} = obj
+			const [c] = arr
+			const {obj1} = obj
+			obj.b = 222
+			arr[0] = 333
+			obj.obj1.aa = 222
+			console.log('b:'+b)
+			console.log('c:'+c)
+			console.log('obj1.aa:'+obj1.aa)
+			 Object.defineProperty(obj,'a',{
+				 value:111,
+				 configurable:true
+			 }) 
+			 
+			 console.log(obj.a)
+			 Object.defineProperty(obj,'a',{
+			 				 value:222,
+			 				 configurable:true
+			 }) 
+			  console.log(obj.a)
+			  
+			var p = new Proxy(obj,{})
+			  
+			  console.log(obj === p)
+		
+
+		</script>
+	</body>
+</html>

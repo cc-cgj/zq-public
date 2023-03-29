@@ -1,0 +1,29 @@
+
+
+	一、概念
+
+		RangeError对象标明一个错误，当一个值不在其所允许的范围或者集合中。
+
+	二、语法
+
+		new RangeError([message[, fileName[, lineNumber]]])
+	三、参数
+
+		message：可选，可读的错误描述
+
+		fileName：可选，包含造成异常代码的文件名
+
+		lineNumber：可选，造成异常的代码所在的行数
+
+	四、描述
+
+		试图传递一个number参数给一个范围内不包含该number的函数时则会引发RangeError。当传递一个不合法的length值作为Array 构造器的参数创建数组，
+	或者传递错误值到数值计算方法（Number.toExponential()，Number.toFixed() ，Number.toPrecision()），会出现RangeError。.
+
+	五、属性
+
+		RangeError.prototype (en-US) //允许在RangeError对象上附加属性。
+
+	六。例
+
+		 throw new RangeError('Parameter must be between ' + MIN + ' and ' + MAX);

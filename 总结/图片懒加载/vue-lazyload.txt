@@ -1,0 +1,25 @@
+// 安装 
+npm install vue-lazyload 
+    
+// main.js 注册
+import VueLazyload from 'vue-lazyload'
+Vue.use(VueLazyload)
+// 配置项
+Vue.use(VueLazyload, {
+  preLoad: 1.3,
+  error: 'dist/error.png', // 图片加载失败时的占位图
+  loading: 'dist/loading.gif', // 图片加载中时的占位图
+  attempt: 1
+})
+
+// 通过 v-lazy 指令使用
+<ul>  
+    <li v-for="img in list">
+        <img v-lazy="img.src" :key="img.src" >
+    </li>
+</ul>
+
+作者：海阔_天空
+链接：https://juejin.cn/post/7188894691356573754
+来源：稀土掘金
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。

@@ -1,0 +1,52 @@
+
+
+	3.x
+
+	v-model 指令扩展为 modelValue 和 onUpdate:modelValue 在模板编译过程中，我们必须自己提供这些 prop：
+		
+
+		import { resolveComponent } from 'vue'
+
+		props: ['modelValue'],
+
+		emits: ['update:modelValue'],
+
+		render() {
+  	
+			return h( resolveComponent( 'el-date-picker' ) , {
+   
+				modelValue: this.modelValue,
+    
+				'onUpdate:modelValue': value => this.$emit('update:modelValue', value)
+  			})
+	
+		}
+
+	
+	2.x
+
+		props:[ 'value' ],
+
+		model:{ prop:"value",event:'input' } //3.x移除
+
+		render( h ){
+
+			return h( 'el-date-picker' ),{
+				
+				props:{ value:this.value },
+
+				on:{
+
+					input:value => this.$emit( 'input',value )
+
+				}
+
+			}
+
+		}
+
+		
+
+
+		
+	

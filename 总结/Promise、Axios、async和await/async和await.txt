@@ -1,0 +1,67 @@
+
+
+	async 和 await 在ES7才有的语法。
+
+	await作用就是，在async声明的函数内可以将异步操作同步化。即具有await声明的异步操作必须要等上一个执行完才能执行下一个
+
+	注意：
+
+	Async—声明函数：
+
+		1、自动将常规函数转换成异步函数，返回值也是一个Promise对象
+
+		2、只有async函数内部的异步操作执行完，才会执行then方法指定的回调函数
+
+		3、异步函数内部可以使用await
+
+	在async声明的函数内
+		
+		在进行axios请求时，在axios前声明await，此时具有默认返回值，返回值为一个对象，里面包含请求后响应的参数
+
+		注意：
+
+			1、axios.get()返回的是一个Promise对象
+
+			2、通过 await 可以返回在Promise对象内调用 resolve函数时传递的参数，从而取代then方法。
+
+			3、若在Promise对象内通过调用 reject函数 来传递数据时，只能通过catch方法捕获，不能通过await来获取传递的参数。
+
+				例：
+
+					const aa = ()=>{
+						
+						return new Promise((resolve,reject)=>{
+						
+							reject({ aa:1 })
+						})
+					}
+
+					async ()=>{ 
+
+						const res = await aa().catch(err=>{      
+
+							console.log(err.aa) //1
+					
+						})
+
+						或   
+
+						const res = await aa().then(()=>{},err=>{ 
+
+							console.log(err.aa) //1			
+
+						}) 
+
+
+					}
+
+					
+
+
+			
+
+
+	
+
+
+		

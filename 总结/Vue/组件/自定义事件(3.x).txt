@@ -1,0 +1,57 @@
+
+
+	一、定义自定义事件
+
+		概念
+
+			可以通过 emits 选项在组件上定义发出的事件。
+
+		例
+
+			app.component('custom-form', { emits: ['inFocus', 'submit'] })
+
+		注意
+
+			1、当在 emits 选项中定义了原生事件 (如 click) 时，将使用组件中的事件替代原生事件侦听器。
+			
+			2、建议定义所有发出的事件，以便更好地记录组件应该如何工作。
+
+	
+	二、验证抛出的事件
+
+		概念
+	
+			1、与 prop 类型验证类似，如果使用对象语法而不是数组语法定义发出的事件，则可以对它进行验证。
+
+			2、要添加验证，请为事件分配一个函数，该函数接收传递给 $emit 调用的参数，并返回一个布尔值以指示事件是否有效。
+
+		例
+			
+			app.component('custom-form', {
+  
+				emits: {
+    
+					click: null,// 没有验证
+
+    					// 验证 submit 事件
+    
+					submit: ({ email, password }) => {
+      
+						if (email && password) {
+        
+							return true
+      			
+						} else {
+       
+        						 console.warn('Invalid submit event payload!')
+
+							return false
+      
+						}
+    
+					}
+  
+				},
+  							
+				methods: {  submitForm(email, password) { this.$emit('submit', { email, password }) } }
+			})

@@ -1,0 +1,41 @@
+
+
+	一、概念
+
+		在有些情况下，我们可能需要对一个 prop 进行“双向绑定”。不幸的是，真正的双向绑定会带来维护上的问题，因为子组件可以变
+
+	更父组件，且在父组件和子组件两侧都没有明显的变更来源。
+
+	
+	二、例
+
+		父组件：
+
+
+			<cpt :msg.sync = "message"></cpt> =====> <cpt :msg = "message" @update:message="message=$event"></cpt>
+
+			data(){ return { message:'hello world' } }
+
+		子组件：
+
+
+			Vue.component("cpt",{
+
+				props:['msg'],
+
+				created(){ this.$emit('update:msg','父组件的值可以被修改') }//对象、数组都适用
+			
+
+			})
+
+	三、注意
+
+		1、2.3.0+ 新增(3.x建议v-model代替)
+
+		2、注意带有 .sync 修饰符的 v-bind 不能和表达式一起使用 (例如 v-bind:title.sync=”doc.title + ‘!’” 是无效的)。
+
+	取而代之的是，你只能提供你想要绑定的 property 名，类似 v-model。
+
+		3、将 v-bind.sync 用在一个字面量的对象上，例如 v-bind.sync=”{ title: doc.title }”，是无法正常工作的，因为在解析一个
+
+	像这样的复杂表达式的时候，有很多边缘情况需要考虑。

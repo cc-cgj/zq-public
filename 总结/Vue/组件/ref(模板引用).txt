@@ -1,0 +1,45 @@
+
+
+	一、概念：
+		
+		ref 被用来给元素或子组件注册引用信息。引用信息将会注册在父组件的 $refs 对象上。如果在普通的 DOM 元素上使用，引用指向的就是 DOM元素；
+
+	如果用在子组件上，引用就指向组件实例。
+
+	二、语法：<cpt ref="name"></cpt>
+
+		获取方式：new Vue({el:"#app"}).$refs //设置ref属性的元素为id为app的元素的子元素。
+
+	三、注意
+
+		1、$refs返回的是一个对象，包含的是具有ref属性的DOM元素或组件。对象内属性为指定的name，属性值为DOM元素或组件
+		
+		2、当返回的对象为组件时，此时该对象可以调用组件的方法跟data里面设置的数据等。
+		
+		3、$refs 只会在组件渲染完成之后生效。这仅作为一个用于直接操作子元素的“逃生舱”——你应该避免在模板或计算属性中访问 $refs。
+
+
+	vue3.x
+
+
+		// template
+
+			<div ref="refName" />
+
+		//srcript
+
+			setup(){
+
+				const refName = ref(null)
+
+				console.log(refName.value) 
+					
+				return {
+
+					refName
+
+				}
+					
+			}
+	
+		 

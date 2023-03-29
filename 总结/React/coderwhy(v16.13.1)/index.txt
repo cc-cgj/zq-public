@@ -1,0 +1,117 @@
+
+
+	html的使用
+
+
+		<!-- ... 其它 HTML ... -->
+
+  		<!-- 加载 React。-->
+  		
+		<!-- 注意: 部署时，将 "development.js" 替换为 "production.min.js"。-->
+  
+		<script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  
+		<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+
+		//crossorigin：表示将远程js脚本错误显示到当前运行的浏览器上
+		
+		<!-- 使用JSX -->
+
+		<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+		<script type="text/babel">
+			
+			...编写react代码
+		
+		</srcipt>
+
+	
+	jsx注释写法： 
+			(
+          
+				<div>
+            
+					{ /*  我是注释 */}
+            
+					<h1> {this.msg} </h1>
+          			</div>
+        		)
+
+	props 
+
+		1、props的值可以是jsx语法
+
+		2、当组件内部的元素通过props.children传递 //可参考源码react/ReactElement.js的createElement函数
+	
+
+	源码系列
+
+		1、自动继承props
+
+			// v16.3.0 
+
+				react/packages/react-test-renderer/src/ReactShallowRenderer.js
+
+				render() -->_updateClassComponent() -->  this._instance.props = props;
+
+
+			// v16.3.0以上版本 
+
+			// 封装在react-shallow-renderer包里了;react-shallow-renderer/src/ReactShallowRenderer.js
+			
+			例
+
+			import React, { Component } from 'react'
+
+			import PropTypes from 'prop-types';
+
+			class Client extends Component {
+  		
+				static propTypes  = { name:PropTypes.string.isRequired }
+  
+				static defaultProps = { age: 18 }
+  
+				constructor(props){ 
+
+					console.log(1111,props);
+				
+					super()
+  
+				}
+  			
+				render() {
+    
+					return (
+      
+						<>
+        
+							<h2>name:{this.props.name}</h2>
+        
+							<h2>age:{this.props.age}</h2>
+      
+						</>
+    
+					)
+  
+				}
+
+			}
+
+
+			export default class App extends Component {
+  
+				render() {
+    
+					return (
+      
+						<div>
+        
+							<Client name="cgj"/>
+      
+						</div>
+    
+					)
+  
+				}
+
+			}

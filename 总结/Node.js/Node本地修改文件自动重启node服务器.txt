@@ -1,0 +1,14 @@
+
+
+	一、nodemon（常用）
+
+		安装：npm install -g nodemon
+
+		启动：nodemon server.js
+
+	二、supervisor
+
+		安装：npm install supervisor -g
+	
+		启动：supervisor node server.js
+		

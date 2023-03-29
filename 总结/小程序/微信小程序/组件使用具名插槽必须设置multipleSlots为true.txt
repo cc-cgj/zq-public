@@ -1,0 +1,13 @@
+
+
+	Component({
+  
+		options: {
+    
+			styleIsolation: 'apply-shared',
+    
+			pureDataPattern: /^_/, // 指定所有 _ 开头的数据字段为纯数据字段
+    
+			multipleSlots: true // 在组件定义时的选项中启用多 slot 支持
+  
+	})

@@ -1,0 +1,157 @@
+-----------------------------------PHP会话跟踪-----------------------------------
+
+一、http协议特点:
+
+	由于使用http协议请求服务器无法保持用户的状态，Web服务器并不知道您是谁以及您做了什么。
+
+	例：使用http向服务器请求成功之后，刷新页面，再次请求时服务器识别的是一个新用户的请求。
+
+
+二、PHP header 的几种用法
+
+	1、跳转页面
+
+		header('Location:'.$url);  //location和":"之间无空格。
+
+	2、声明content-type和charset
+
+		header('content-type:text/html;charset=utf-8');
+
+	3、在某个时间后执行跳转
+
+		header('Refresh:10,url=http://www.baidu.com/');  //10s后跳转。
+
+
+三、Cookie //常用于前端的登录账号。即用户在浏览器登录之后，一直保持登录状态。
+
+	------概念：
+
+		cookie是由服务器发送到浏览器的变量。客户端请求服务器，如果服务器需要记录该用户状态，通过response(响应)向客户端浏览器发送一个
+
+	Cookie。客户端浏览器会把Cookie保存起来。当浏览器再请求该网站时，浏览器把请求的网址连同该Cookie一同提交给服务器。服务器检查该Cookie，
+
+	以此来辨认用户状态。服务器还可以根据需要修改Cookie的内容。
+
+	
+	------设置并发送cookie  //setcookie()
+
+		概念：通过setcookie()函数向客户端发送一个 HTTP cookie。
+
+		语法：setcookie(name,value,expire,path,domain,secure);
+
+		参数：
+			
+			name：必需。规定 cookie 的名称。
+
+			value：必需。规定 cookie 的值。
+
+			expire：可选。规定 cookie 的有效期。//单位为秒
+				
+				注意：
+				
+					1、time()+3600*24*30 将设置 cookie 的过期时间为 30 天。
+			
+					2、若只没加上时间戳time()则表示的是过去的时间，即会删除名称为name的cookie
+
+					3、如果这个参数没有设置，那么 cookie 将在浏览器关闭时自动失效。	
+
+			path：可选。规定 cookie 的服务器路径。
+
+			domain：可选。规定 cookie 的域名。
+			
+			secure：可选。规定是否通过安全的 HTTPS 连接来传输 cookie。
+
+	------获取 cookie 值 //$_COOKIE["name"]
+
+		概念：$_COOKIE获取设置的cookie值,返回的是一个关联数组
+
+		语法：$_COOKIE["name"];
+
+		参数：name：设置的cookie的名称。
+
+
+	------删除一个 cookie 
+
+		概念：通过把有效日期设置为过去的日期时间
+		
+		语法：setcookie ("name","",time() - 3600);
+
+	------注意：
+
+		1、setcookie() 函数必须位于 <html> 标签之前。
+		
+		2、必须在任何其他输出发送到客户端前对 cookie 进行赋值。
+
+		3、如果成功，该函数返回 true。如果失败则返回 false。
+
+		4、在发送 cookie 时，cookie 的值会自动进行 URL 编码。接收时会自动进行 URL 解码。
+
+		5、浏览器里保存的cookie值一直存在，在该浏览器打开的所有页面都能共享该cookie值，通过$_COOKIE["name"]来获取，前提是所有页面进行请
+	
+	求服务的服务器是相同的。
+
+		6、Cookie具有不可跨域名性，即使用不同浏览器，它们的cookie也是不同的。
+
+		
+四、Session //常用于后端
+
+	------概念：
+
+		客户端浏览器访问服务器的时候，服务器把客户端信息以某种形式记录在服务器上。这就是Session。客户端浏览器再次访问时只需要从该Session
+	
+	中查找该客户的状态就可以了。
+
+	------Session 的工作机制是：
+
+		服务器会为每个访客创建一个唯一的id(UID)，并基于这个id来存储变量。id存储在 cookie 中，或者通过 URL 进行传导。因为session不能依据
+	HTTP连接来判断是否为同一客户，因此服务器向客户端浏览器发送一个名为PHPSESSID的Cookie，它的值为该Session的id(UID)。该Cookie为服务器自动生
+	成的，它的maxAge属性一般为–1，表示仅当前浏览器内有效，并且同一浏览器窗口间是共享的，关闭浏览器就会失效。
+
+	------设置并发送session 
+
+		语法：$_SESSION["name"] = "值";
+
+		参数：name为session的名称
+		
+	
+	------获取session值 //返回的是一个关联数组
+
+		语法：$_SESSION["name"];
+
+		参数：name为session的名称
+
+	------删除session的值
+
+		1、删除指定session的值
+			
+			语法：unset($_SESSION["name"]);
+
+		2、删除所有session的值
+	
+			语法：session_destroy(); //将服务器上所有session全部删除
+
+		参数：name为session的名称
+
+	------注意：
+
+		1、使用session之前首先必须启动会话，即需要在<html>标签之前添加session_start()函数。
+
+		2、删除session，只是删除session的值，但服务器依旧会向浏览器传递一个名为PHPSESSID的Cookie。
+
+		3、新开的浏览器窗口会生成新的Session，但子窗口除外。例如，在链接上右击，在弹出的快捷菜单中选择“在新窗口中打开”时，子窗口便可以
+	
+	访问父窗口的Session。
+
+
+五、cookie和session的区别：
+
+	1、cookie数据存放在客户的浏览器上，session数据放在服务器上.
+
+	2、单个cookie保存的数据不能超过4K，而Session对象没有对存储的数据量的限制，其中可以保存更为复杂的数据类型。
+
+	3、浏览器页面一关 ,session就消失了，而cookie不会。
+	
+	4、session会在一定时间内保存在服务器上。当访问增多，会比较占用你服务器的性能考虑到减轻服务器性能方面，应当使用cookie。
+
+
+

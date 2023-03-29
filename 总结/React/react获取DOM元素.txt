@@ -1,0 +1,90 @@
+
+
+ 一、使用事件对象来获取当前事件的DOM元素
+
+	e.target
+
+
+ 二、给html标签添加ref标识 (非受控组件) //使用React.createRef()
+
+	1、在class的构造函数中使用React.createRef()方法创建一些属性
+
+		constructor(){
+			
+			super()
+
+			this.usernameRef(自定义) = React.createRef()//
+
+		} 
+	
+	2、将这些属性绑定到标签的ref中	
+	
+		render(){ return < input ref = { this.usernameRef } /> }
+
+	3、那么该属性的current则指向绑定的标签DOM。
+
+		如：获取输入框的值
+
+			console.log( this.usrnameRef.current.value ) //this.usrnameRef.current == e.target ->true
+
+
+	注意：
+		不能在函数式组件上使用 ref 属性，因为它们没有实例，即没有this。
+
+ 三、使用函数给html标签添加ref标识
+
+	1、在html标签ref中将函数形参el赋值给自定义属性，再将该属性赋值给ref
+
+		render(){ return (<> < button ref = { el => this.btn(自定义) = el } onClick = this.click.bind(this) >点击</button> </>) }
+
+		注意：
+			1、在ref中当前的DOM对象会默认赋值给函数的形参
+
+			2、若想要在其他地方获取该DOM对象，必须要将函数的形参赋值给自定义属性，再return该自定义属性给ref
+
+	2、直接使用this.自定义属性获取DOM对象
+
+		click(){
+
+			console.log( this.btn ) //获取的就是当前点击的这个按钮了			
+
+		}
+
+
+ 四、react中操作表单 (受控组件)
+
+	react操作表单的元素，操作表单的目的： 获取到用户输入的内容
+
+	概念：将react类组件的state对象的数据和表单输入的内容进行双向绑定。
+
+	例： 
+
+		<input value={ this.state.val } onChange={ this.handle } />
+
+		handel= (e)=>{ this.setState( { val: e.target.value } ) } 
+
+	注意：
+
+		1、在输入框或文本域中的显示的默认值使用 defaultValue = "默认内容" 。
+
+		2、若在输入框或文本域中使用value属性，该属性的值一定是类组件状态里的数据并且使用onChange事件处理函数来修改类组件状态里的数据，
+
+	否则无法在输入框或文本域中输入内容。
+
+		3、多选按钮、单选按钮使用 defaultChecked属性 来设置默认选中，通过事件对象e.target.checked来判断是否选中。
+
+		4、下拉框中使用value、defaultValue属性都可以设置默认值。
+
+		5、输入框、文本域、下拉框、单多选按钮都有name属性。有时候可以设置公共的事件处理函数，即都具有相同的事件处理函数，通过事件对象
+
+	的name属性来区别
+
+
+ 五、onChange事件
+
+	onchange 事件会在域的内容改变时发生。
+
+	支持该事件的html标签：<input type="text">、<select>、<textarea>
+
+	
+	

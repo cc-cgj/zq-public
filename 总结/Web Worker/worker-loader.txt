@@ -1,0 +1,5 @@
+
+
+	https://juejin.cn/post/7137728629986820126
+
+	https://webpack.js.org/guides/web-workers/

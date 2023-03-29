@@ -1,0 +1,108 @@
+
+--------------------------------------Ajax--------------------------------------
+
+一、jQuery进行get和post请求
+
+	------$.ajax()
+
+		概念：jQuery通过ajax()方法通过 HTTP 用于与服务器通信(交换数据)。
+
+		语法：
+			$.ajax({
+
+				type:"get/post",  
+
+				url:"地址",
+
+				data:{name:"zs", age:18},//请求数据
+
+				dataType:"json",
+
+				timeout:5000,//设置超时时间
+
+				beforeSend:function () {}, 
+
+				success:function (data) {},
+
+				error:function(error){}, //失败时的回调函数
+			
+				complete:function(){} //请求完成时的回调函数，即请求成功或失败之后均调用，在 success 和 error 函数之后
+			
+			})
+
+	参数：
+		type：请求类型
+
+		url：规定发送请求的 URL。默认是当前页面。
+
+		data：规定要发送到服务器的数据。
+
+		dataType: 本地接收的数据类型，json/xml/text(默认)
+
+		timeout：设置本地的请求超时时间（以毫秒计）。
+
+		beforeSend：发送请求前运行的函数。
+
+		success:(data)=>{}：当请求成功时运行的函数。 //形参data为服务器响应后返回的数据
+
+		error：如果请求失败要运行的函数。
+
+		complete：请求完成时运行的函数（在请求成功或失败之后均调用，即在 success 和 error 函数之后）。
+
+	注意：
+
+		1、get请求和post请求都是一样的
+
+		2、在图书管理系统中，图书列表显示在页面上不需要使用data参数，即不需要请求参数。
+
+二、其他请求方法
+
+	1、$.get()
+
+		概念：$.get() 方法使用 HTTP GET 请求从服务器加载数据。
+		
+		语法：$.get(url,callback, [dataType])
+
+	
+	2、$.post()
+
+		语法：$.post( url,data, callback( rps,status,xhr ), dataType );
+
+		概念：$.post() 方法使用 HTTP POST 请求从服务器加载数据。
+
+		参数：
+
+			url：必需。规定将请求发送到哪个 URL。
+
+			data：可选。规定连同请求发送到服务器的数据。
+
+			callback：可选。规定当请求成功时运行的函数。
+				
+			rps：响应的数据
+
+			status：包含请求的状态
+			
+			xhr：包含 XMLHttpRequest 对象
+
+			dataType：可选。规定预期的服务器响应的数据类型。默认地，jQuery 会智能判断。
+
+	3、$.getJSON()
+
+		概念：getJSON() 方法使用 AJAX 的 HTTP GET 请求获取 JSON 数据。
+
+		语法：$.getJSON( url，data，callback( rps,status,xhr ) )
+
+	4、$.getScript()
+
+		概念：getScript() 方法使用 AJAX 的 HTTP GET 请求获取和执行 JavaScript文件。
+
+		语法：$.getScript( url，data，callback( rps,status,xhr ) )
+
+	5、$("el").load()
+
+		概念：load() 方法从服务器加载数据，并把返回的数据放置到指定的元素中。
+
+		语法：$("div").load( url，data，callback( rps,status,xhr ) )
+		
+		
+str.trim()方法：删除字符串开始和末尾的空格

@@ -1,0 +1,58 @@
+
+
+	安装
+
+		npm i @babel/core @babel/cli -D
+
+		@babel/core:bable的核心代码
+
+		@babel/cli：可以让我们在命令行使用babel（可选）
+
+
+	使用
+
+		npx babel demo.js --out-dir dist //输出
+
+		npx babel demo.js --out-file test.js
+
+	
+	 	注意：
+
+			1、要想将ES6转换为ES5语法还需要安装对应的插件 
+
+				//转换箭头函数 
+
+					安装
+
+						npm i @babel/plugin-transform-arrow-funtions -D
+
+					使用
+
+						bable demo.js --out-file tset.js --plugins=@babel/plugin-transform-arrow-functions
+
+				转换const、let
+
+					安装
+
+						npm i @babel/plugin-transform-block-scoping -D
+
+					使用
+
+						babel demo.js --out-file tset.js --plugins=
+
+								@babel/plugin-transform-arrowfunctions,
+
+								@babel/plugin-transform-block-scoping
+		
+
+			2、预设(解决设置语法转换插件过多)
+
+				@babel-preset-env（ES6-ES5）插件
+
+					安装：npm i @babel-preset-env -D 
+					
+					使用：babel demo.js --out-file tset.js --presets=@babel-preset-env
+					
+
+
+			

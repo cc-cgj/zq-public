@@ -1,0 +1,57 @@
+
+	
+	module.exports = {
+	
+		 // webpack-dev-server配置
+    		
+		devServer:{
+        
+			/** 
+         
+				* @introduce 将对应(文件夹下所有文件)/文件复制到打包后的文件夹中（本地服务器） 
+         
+				* @detail 开发阶段可代替copy-webpack-plugin插件
+         		* */
+        
+			// 旧版 contentBase:"" //所要复制的本地文件夹路径
+        
+			static:"",//所要复制的本地文件夹路径
+        
+			open:true,
+        
+			port:7777,
+        
+			hot:true,//'only'
+        
+			host:"0.0.0.0",
+        
+			proxy:{
+            
+				"/api":"http://localhost:88888",
+
+					//axios.get('/api/mock')请求的地址为axios.get('http://localhost:88888/api/mock')    
+
+				/** or */
+            
+				"/api":{
+                
+					target:"http://localhost:88888",
+                
+					pathRewrite:{
+                    
+						"^/api":""
+                
+					},
+                
+				secure:false,//默认情况下为true，表示将不接受在 HTTPS 上运行且证书无效的后端服务器，如果需要设为false
+                
+				changeOrigin:true
+
+				//默认情况下，代理时会保留主机头的来源(即请求头的来源为http:localhost:7777)，可以将 changeOrigin 设置为 			
+				//true 以覆盖此行为
+            }
+        }
+    },
+
+
+	}

@@ -1,0 +1,55 @@
+
+
+	一、概念
+
+		HTML5 提供了两种在客户端存储数据的新方法：localStorage和sessionStorage，这两个系统属性为window全局对象下的方法且都有这相同的API。
+
+
+	二、localStorage
+
+		概念：存储数据在客户端。一个域名下的需要永久存在在本地的数据，这些数据可以被一直访问，直到这些数据被手动删除。
+
+		方法：
+		
+			1、设置一对存储数据
+			
+				window.localStorage.setItem("key","value")
+
+				注意：如果key是不存在的那么setItem就是添加，如果key原本就存在setItem就是修改
+
+			2、获取一对存储的数据
+
+				window.localStorage.getItem("key")
+
+			3、销毁数据中的一对键值
+
+				window.localStorage.removeItem("key")
+
+			4、删除所有数据
+
+				window.localStorage.clear()
+
+		注意：存储的数据只能是以字符串的形式存储在浏览器中
+
+	三、sessionStorage
+		
+		概念：存储数据在客户端，且这些数据只有在同一个会话中的页面才能访问，会话结束后数据也随之销毁。
+
+		方法：
+			跟localStorage一样
+
+	四、HTML5本地存储和PHP本地存储的区别
+
+		1、它们的生命周期不同。sessionStorage 的生命周期是一个会话，localStorage的生命周期是永久，cookie 的生命周期可以自定义，cookie 
+
+可以设置过期时间，数据在过期时间之前可以访问。
+
+		2、它们的存储大小限制不同。HTML5新增的这两个属性在大部分现代浏览器的存储限制大小为 5M，cookie 的存储大小限制 为 4K。
+
+		3、浏览器支持的HTML5存储的大小不统一，并且在IE8以上的IE版本才支持HTML5新增的这两个属性
+
+		4、HTML5新增的这两个属性不能被爬虫抓取到
+
+		5、cookie每次都随请求数据发送到服务器端，HTML5新增的这两个属性保存在本地的数据不会和请求数据一同发送到服务器端
+
+		6、存储数据的格式都是字符串形式，且以键值的方式来设置存储的数据

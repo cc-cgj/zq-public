@@ -1,0 +1,64 @@
+
+	在 JavaScript 中，我们可以使用 Object.prototype.hasOwnProperty() 方法来检查对象是否具有给定的属性。
+
+	但是，这种方法存在一定的问题，一方面，Object.prototype.hasOwnProperty() 方法不受保护 - 它可以通过为类定义自定义 hasOwnProperty() 方
+法来覆盖，该方法可能具有与 Object.prototype.hasOwnProperty() 完全不同的行为。
+
+	例：
+
+		class Car {
+  			
+			color = 'green';
+  
+			age = 2;
+  
+			// This method does not tell us whether an object of
+  
+			// this class has a given property.
+  
+			hasOwnProperty() { return false; }
+
+		}
+
+		const car = new Car();
+
+		console.log(car.hasOwnProperty('age')); // false
+
+		console.log(car.hasOwnProperty('name')); // false
+
+	另一个问题是，对于使用 null 原型创建的对象（使用 Object.create(null)），尝试对其调用此方法会导致错误。
+
+		解决这些问题的一种方法是使用调用 Object.prototype.hasOwnProperty Function 属性上的 call() 方法
+
+			例：
+
+				const obj = Object.create(null);
+
+				obj.color = 'green';
+
+				obj.age = 2;
+
+				obj.hasOwnProperty = () => false;
+
+				console.log(Object.prototype.hasOwnProperty.call(obj, 'color')); // true
+
+				console.log(Object.prototype.hasOwnProperty.call(obj, 'name')); // false
+
+
+	不过没有必要，因为我们可以使用新的内置 Object.hasOwn() 方法。与我们的可重用函数一样，它接受对象和属性作为参数，如果指定的属性是对象
+的直接属性，则返回 true。否则，它返回 false。
+
+		例：
+
+			const obj = Object.create(null);
+
+			obj.color = 'green';
+
+			obj.age = 2;
+
+			obj.hasOwnProperty = () => false;
+
+			console.log(Object.hasOwn(obj, 'color')); // true
+
+			console.log(Object.hasOwn(obj, 'name')); // false
+

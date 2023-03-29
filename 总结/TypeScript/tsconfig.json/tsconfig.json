@@ -1,0 +1,57 @@
+{
+  "compilerOptions": {
+    // 目标代码(ts -> js(es5/6/7)) esnext->es6以上，ts->js(es6以上)->es5(babel)
+    "target": "esnext",
+    // 支持esModule/common.js; umd:表示都支持 
+    "module": "esnext",
+    // 严格模式(any)
+    "strict": true,
+    // 对jsx进行怎么样的处理，babel处理了，所以这里就不需要设置(preserve)
+    "jsx": "preserve",
+    // 通过tslib引入helper函数，文件必须是模块
+    "importHelpers": true,
+    // 模块解析策略，ts默认用node的解析策略，即相对的方式导入
+    "moduleResolution": "node",
+    // 跳过一些库的类型检测( axios->类型/lodash-> @types/lodash / 其他第三方库 )
+    "skipLibCheck": true,
+    // start
+    // esmodule和commonjs的导入导出是否可以组合使用
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    // end
+    // 是否生成映射文件
+    "sourceMap": true,
+    // 文件路径解析时的基础URL
+    "baseUrl": ".",
+    // 解析使用的类型
+    "types": ["webpack-env"],
+    // 路径解析
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    // 可以指定在项目中可以使用哪些库的类型(Proxy/window/document)
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
+    //用于指定是否启用实验性的装饰器特性
+    // 在排序第一的项目中加入含有experimentalDecorators配置的tsconfig.json，重启编辑器，不报错了。
+    // 也就是说，vsCode编辑器在查找experimentalDecorators配置的时候，只会查找第一个工作区的项目，
+    // 如果该项目有experimentalDecorators配置，则整个工作区使用该配置，如果没有，整个工作区都不会使用
+    "experimentalDecorators": true, 
+    // 强制大小写
+    "forceConsistentCasingInFileNames": true,
+    // 将 class 声明中的字段语义从 [[Set]] 变更到 [[Define]](编译)
+    "useDefineForClassFields": true
+      // export class C { foo = 100; }  
+      // false: export class C { constructor(){ this.foo = 100; } }
+      // true: export class C { constructor(){ Object.defineProperty(this,'foo',{ enumerable: true,configurable: true,writable: true,alue: 100 }) } }
+  },
+  // 指定哪些文件需要解析
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "tests/**/*.ts",
+    "tests/**/*.tsx"
+  ],
+  // 排除哪些文件不需要解析
+  "exclude": ["node_modules"]
+}

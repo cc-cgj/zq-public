@@ -1,0 +1,53 @@
+
+	一、概念
+
+		我们可以通过以下 attribute 来自定义过渡类名：
+
+			enter-class(2.x) / enter-from-class(3.x)
+
+			enter-active-class
+
+			enter-to-class
+
+			leave-class( 2.x ) / leave-from-class(3.x)
+
+			leave-active-class
+
+			leave-to-class
+
+	二、注意
+
+		他们的优先级高于普通的类名，这对于 Vue 的过渡系统和其他第三方 CSS 动画库，如 Animate.css. 结合使用十分有用。
+
+	三、例
+
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.0/animate.min.css" rel="stylesheet" type="text/css" />
+
+		<div id="demo">
+  
+			<button @click="show = !show"> Toggle render </button>
+
+  			<transition
+    
+				name="custom-classes-transition"
+    
+				enter-active-class="animate__animated animate__tada"
+    
+				leave-active-class="animate__animated animate__bounceOutRight"
+  			>
+    			
+				<p v-if="show">hello</p>
+  
+			</transition>
+
+		</div>
+
+		const Demo = { 
+
+			data() { return { show: true } }
+
+		}
+
+		Vue.createApp(Demo).mount('#demo')
+
+	

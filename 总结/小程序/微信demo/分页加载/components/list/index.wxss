@@ -1,0 +1,16 @@
+
+.list {
+    background-color: #fff;
+    margin-top: 7px;
+}
+
+.list_item {
+    padding: 25rpx 20rpx;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+}
+
+.list_item:last-child {
+    border-bottom: none;
+}

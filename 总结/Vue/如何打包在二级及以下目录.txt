@@ -1,0 +1,22 @@
+
+
+
+	1、在项目目录下创建 vue.config.js文件
+
+	2、输入内容为
+
+		
+			module.exports = {
+
+				publicPath:'/二级/' || './',   //打包后部署在一个子路径上 || //相对路径上，表示打包后部署在服务器什么路径都可以
+			
+				productionSourceMap:false  //如果你不需要生产环境的 source map，可以将其设置为 false 以加速生产环境构建。
+
+				outputDir: "dist", //设置运行 vue-cli-service build 时生成的生产环境构建文件的目录。
+
+				assetsDir: "static" //放置生成的静态资源 (js、css、img、fonts) 的 (相对于 outputDir 的) 目录。
+			
+			}
+
+
+	https://cli.vuejs.org/zh/config/

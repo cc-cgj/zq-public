@@ -1,0 +1,39 @@
+
+	
+	// formate.ts
+
+	export namespace time {
+
+		export function formate(){
+
+			return '2022/10/13'		
+		}
+	
+	}
+
+	export namespace price {
+
+		export function formate() { return '￥10 元' }
+
+	}
+
+	time.formate()//'2022/10/13'
+
+	price.formate()//'￥10 元'
+
+	//index.ts
+	
+	import { time,price } from './formate.ts'
+
+	time.formate()//'2022/10/13'
+
+	price.formate()//'￥10 元'
+
+	注意：
+
+		1、在namespace内定义的函数、变量等必须export 之后才能在外部调用
+
+		2、在其他文件调用时namespace前必须添加export
+
+		3、TypeSrcipt ( namespace )是2014年推出，ES2016(模块化ESModule) 2015 
+	

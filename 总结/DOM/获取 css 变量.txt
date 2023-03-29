@@ -1,0 +1,60 @@
+
+
+	// document.documentElement 是全局变量时
+
+	const el = document.documentElement
+
+	// const el = document.getElementById('xxx')
+
+	// 获取 css 变量
+
+	getComputedStyle(el).getPropertyValue(`--el-color-primary`)
+
+
+	// 设置 css 变量
+	
+	el.style.setProperty('--el-color-primary', 'red')
+
+
+	Window.getComputedStyle()
+
+		概念
+
+			Window.getComputedStyle()方法返回一个对象，该对象在应用活动样式表并解析这些值可能包含的任何基本计算后报告元素的所有 	
+		CSS 属性的值。 私有的 CSS 属性值可以通过对象提供的 API 或通过简单地使用 CSS 属性名称进行索引来访问。
+
+		语法
+
+			let style = window.getComputedStyle(element, [pseudoElt]);
+
+		参数
+
+			element：用于获取计算样式的Element。
+
+			pseudoElt 可选：指定一个要匹配的伪元素的字符串。必须对普通元素省略（或null）。
+
+	getPropertyValue()
+		
+		概念
+
+			CSSStyleDeclaration.getPropertyValue() 接口返回一个 DOMString ，其中包含请求的 CSS 属性的值
+
+		语法
+
+			let style =  style.getPropertyValue(property);
+
+		参数
+
+			property 是一个 DOMString，是需要查询的 CSS 属性名称。
+		
+		返回值
+
+			value 是 DOMString ，包含查找属性的值。若对应属性没有设置，则返回空字符串。
+
+		例
+
+			var declaration = document.styleSheets[0].cssRules[0].style;
+
+			var value = declaration.getPropertyValue('margin'); // "1px 2px"
+
+			el.style.getPropertyValue('display')//""

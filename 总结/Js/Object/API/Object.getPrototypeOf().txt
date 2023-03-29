@@ -1,0 +1,8 @@
+
+	一、概念
+
+		Object.getPrototypeOf() 方法返回指定对象的原型（内部[[Prototype]]属性的值）。
+
+	二、语法
+
+		Object.getPrototypeOf(object)

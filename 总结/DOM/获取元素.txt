@@ -1,0 +1,126 @@
+
+
+	一、节点概述
+
+		网页中的所有内容都是节点（标签、属性、文本、注释等），在DOM 中，节点使用 node 来表示。 HTML DOM 中的所有节点均可通过JS进行
+
+	访问，所有 HTML 元素（节点）均可被修改，也可以创建或删除。
+
+		一般地，节点至少拥有nodeType（节点类型）、nodeName（节点名称）和nodeValue（节点值）这三个基本属性。
+
+			（nodeType：1；nodeName：2；nodeValue：3）
+
+	
+	二、根据ID获取
+
+		document.getElementById (id)
+
+	三、根据标签名获取元素
+
+		document.getElementsByTagName('标签名') 或者 element.getElementsByTagName('标签名')
+
+		(注意：返回的是一个伪数组)
+
+	四、H5新增的获取元素的方式：
+
+		1、根据类名获取元素：document.getElementsClassName("类名")
+				
+			(注意：返回的是一个伪数组)
+
+		2、根据指定选择器获取第一个元素：document.querySelector(".类名/标签名/#id名")
+		
+		3、根据指定选择器获取全部元素：document.querySelectorAll(".类名/标签名/#id名")
+		
+					(注意：返回的是一个伪数组)
+
+	五、获取特殊元素（body，html）
+
+		1、document.body//获取body标签
+
+		2、document.documentElement//html标签以及它的子标签
+
+	六、获取父级节点
+
+		ele.parentNode:该属性可返回某节点的父节点(注意：返回的是最近的一个父元素节点),没有则返回null
+
+		ele.parentElement
+
+	五、获取子节点
+
+		1、所有子节点
+
+			ele.childNodes:该属性返回包含指定节点的子节点的集合,该集合为即时更新的集合
+
+			(注意：返回值里面包含了所有的子节点，包括元素节点和文本节点(空格、换行)，返回的是一个伪数组)
+
+		2、子元素节点
+
+			ele.children:是一个只读属性，返回所有的子元素节点。只包括元素节点
+
+			(注意：所有浏览器都支持，且返回的是一个伪数组)
+			
+		3、第1个子节点
+
+			ele.firstChild:返回第一个子节点，找不到则返回null
+
+			(注意：返回值里面包含了第一个元素子节点或第一个文本子节点(空格、换行))
+
+		4、最后1个子节点
+
+			ele.lastChild:返回最后一个子节点，找不到则返回null
+
+			(注意：返回值里面包含了最后一个元素子节点或最后一个文本节点(空格、换行))
+
+		5、第1个子元素节点
+
+			ele.firstElementChild:返回第一个子元素节点，找不到则返回null。只包括元素节点(IE9以上)
+
+		6、最后1个子元素节点
+
+			ele.lastElementChild:返回最后一个子元素节点，找不到则返回null。只包括元素节点(IE9以上)
+		
+		------要想兼容，如何获取第一个子元素节点或最后一个子元素节点呢？
+
+			解决方案：
+
+				1、第一个子元素节点——node.children[0]
+
+				2、最后一个子元素节点——node.chidren[node.chidren.length-1]
+
+
+	六、获取兄弟节点
+
+		1、上一个兄弟节点
+
+			element.previousSibling
+
+			(注意：兄弟节点包括文本节点(空格、换行、文字)和元素节点)
+		
+		2、下一个兄弟节点
+
+			element.nextSibling
+
+			(注意：兄弟节点包括文本节点(空格、换行、文字)和元素节点)
+		
+		3、上一个兄弟元素节点(IE9以上)
+
+			element.previousElementSibling
+
+			(注意：兄弟节点只包括元素节点)
+
+		4、下一个兄弟元素节点(IE9以上)
+
+			element.nextElementSibling
+
+			(注意：兄弟节点只包括元素节点)
+
+		要想兼容：
+			1、创建一个空数组
+			2、获取上/下一个兄弟节点
+			3、通过node.Type==1来排除文本节点
+			4、排除元素节点依次追加到空数组中
+
+		
+
+
+

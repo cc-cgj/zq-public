@@ -1,0 +1,44 @@
+
+ 一、概念
+
+	修改类组件中 state 对象里的属性值
+
+
+ 二、对象的方式修改
+
+	this.setState( {
+
+		state里的属性名:最新的值
+
+	} )
+	
+	console.log( this.state.state里的属性名 ) //此时打印出的是该属性原来的值
+		
+	注意：
+		1、setState方法是异步的 , 如果通过setState修改状态,方法内传递的是一个对象时，下面立马要获取最新的数据,是获取不到的
+
+		2、如果你想给某个state赋值,没有涉及到state里面的其他值,就还是可以使用对象形式的
+
+三、函数的方式修改
+
+	setState方法的第一个参数可以是一个函数，通过return返回对象来修改state里的属性，函数有一个默认形参state，相当于this.state
+
+	setState方法有第二个参数，为函数形式，该回调函数可以获取最新的state对象的数据 //可以省略
+
+	例：
+
+		state = { msg:"hello" }
+
+		this.setState( state=>{
+		
+			return { msg: state.msg + "world" }	
+
+		},()=>{ 
+
+			console.log( this.state.msg ) //hello world 		
+
+		} )
+
+		console.log( this.state.msg ) //hello
+
+	注意：如果你想给某个state值赋值,,但是涉及到之前state里面的值,使用函数形式

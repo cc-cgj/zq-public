@@ -1,0 +1,90 @@
+
+
+	第一种
+
+		< custom-cpt text="hello world" /> //hello world 红色
+
+		<p> 外部的p </p> //外部的p 不变色
+
+	 	class customcpt extends HTMLHeadingElement {
+    
+			constructor() {
+      
+				super()
+      
+				const shadow = this.attachShadow({ mode: 'open' })
+      
+				const p = document.createElement('p')
+
+				//获取设置在自定义组件的attribute
+      
+				p.innerText = this.getAttribute( 'text' )
+
+				//作用域内部样式
+
+				const style = document.createElement('style')
+
+				style.textContent = `
+
+					p{ color: red; font-weight:900;font-size: 22px; }
+
+				`
+      
+				shadow.appendChild( text )
+
+				shadow.appendChild( style )
+
+				//作用域外部样式
+
+				const linkElem = document.createElement('link');
+
+				linkElem.setAttribute('rel', 'stylesheet');
+	
+				linkElem.setAttribute('href', 'style.css');
+
+				// 将所创建的元素添加到 Shadow DOM 上
+
+				shadow.appendChild(linkElem);
+    			}
+  		}
+  
+	第二种
+
+		customElements.define('custom-cpt', customcpt)
+
+
+		<h1 is="custom-cpt" text="hello world" />
+
+	 	class customcpt extends HTMLHeadingElement {
+    
+			constructor() {
+      
+				super()
+      
+				const shadow = this.attachShadow({ mode: 'open' })
+
+				const p = document.createElement('p')
+
+				p.innerText = this.getAttribute( 'text' )
+      
+				shadow.appendChild( p )
+
+			
+    			}
+  		}
+  
+
+		customElements.define('custom-cpt', customcpt, { extends: 'h2' })
+
+
+
+	注意：
+
+		1、在Chrome版本76.0.3809.132（正式版本）（64 位）中测试发现，customElements.define()必须在js文件中调用，且引用此js文件时必
+
+	须在script标签上添加defer属性，否则this.getAttribute('属性名称')无法获取到值。
+
+		2、一个DOM元素只能仅有一个shadow root
+
+		3、当DOM元素有shadow root时该元素在浏览器上渲染的文本由shadow DOM的决定
+

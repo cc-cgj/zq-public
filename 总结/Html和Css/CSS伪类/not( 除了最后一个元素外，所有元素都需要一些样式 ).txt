@@ -1,0 +1,8 @@
+
+
+	除了最后一个元素外，所有元素都需要一些样式，使用 not 选择器非常容易做到。
+
+	li:not(:last-child) {
+  
+		border-bottom: 1px solid #ebedf0;
+	}

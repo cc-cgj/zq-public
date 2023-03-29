@@ -1,0 +1,31 @@
+
+
+	概念：
+
+		eval() 函数会将传入的字符串当做 JavaScript 代码进行执行。
+
+	语法：
+
+		eval(string)
+
+	参数
+
+		string
+
+			一个表示 JavaScript 表达式、语句或一系列语句的字符串。表达式可以包含变量与已存在对象的属性。
+
+
+	返回值
+
+		返回字符串中代码的返回值。如果返回值为空，则返回 undefined。
+
+		
+	例：
+
+		var x = 10;
+		
+		var y = 20;
+
+		var a = eval("x * y")
+
+		console.log( a ) //200

@@ -1,0 +1,174 @@
+
+	
+
+	2.x-------https://cn.vuejs.org/v2/api/#provide-inject
+
+	3.x-------https://v3.cn.vuejs.org/guide/component-provide-inject.html#%E5%A4%84%E7%90%86%E5%93%8D%E5%BA%94%E6%80%A7
+
+	一、概念：( 2.2.0 新增 )
+
+		1、通常，当我们需要从父组件向子组件传递数据时，我们使用 props。想象一下这样的结构：有一些深度嵌套的组件，而深层的子组件
+
+	只需要父组件的部分内容。在这种情况下，如果仍然将 prop 沿着组件链逐级传递下去，可能会很麻烦。
+
+		2、对于这种情况，我们可以使用一对 provide 和 inject。无论组件层次结构有多深，父组件都可以作为其所有子组件的依赖提供者。
+
+	这个特性有两个部分：父组件有一个 provide 选项来提供数据，子组件有一个 inject 选项来开始使用这些数据。
+
+		3、provide可以是对象也可以是函数，inject的定义跟props类似，可以是数组或对象,调用方式跟data定义的属性一样
+
+		4、在该对象中你可以使用 ES2015 Symbols 作为 key，但是只在原生支持 Symbol 和 Reflect.ownKeys 的环境下可工作。
+
+
+	二、类型：
+
+		provide：Object | () => Object
+
+		inject：Array<string> | { [key: string]: string | Symbol | Object }
+
+	二、注意：
+
+		1、provide/inject 绑定并不是响应式的。（*******）
+		
+		2、要访问组件实例 property，我们需要将 provide 转换为返回对象的函数
+
+		3、provied跟组件的data值没有关联（即定义相同属性不冲突）
+
+		4、只有按照以下案例中定义响应式的方式去修改 this._provided的值才会有响应式，否则无响应式
+
+		5、在 2.5.0+ 的注入可以通过设置默认值使其变成可选项： inject: {  foo: { default: 'foo'/() => [1, 2, 3] }  }
+
+		6、在 2.5.0+ 如果它需要从一个不同名字的 property 注入，则使用 from 来表示其源 property：
+
+			provide()=> { return { bar:'bar' } }
+
+			inject: {  foo: from: 'bar',{ default: 'foo' }  } //this.bar === 'bar'
+
+
+	三、inject和props的区别
+
+		1、inject定义的属性名跟data定义的属性名相同时，会被覆盖，而props会抛出错误
+	
+		2、inject定义的属性名跟computed定义的属性名相同时，会被inject覆盖，而props会抛出错误
+
+		2、inject建议只用数组定义，当为对象时也可以接受数据，但是按照props为对象的定义type、validate等都不起作用
+
+		3、inject为对象时不支持 inject:{ msg:String } 这种定义方式
+
+	四、接下来 2 个例子只工作在 Vue 2.2.1 或更高版本。
+
+		const Child = {
+  
+			inject: ['foo'],
+  
+			props: {  bar: { default () { return this.foo } } }
+
+		}
+
+		const Child = {
+  
+			inject: ['foo'],
+  
+			data () { return {  bar: this.foo } }
+
+
+		}
+
+		注意：低于这个版本时，注入的值会在 props 和 data 初始化之后得到。
+	
+	五、例：
+	
+		基本定义：
+
+			父组件：provied:{ msg:'hello world' }
+
+			孙子组件：inject:[ 'msg' ] ---- console.log( this.msg )// hello world
+
+
+		函数定义：
+
+			父组件：
+
+				created(){ this.msg = "再也不见" },//修改msg
+
+				data() { return { msg: "hello world" } },
+				
+				provide() { return { msg: this.msg } } //this._provied.msg //hello world 没有发生改变
+
+
+			孙子组件:
+
+				inject:[ 'msg'] ---- console.log( this.msg )// hello world
+
+
+		响应式定义：
+
+			父组件：
+				
+				import Vue from 'vue'
+
+				created(){ this.msg = "再也不见" this.obj.msg = "再也不见" },//修改msg
+
+				data() { return { msg: "hello world",obj:{ msg:"hello world" } } },
+				
+				provide() { return { 
+
+					//第一种：
+
+						msg: ()=> this.msg   //this._provied.msg() //再也不见 
+
+					//第二种：
+						
+						obj: Vue.observable( this.obj ) //this._provied.obj.msg //再也不见
+
+						错误定义：
+
+							msg: Vue.observable( { msg:this.msg } ).msg //无响应式
+		
+							msg: Vue.observable( { msg:this.msg } ) //无响应式
+
+							msg: Vue.observable( this.msg ) //无响应式，不会报错
+
+
+					} 
+
+				}
+
+			孙子组件:
+
+				inject:[ 'msg','obj']  
+
+				//第一种：computed:{ message: this.msg() }  ---- console.log( this.message )//再也不见
+
+				//第二种：console.log( this.obj.msg )//再也不见
+
+				注意：计算属性不能跟inject接收的属性名相同，否则是以inject的属性值为准
+
+
+			注意：若在data里调用inject的属性则会发生响应式改变，但不会实时改变
+
+				例：
+				
+					父组件：
+
+						created(){ 
+		
+							this.count = 2;
+    					
+							setInterval(() => { this.count += 1 }, 1000)
+
+						},
+
+						data() { return { count: 0 } },
+
+						provide:{ count:this.count }
+
+
+					孙子组件：
+						
+						inject:[ 'count'],
+
+						data:()=>{ return { num:this.count() } }//console.log( this.num )//2
+
+						computed:{ number(){ this.count() } } //console.log( this.number ) // 2,3,4 ...
+						

@@ -1,0 +1,74 @@
+$theme-tfkd: (
+   // 【主区域】
+  // 背景色
+  g-main-bg: #fdfdff, // 次应用背景色
+  g-sub-main-bg: #f2f1f6,
+  "": (
+    /* ----- 应用 ----- */
+    // 网页背景色
+    "app-bg": #f5f5f5,
+    // 主区域背景色
+    "main-bg": #f5f6f8,
+    /* ----- 进度条 ----- */
+    "nprogress-color": #29d
+  ),
+  "dark": (
+    "app-bg": var(--el-bg-color),
+    "main-bg": var(--el-bg-color-page),
+    "nprogress-color": var(--el-color-primary)
+  )
+);
+
+
+$themes: (
+  sys_tfkd: $theme-tfkd
+);
+@mixin set-themes-css-var() {
+  @each $theme-name, $theme-map in $themes {
+    @each $mode, $map in $theme-map {
+      @if ($mode == "") {
+        // 判断html的data-theme 的属性值 #{} 是sass的插值表达式
+        // & sss嵌套的父容器标识
+        [data-theme=#{$theme-name}] &{
+          @each $key, $value in $map {
+            --g-#{$key}: #{$value};
+          }
+        }
+      }
+      @else if ($mode == "dark") {
+        &.dark [data-theme=#{$theme-name}] {
+          @each $key, $value in $map {
+            --g-#{$key}: #{$value};
+          }
+        }
+      }
+      @else {
+        @content; //混合气插槽。像vue的slot
+      }
+    }
+  }
+}
+@mixin themeify($name: "", $key: "") {
+  @each $theme-name, $map in $themes {
+    $theme-map: $map !global;//将局部变量转换为全局变量
+    [data-theme=#{$theme-name}] & {
+      @if ($name != "" and $key != "") {
+        #{$name}: map-get($theme-map, $key);
+      }
+      @else {
+        @content;
+      }
+    }
+  }
+}
+@function themed($key) {
+  // map-get($map,$key) 函数的作用是根据 $key 参数，返回 $key 在 $map 中对应的 value 值。如果 $key 不存在 $map中，将返回 null 值
+  @return map-get($theme-map, $key);
+}
+
+// 使用
+  // @include set-themes-css-var();
+  // @include themeify{
+  //    background-color: themed("g-main-bg");
+  // }
+  @include themeify('background-color',"g-main-bg")

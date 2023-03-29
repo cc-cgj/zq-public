@@ -1,0 +1,59 @@
+
+一、offset概述
+
+	offset 翻译过来就是偏移量， 我们使用 offset系列相关属性可以动态的得到该元素的位置（偏移）、大小等。
+
+	1. 获得元素距离带有定位父元素的位置 
+
+	2. 获得元素自身的大小（宽度高度）
+ 
+	   （注意：返回的数值都不带单位）
+
+二、offset属性
+
+	1、element.offsetParent：返回作为该元素带有定位的父级元素，如果父级没有定位则返回body
+
+	2、element.offsetTop：返回元素相对带有定位父元素上方的偏移
+
+	3、element.offsetLeft：返回元素相对带有定位父元素左边框的偏移
+
+	------注意：	
+
+			1、偏移量包含父元素的边框和内边距
+
+			2、若当前元素的所有父元素没有定位，以html为准
+
+			3、当父元素都有定位时，以最近的父元素为准
+
+			4、包含所有定位。
+		
+	4、element.offWidth：返回自身包括padding、边框、内容区的宽度，返回数值不带单位
+
+	5、element.offHeight：返回自身包括padding、边框、内容区的高度，返回数值不带单位
+
+三、offset与style的区别
+
+	------offset
+
+		1、offset可以得到任意样式表中的样式值
+
+		2、offset系列获取的数值是没有单位的
+
+		3、offsetWidth包含padding+border+width
+
+		4、offsetWidth不可以赋值
+
+	------style
+
+		1、只能得到行内样式内的样式值
+
+		2、style.width获得的是带有单位的字符串
+
+		3、style.width获得不包含padding和border的值
+
+		4、style.width是可读写属性，可以获取也可以赋值
+
+innerWidth//获取浏览器页面可视区宽度
+
+innerHeight//获取浏览器页面可视区高度
+

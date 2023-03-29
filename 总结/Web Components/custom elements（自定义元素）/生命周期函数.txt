@@ -1,0 +1,8 @@
+
+
+	attributeChangedCallback(name, oldValue, newValue) {
+
+		//属性的名称、旧值与新值
+
+
+	}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>01-柱状图</title>
+		<script src="lib/echarts.min.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div class="box" style="width: 600px;height: 400px;margin: 100px auto;"></div>
+		<div class="dv" style="width: 600px;height: 400px;margin: 100px auto;background-color: pink;"></div>
+	</body>
+	<script type="text/javascript">
+		var box = document.querySelector(".box")
+		var dv = document.querySelector(".dv")
+		dv.ontouchcancel = function(){
+			console.log(event)
+		}
+		console.log(dv.classList)
+		var myEcharts = echarts.init(box)
+		var xData = ["张三", "李四", "王五"]
+		var yData = [60, 80, 95]
+		var option = {
+			xAxis: {
+				type: "category",
+				data: xData
+			},
+			yAxis: {
+				type: "value"
+			},
+			series: [
+				{
+					name: "成绩",
+					type: "bar",
+					data: yData,
+					// 最大值和最小值
+					markPoint: {
+						data: [{
+								type: "max",
+								name: "最大值"
+							},
+							{
+								type: "min",
+								name: "最小值"
+							}
+						]
+					},
+					// 平均值
+					markLine:{
+						data:[
+							{
+								type:"average",
+								name:"平均值"
+							}
+						]
+					},
+					// 数值显示
+					label:{
+						show:true,
+						rotate:30
+					},
+					barWidth:'50%',
+					
+				}
+			],
+			// 标题
+			title:{
+				text:"成绩柱状图",
+				textStyle:{
+					color:"red"
+				},
+				borderWidth:1,
+				borderColor:'yellow',
+				borderRadius:5,
+				// left:"center"
+			},
+			// 提示框
+			tooltip:{
+				trigger:'axis',
+				triggerOn:"click",
+				// formatter:'{a}---{b}:{c}',
+				formatter:function(arg){
+					return arg[0].name+arg[0].data
+				}
+			},
+			// 工具按钮
+			toolbox:{
+				feature:{
+					saveAsImage:{},//将图标保存为图片
+					dataView:{},//是否显示出原始数据
+					restore:{},//还原图标
+					dataZoom:{},//数据缩放
+					magicType:{
+						type:['成绩','bar','line']
+					}
+				}
+			},
+			// 图例组件展现了不同系列的标记(symbol)，颜色和名字。可以通过点击图例控制哪些系列不显示。
+			legend:{
+				data:['成绩','最大值','平均值']
+			}
+		}
+		myEcharts.setOption(option)
+	</script>
+</html>

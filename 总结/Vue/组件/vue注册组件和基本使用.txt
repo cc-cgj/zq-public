@@ -1,0 +1,100 @@
+
+一、注册组件和基本使用
+
+	概念：组件可以扩展 HTML 元素，封装可重用的代码。
+
+	------注册全局组件
+
+		Vue.component("组件名",{
+
+			data:function(){ return{ msg:"hello world" } } 		
+				
+			template:`<div> <div>{{msg}}</div> </div>`			
+
+		})
+		
+		new Vue({ el:"#app" })
+
+		注意：Vue.component()方法只能注册一个全局组件，但在所有挂载的vue实例里使用。
+
+	------注册局部组件
+
+		new Vue({ 
+
+			el:"#app",
+			
+			data:{  }
+
+			components:{
+
+				组件名1:{
+
+					template:`<div> <div>hello</div> </div>`		
+		
+				},
+				
+				组件名2:{
+
+					template:`<div> <div>world</div> </div>`					
+	
+				}				
+
+			}
+		
+		})
+
+		注意：
+
+			1、局部组件也为子组件，所以无法调用vue实例(根组件)data里的数据，需要通过props传递数据才能调用
+
+			2、在vue实例components里可以注册多个组件,但注册的组件只能在当前挂载的vue实例里使用。
+
+
+	------组件的基本使用
+
+		语法：
+
+			<div id="app">
+
+				<组件名></组件名>
+		
+			</div>			
+
+
+	------总结
+
+			1、vue实例在组件中为根组件，所有的全局组件都为vue实例的子组件。
+		
+			2、子组件接收父组件传过来的数据只能在子组件模板属性(template)的属性值中通过插值表达式来调用。
+
+			3、全局组件必须在实例Vue之前注册且注册的组件只能在挂载的DOM对象内使用。
+
+			4、组件对象的data属性必须是一个函数，而且这个函数返回一个对象，对象内部保存着数据
+
+	------data为什么必须是函数？
+
+			如果data是对象的话，当前组件反复使用时，修改其中一个组件数据就会全部被修改，当为函数时，使用一次组件则就会调用一次函
+
+		数，所以多次使用同一组件时，相互之间的数据不会产生影响
+
+二、大小写不敏感
+
+	另外，HTML attribute 名不区分大小写，因此浏览器将所有大写字符解释为小写。这意味着当你在 DOM 模板中使用时，驼峰 prop 名称和 event 处理器参数
+
+需要使用它们的 kebab-cased (横线字符分隔) 等效值：
+
+	//  在 JavaScript 中是驼峰式
+
+		app.component('blog-post', {
+			
+			props: ['postTitle'], 
+
+			template: ` <h3>{{ postTitle }}</h3> `
+
+		})
+
+	<!-- 在 HTML 中则是横线字符分割 -->
+
+	<blog-post post-title="hello!"></blog-post>
+
+	

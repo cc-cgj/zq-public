@@ -1,0 +1,24 @@
+
+
+	一、创建自定义事件
+
+		var event = new Event('build');
+
+		// Listen for the event.
+
+		elem.addEventListener('build', function (e) { ... }, false);
+
+		// Dispatch the event.
+
+		elem.dispatchEvent(event);
+
+		//向一个指定的事件目标派发一个事件,  并以合适的顺序同步调用目标元素相关的事件处理函数。
+
+
+	二、添加自定义数据 – CustomEvent()
+
+		var event = new CustomEvent('build', { 'detail': elem.dataset.time });
+
+		function eventHandler(e) { log('The time is: ' + e.detail); }
+
+	

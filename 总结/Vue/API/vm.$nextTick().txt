@@ -1,0 +1,11 @@
+
+
+	因为 $nextTick() 返回一个 Promise 对象,所以你可以使用新的 ES2017 async/await 语法完成相同的事情
+
+		this.message = 'updated'
+      
+		console.log(this.$el.textContent) // => 'not updated'
+      	
+		await this.$nextTick()
+      
+		console.log(this.$el.textContent) // => 'updated'

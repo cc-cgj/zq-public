@@ -1,0 +1,117 @@
+	 
+一、导航
+
+	navigator标签的open-type：
+
+				reLaunch：所有页面都可以打开，包括tabBar页面和非tabBar页面
+
+				switchTab：只能打开tabBar页面
+
+在小程序中上传的文件为2m左右，所以一般页面中的图片都是线上的，除icon图片(限制在40k)外
+
+
+二、轮播图标签
+
+	swiper高度无法实现由内容撑开，为解决不同手机屏幕显示不变形，可以使用该公式来实现高度的自适应：
+
+		swiper的高度/swiper的宽度 = 原图的高度/原图的宽度
+
+
+三、传递的参数在页面的生命周期函数中的onLoad()函数中接收
+
+	该函数有一个默认形参，用来接收传递的参数的
+
+四、小程序的富文本组件(rich-text)是用来解析 传统的 html文件中的标签的。
+
+五、API
+
+	wx.showToast({
+
+		title:'没有下一页数据', //必须，提示的内容
+
+	}) //显示消息提示框
+
+	wx.previewImage( { 
+
+		urls: [ 预览的图片数组 ],
+
+		current: "当前显示的图片https链接"
+
+	},bool )
+
+		概念：在新页面中全屏预览图片。预览的过程中用户可以进行保存图片、发送给朋友等操作。
+
+		参数：
+
+			urls：必填。需要预览的图片http链接列表，类型为数组。如预览轮播图中所有图片
+
+			current：可选。当前显示图片的http链接,默认值为urls的第一张图片链接，类型为string。
+
+				如：点击轮播图中的图片，在预览轮播图中所有图片中默认是显示当前图片。
+	
+			bool：是否显示长按菜单，类型为布尔
+
+	wx.showModal({})
+
+		概念：显示模态对话框
+
+	wx.chooseAddress({})
+	
+		概念：获取用户收货地址。调起用户编辑收货 地址原生界面，并在编辑完成后返回用户选择的地址。
+
+	wx.getSetting({})
+
+		概念：获取用户的当前设置。返回值中只会出现小程序已经向用户请求过的权限。
+
+		注意：返回值中的 authSetting 字段中是插件的权限（如用户信息功能页授权）
+
+	wx.openSetting({})
+
+		概念：调起客户端小程序设置界面，返回用户设置的操作结果。设置界面只会出现小程序已经向用户请求过的权限。
+
+		注意：返回值中authSetting字段为用户授权的结果
+
+	wx.getUserInfo({})
+
+		概念：获取用户信息。
+
+		注意：
+
+			1、在小程序插件中使用时，需要在用户信息功能页中获得用户授权之后调用。否则将执行 fail。
+
+			2、授权方式是可以通过给标签button绑定获取用户信息事件来授权，当点击按钮时会弹出一个授权对话框，点击确定或取消时触发事件
+		
+				例：
+
+					< button open-type="getUserInfo" bindgetuserinfo="getUserInfo">授权</button>
+
+					getUserInfo(){
+
+						wx.getUserInfo({ success(userInfo){ console.log(userInfo)//打印的就是用户的所有信息 } })
+
+					}
+
+				注意：
+
+					1、小程序插件中不能使用
+
+					2、按钮必须有open-type属性，表示使用微信开放能力。
+
+
+六、try{}catch{}
+
+	概念：
+
+		1、SDK 的方法调用有可能会抛出错误，如使用wx.navigateTo('path/to/page') 在页面不存在时会出错。
+
+		2、在可能出错的代码上，你可以使用 try catch 进行处理
+
+	语法：
+
+		try{ wx.navigateTo('path/aa/') }catch( err ){ console.log( "错误信息：" + err ) }
+
+	注意：当try{}里的代码出错时执行catch{}里的代码
+		
+
+			
+

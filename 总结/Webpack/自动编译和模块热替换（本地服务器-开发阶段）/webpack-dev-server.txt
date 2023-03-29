@@ -1,0 +1,54 @@
+
+
+	基于node的express框架搭建本地服务器
+
+	安装
+
+		npm i webpack-dev-server -D
+
+	使用
+
+		package.json:
+
+			"scripts":{
+
+				"serve": "webpack serve" //借助webpack-cli
+
+			}
+
+	概述：
+			编译并将打包好的文件放到本地服务器上，默认：localhost:8080
+
+			当源代码发生改变时重新编译打包并自动刷新浏览器
+
+	配置
+
+		moudle.exports = {
+			
+			  devServer:{
+        				
+				/** 
+         
+					* @introduce 将对应(文件夹下所有文件)/文件复制到打包后的文件夹中（本地服务器） 
+         
+					* @detail 开发阶段可代替copy-webpack-plugin插件
+         			* */
+        
+				// 旧版 contentBase:"" //所要复制的本地文件夹路径
+        
+				static:"assets"//所要复制的本地文件夹路径
+		
+				static:['assets'],
+						
+				static:{
+
+					directory: path.join(__dirname, './assets'),
+
+					publicPath:"/assets"				
+
+				}
+    
+			}
+
+
+		}

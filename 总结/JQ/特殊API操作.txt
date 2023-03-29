@@ -1,0 +1,59 @@
+
+
+	-------val()
+			作用：用于设置和获取表单元素的值，例如input、textarea的值
+
+			语法：	
+				设置值：$("input").val("zs")
+				获取值：$("input").val()
+
+	-------html()和text()
+
+			作用：html方法相当于innerHTML text方法相当于innerText
+		
+			语法：
+				html(): 
+					设置值：$("targetNode").html("<span>内容</span>")  
+					获取值: $("targetNode").html()
+				text(): 
+					设置值：$("targetNode").text("内容")  
+					获取值：$("targetNode").text()
+
+			区别：html方法会识别html标签，text方法会将内容直接当成字符串，并不会识别html标签。
+
+	------width()和height()
+
+			作用：设置或者获取匹配元素的宽度和高度
+			
+			语法：
+				width(): 
+					1、设置宽度 $("targetNode").width(200)//注意不带单位			
+					2、获取宽度 $("targetNode").width()//注意获取的值不带单位
+
+				height(): 
+					1、设置宽度 $("targetNode").height(200)//注意不带单位			
+					2、获取宽度 $("targetNode").height()//注意获取的值不带单位
+
+	-------scrollTop()和scrollLeft()
+			
+			作用：获取页面被卷去的宽度和高度
+	
+			语法：
+				1、获取页面卷去的宽度：$(window).scrollTop()
+				2、获取页面卷去的高度：$(window).scrollLeft()
+				
+				3、通过自定义动画可以设置页面卷去距离的宽度和高度：
+						
+					$("html,body").animate({ srcollTop/scrollLeft: 0 }) //可以不带单位
+
+	-------offset()和position()
+			
+			作用：offset方法获取元素距离document的位置，position方法获取的是元素距离有定位的父元素的位置。
+				
+				注意：offset可以设置值且值不带单位，position不可以,方法获取的都是一个对象
+
+			语法：
+				1、获取距离document的位置：$("targetNode").offset()
+				2、设置距离document的位置：$("targetNode").offset({top:200,left:200})
+	
+				3、获取距离有定位的父元素的位置：$("targetNode").position()	

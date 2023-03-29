@@ -1,0 +1,50 @@
+
+	一、概念
+
+		Object.values()方法返回一个给定对象自身的所有可枚举属性值的数组，值的顺序与使用for...in循环的顺序相同 
+
+	( 区别在于 for-in 循环枚举原型链中的属性 )。
+
+	二、语法
+
+		Object.values(obj)
+
+	三、参数
+
+		obj：要返回其枚举自身属性的对象。
+
+	四、返回值
+
+		一个包含对象自身的所有可枚举属性值的数组。
+
+	五、注意
+
+		1、Object.values()返回一个数组，其元素是在对象上找到的可枚举属性值。属性的顺序与通过手动循环对象的属性值所给出的顺序相同。
+
+	六、例
+
+		
+		const obj = {}
+
+		Object.defineProperties( obj,{
+
+			aa:{ enumerable:true,value:1 },
+
+			bb:{ enumerable:false }
+	
+		} )
+
+		console.log( obj ) //{ aa:1,bb:undefined }
+
+		console.log( Object.values( obj ) ) //[ 1 ]
+
+
+		//当我们使用数字键时，返回的值根据键的数字顺序
+		
+		var an_obj = { 100: 'a', 2: 'b', 7: 'c' };
+
+		console.log(Object.values(an_obj)); // ['b', 'c', 'a']
+
+		console.log(Object.values('foo')); // ['f', 'o', 'o']
+
+

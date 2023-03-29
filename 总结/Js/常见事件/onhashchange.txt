@@ -1,0 +1,3 @@
+
+
+	onhashchange 事件在页面的URL的锚部分(以 '#' 号为开始) 发生改变时触发 。//可通过location.hash来修改锚部分。

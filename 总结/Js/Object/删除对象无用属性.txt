@@ -1,0 +1,7 @@
+
+
+		const obj = { a: 0, b: 1, c: 2 }; 
+
+		const { a, ...rest } = obj;
+
+		// rest => { b: 1, c: 2 }

@@ -1,0 +1,32 @@
+
+
+	错误对象现在有一个 cause 属性，用于指定导致即将抛出的错误的原始错误。这有助于为错误添加额外的上下文信息并帮助诊断意外行为，我们可以
+通过在作为第二个参数传递给 Error() 构造函数的对象上设置 cause 属性来指定错误的原因。
+
+	例
+
+		function userAction() {
+  
+			try {
+    
+				apiCallThatCanThrow();
+  
+			} catch (err) {
+    
+				throw new Error('New error message', { cause: err });
+  
+			}
+
+		}
+
+		try {
+  
+			userAction();
+	
+		} catch (err) {
+  
+			console.log(err);
+  
+			console.log(`Cause by: ${err.cause}`);
+		}
+

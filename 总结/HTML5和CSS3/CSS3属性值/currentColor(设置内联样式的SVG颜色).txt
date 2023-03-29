@@ -1,0 +1,44 @@
+
+		currentColor是CSS3中的变量，它表示“当前的标签所继承的文字颜色”。
+
+		!tips：“当前颜色” 指本体color , 如果没有设置color就找父元素,一级一级找,一直到根元素位置。		
+
+		color:currentColor；
+
+		currentColor最好用的是设置内联样式的SVG颜色。当从UI那里拿到icon时通常都带有fill属性（比如fill: #333），我们可以在使用前将
+	
+	fill属性的值替换成currentColor。这样就可以不用深入到SVG内部（icon -> path -> fill）去覆盖fill属性了。
+
+	HTML
+
+		<!-- Before -->
+		
+		<path fill="#bbdb44" d="..."/>
+
+
+		<!-- After -->
+
+		<path fill="currentColor" d="..."/>
+
+	CSS
+
+		/* Before */
+
+		.icon:hover path {
+  
+			fill: #112244;
+
+		}
+
+		/* After */
+
+		.icon {
+  
+			color: #bbdb44;
+		}
+
+
+		.icon:hover {
+  
+			color: #112244;
+		}

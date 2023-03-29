@@ -1,0 +1,120 @@
+
+
+	一、通过 data attribute 与 JavaScript 通信，就可以实现列表的交错过渡
+
+	二、例
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.3.4/gsap.min.js"></script>
+
+		<div id="demo">
+  
+			<input v-model="query" />
+  
+			<transition-group
+    
+				name="staggered-fade"
+   
+ 				tag="ul"
+    				
+				:css="false"
+    
+				@before-enter="beforeEnter"
+    
+				@enter="enter"
+    
+				@leave="leave"
+  			>
+    
+				<li
+      
+					v-for="(item, index) in computedList"
+      
+					:key="item.msg"
+      
+					:data-index="index"
+    				>
+      
+					{{ item.msg }}
+    
+				</li>
+  			</transition-group>
+		</div>
+
+		const Demo = {
+  
+			data() {
+    
+				return {
+   			
+					query: '',
+      
+					list: [
+        
+						{ msg: 'Bruce Lee' },
+        
+						{ msg: 'Jackie Chan' },
+        
+						{ msg: 'Chuck Norris' },
+        
+						{ msg: 'Jet Li' },
+        
+						{ msg: 'Kung Fury' }
+      					]
+    
+				}
+  			},
+  
+			computed: {
+    
+				computedList() {
+      
+					var vm = this
+      
+					return this.list.filter(item => {
+        
+						return item.msg.toLowerCase().indexOf(vm.query.toLowerCase()) !== -1
+      					})
+    				}
+  			},
+  
+			methods: {
+    
+				beforeEnter(el) {
+      					
+					el.style.opacity = 0
+      
+					el.style.height = 0
+    				},
+    
+				enter(el, done) {
+      
+					gsap.to(el, {
+        
+						opacity: 1,
+        
+						height: '1.6em',
+        
+						delay: el.dataset.index * 0.15,
+        
+						onComplete: done
+      					})
+    				},
+    
+				leave(el, done) {
+      
+					gsap.to(el, {
+        
+						opacity: 0,
+        
+						height: 0,
+        
+						delay: el.dataset.index * 0.15,
+        
+						onComplete: done
+      					})
+    				}
+  			}
+
+		}
+
+Vue.createApp(Demo).mount('#demo')

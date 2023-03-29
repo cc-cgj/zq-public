@@ -1,0 +1,22 @@
+
+
+	在less文件中使用calc() 函数用于动态计算长度值时必须要加~，否则转为css文件直接得到的是计算后的值，而不是表达式。
+
+		 例：~ "calc( 100vh ‐ 90rpx )";
+
+	在less文件中 &表示的是父亲的类名
+
+	例：
+
+		.father {  .children{ &:nth-last-child( -n+4 ) }  }
+
+		//&:nth-last-child( -n+4 ) === .father:nth-last-child(-n+4)
+
+			匹配类名为father元素下的倒数四个子元素
+
+
+	Date.now() ：返回当前时间的时间戳(一串数字)，单位为毫秒
+
+
+		
+

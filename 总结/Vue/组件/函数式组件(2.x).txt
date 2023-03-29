@@ -1,0 +1,171 @@
+
+
+	https://cn.vuejs.org/v2/guide/render-function.html#%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BB%84%E4%BB%B6
+
+	一、概念
+		
+		之前创建的锚点标题组件是比较简单，没有管理任何状态，也没有监听任何传递给它的状态，也没有生命周期方法。实际上，它只是一个接受一些 
+
+	prop 的函数。在这样的场景下，我们可以将组件标记为 functional，这意味它无状态 (没有响应式数据)，也没有实例 (没有 this 上下文)。
+
+	二、用例
+
+		Vue.component('my-component', {
+  
+			functional: true,
+  
+			// Props 是可选的
+  
+			props: {
+    		
+				// ...
+  			},
+  		
+			// 为了弥补缺少的实例
+  
+			// 提供第二个参数作为上下文
+  
+			render: function (createElement, context) {
+    
+				// ...
+  
+			}
+
+		})
+		
+			在添加 functional: true 之后，需要更新我们的锚点标题组件的渲染函数，为其增加 context 参数，并将 this.$slots.default 更新为 
+
+		context.children，然后将 this.level 更新为 context.props.level。
+
+			
+	三、注意：
+
+		在 2.3.0 之前的版本中，如果一个函数式组件想要接收 prop，则 props 选项是必须的。在 2.3.0 或以上的版本中，你可以省略 props 选项，
+
+	所有组件上的 attribute 都会被自动隐式解析为 prop。
+
+		当使用函数式组件时，该引用将会是 HTMLElement，因为他们是无状态的也是无实例的。
+
+
+	在 2.5.0 及以上版本中，如果你使用了单文件组件，那么基于模板的函数式组件可以这样声明：
+
+		<template functional> ... </template>
+
+
+
+	四、应用场景
+		
+		概念：根据传入 prop 的值来代为渲染更具体的组件
+
+		var EmptyList = { /* ... */ }
+
+		var TableList = { /* ... */ }
+
+		var OrderedList = { /* ... */ }
+
+		var UnorderedList = { /* ... */ }
+
+		Vue.component('smart-list', {
+  
+			functional: true,
+  				
+			props: {
+    		
+				items: { type: Array, required: true },
+    
+				isOrdered: Boolean
+  			},
+  			
+			render: function (createElement, context) {
+    
+				function appropriateListComponent () {
+      
+					var items = context.props.items
+
+      						if (items.length === 0)           return EmptyList
+      
+						if (typeof items[0] === 'object') return TableList
+      
+						if (context.props.isOrdered)      return OrderedList
+
+      					return UnorderedList
+    					
+				}
+
+    				return createElement( appropriateListComponent(),context.data,context.children )
+
+				//children：VNode 子节点的数组
+
+				//data：传递给组件的整个数据对象，作为 createElement 的第二个参数传入组件
+  			}
+		})
+
+	五、向子元素或子组件传递 attribute 和事件
+
+		概念：在普通组件中，没有被定义为 prop 的 attribute 会自动添加到组件的根元素上，将已有的同名 attribute 进行替换或与其进行智能合并。
+
+	然而函数式组件要求你显式定义该行为
+
+		1、render
+
+			Vue.component('my-functional-button', {
+  
+				functional: true,
+  
+				render: function (createElement, context) {
+    
+					// 完全透传任何 attribute、事件监听器、子节点等。
+    
+					return createElement('button', context.data, context.children)
+  
+				}
+			})
+
+		//通过向 createElement 传入 context.data 作为第二个参数，我们就把 my-functional-button 上面所有的 attribute 和事件监听器都传递下去了。
+		
+	事实上这是非常透明的，以至于那些事件甚至并不要求 .native 修饰符。
+
+		2、template
+
+			如果你使用基于模板的函数式组件，那么你还需要手动添加 attribute 和监听器。因为我们可以访问到其独立的上下文内容，所以我们可以
+
+	使用 data.attrs 传递任何 HTML attribute，也可以使用 listeners (即 data.on 的别名) 传递任何事件监听器。
+
+			<template functional>
+ 
+				<button class="btn btn-primary" v-bind="data.attrs" v-on="listeners" >
+   				
+					<slot>{{ props.title }}<slot>
+     
+  				</button>
+    
+  
+			</template>
+
+			<script> 
+			
+				export default { props:{ title:{ type:"String",default:"点击" } } }
+
+			</script>
+
+	六、slots() 和 children 对比
+		
+		你可能想知道为什么同时需要 slots() 和 children。slots().default 不是和 children 类似的吗？在一些场景中，是这样——但如果是如下的带有
+
+	子节点的函数式组件呢？
+
+		<my-functional-component>
+  
+			<p v-slot:foo> first </p>
+    	
+			<p>second</p>
+  
+		</my-functional-component>
+
+		对于这个组件，children 会给你两个段落标签，而 slots().default 只会传递第二个匿名段落标签，slots().foo 会传递第一个具名段落标签。同时
+
+	拥有 children 和 slots()，因此你可以选择让组件感知某个插槽机制，还是简单地通过传递 children，移交给其它组件去处理。
+
+	
+		
+			

@@ -1,0 +1,5 @@
+
+
+	-------输入框自动聚焦：添加autofocus:"autofocus"属性
+
+	注意：autofocus 在移动版 Safari 上不工作

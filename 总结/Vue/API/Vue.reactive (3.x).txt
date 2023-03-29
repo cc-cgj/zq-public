@@ -1,0 +1,47 @@
+	
+
+	代替2.x observable
+
+	注意：
+
+		1、reactive 将解包所有深层的 refs，同时维持 ref 的响应性。
+
+			例
+
+				import { reactive } from 'vue'
+
+				const count = ref(1)
+
+				const obj = reactive({ count })
+
+				// ref 会被解包
+
+				console.log(obj.count === count.value) // true
+
+				// 它会更新 `obj.count`
+
+				count.value++
+
+				console.log(count.value) // 2
+
+				console.log(obj.count) // 2
+
+				// 它也会更新 `count` ref
+				
+				obj.count++
+
+				console.log(obj.count) // 3
+	
+				console.log(count.value) // 3
+
+		2、当将 ref 分配给 reactive property 时，ref 将被自动解包。
+
+				const count = ref(1)
+
+				const obj = reactive({})
+
+				obj.count = count
+
+				console.log(obj.count) // 1
+
+				console.log(obj.count === count.value) // true

@@ -1,0 +1,63 @@
+
+	2.x
+
+		https://router.vuejs.org/zh/guide/advanced/navigation-failures.html#%E6%A3%80%E6%B5%8B%E5%AF%BC%E8%88%AA%E6%95%85%E9%9A%9C
+
+		概念：
+
+			在 v3.2.0 中，可以通过使用 router.push 的两个可选的回调函数：onComplete 和 onAbort 来暴露导航故障。
+
+			从版本 3.1.0 开始，router.push 和 router.replace 在没有提供 onComplete/onAbort 回调的情况下会返回一个 Promise。
+
+		这个 Promise 的 resolve 和 reject 将分别用来代替 onComplete 和 onAbort 的调用。
+
+			所有的导航故障都会有 to 和 from 属性，分别用来表达这次失败的导航的目标位置和当前位置。
+
+	isNavigationFailure
+
+		概念：
+			
+			导航故障是一个 Error 实例，附带了一些额外的属性。要检查一个错误是否来自于路由器，可以使用 isNavigationFailure 函数
+
+		注意：
+
+			如果你忽略第二个参数：isNavigationFailure(failure)，那么就只会检查这个错误是不是一个导航故障。
+
+
+	NavigationFailureType
+
+		概念：
+
+			NavigationFailureType 可以帮助开发者来区分不同类型的导航故障。有四种不同的类型值
+
+		属性：
+		
+			redirected：在导航守卫中调用了 next(newLocation) 重定向到了其他地方。
+
+			aborted：在导航守卫中调用了 next(false) 中断了本次导航。
+
+			cancelled：在当前导航还没有完成之前又有了一个新的导航。比如，在等待导航守卫的过程中又调用了 router.push。
+
+			duplicated：导航被阻止，因为我们已经在目标位置了。
+
+
+
+	例：
+
+		import VueRouter from 'vue-router'
+
+		const { isNavigationFailure, NavigationFailureType } = VueRouter
+
+		router.push('/admin').catch(failure => {
+  
+			if (isNavigationFailure(failure, NavigationFailureType.redirected)) {
+		
+				// 向用户显示一个小通知
+    				showToast('Login in order to access the admin panel')
+    
+				failure.to.path // '/admin'
+    
+				failure.from.path // '/'
+ 		 	}
+
+		})

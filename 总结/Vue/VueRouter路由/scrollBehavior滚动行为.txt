@@ -1,0 +1,39 @@
+
+
+	https://router.vuejs.org/zh/guide/advanced/scroll-behavior.html#%E5%BC%82%E6%AD%A5%E6%BB%9A%E5%8A%A8
+
+	const router = new VueRouter({
+  
+			routes: [...],
+  
+			scrollBehavior (to, from, savedPosition) {
+    
+				// return 期望滚动到哪个的位置
+
+				if (savedPosition) {
+    
+					return savedPosition
+  	
+				} else {
+    
+					return { x: 0, y: 0 }
+  
+				}
+
+				//模拟“滚动到锚点”的行为
+
+				 if (to.hash) {
+    
+					return {
+      
+						selector: to.hash
+
+						behavior: 'smooth' //平滑滚动
+    
+					}
+  
+				}
+  	
+			}
+
+		})

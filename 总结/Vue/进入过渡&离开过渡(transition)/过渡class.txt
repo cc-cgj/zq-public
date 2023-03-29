@@ -1,0 +1,99 @@
+
+
+	一、概念
+		
+		在进入/离开的过渡中，会有 6 个 class 切换。
+
+			1、v-enter( 2.x )/ v-enter-from ( 3.x )
+
+				定义进入过渡的开始状态。在元素被插入之前生效，在元素被插入之后的下一帧移除。
+
+			2、v-enter-active：
+
+				定义进入过渡生效时的状态。在整个进入过渡的阶段中应用，在元素被插入之前生效，在过渡/动画完成之后移除。这个类
+			可以被用来定义进入过渡的过程时间，延迟和曲线函数。
+
+			3、v-enter-to：
+				
+				定义进入过渡的结束状态。在元素被插入之后下一帧生效 (与此同时 v-enter-from 被移除)，在过渡/动画完成之后移除。
+
+			4、v-leave（2.x）/ v-leave-from （3.x）
+
+				定义离开过渡的开始状态。在离开过渡被触发时立刻生效，下一帧被移除。
+
+			5、v-leave-active
+
+				定义离开过渡生效时的状态。在整个离开过渡的阶段中应用，在离开过渡被触发时立刻生效，在过渡/动画完成之后移除。这个类可以被
+			用来定义离开过渡的过程时间，延迟和曲线函数。
+
+			6、v-leave-to
+
+				离开过渡的结束状态。在离开过渡被触发之后下一帧生效 (与此同时 v-leave-from 被删除)，在过渡/动画完成之后移除。			
+
+	二、例：
+
+		<div id="demo">
+  
+			<button @click="show = !show"> Toggle render </button>
+    
+  			<transition name="slide-fade"> 
+					
+					<p v-if="show">hello</p>
+  
+   			</transition>
+
+		</div>
+
+		const Demo = {
+  				
+			data() { return { show: true } } 
+
+		}
+
+		Vue.createApp(Demo).mount('#demo')
+
+		/* 可以设置不同的进入和离开动画   */
+
+		/* 设置持续时间和动画函数        */
+
+		.slide-fade-enter-active {
+  
+			transition: all 0.3s ease-out;
+
+		}
+
+		.slide-fade-leave-active {
+  
+			transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+
+		}
+
+		.slide-fade-enter-from,
+			
+		.slide-fade-leave-to {
+  
+			transform: translateX(20px);
+ 				
+			opacity: 0;
+		}
+  
+	三、注意：
+
+		1、对于这些在过渡中切换的类名来说，如果你使用一个没有名字的 <transition>，则 v- 是这些class名的默认前缀。
+
+		2、如果你使用了 <transition name="my-transition">，那么 v-enter-from会替换为 my-transition-enter-from
+			
+		3、v-enter-active 和 v-leave-active 可以控制进入/离开过渡的不同的缓和曲线
+
+	四、2.x与3.x区别
+
+			1、leave-class 已经被重命名为 leave-from-class (在渲染函数或 JSX 中可以写为：leaveFromClass)
+
+			2、enter-class 已经被重命名为 enter-from-class (在渲染函数或 JSX 中可以写为：enterFromClass)
+
+    
+  
+
+
+		
+		

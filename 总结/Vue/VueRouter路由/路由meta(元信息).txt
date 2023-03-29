@@ -1,0 +1,38 @@
+
+
+	一、概念
+
+		meta简单来说就是路由元信息 也就是每个路由身上携带的信息。
+
+		定义：
+
+			const router = new VueRouter({
+
+				routes:[
+
+					{
+
+						path:"/home",
+
+						name:"home",
+
+						component:()=>import('@/components/home')
+
+						meta:{ keepAlive:true,title:"主页" }
+	
+
+					}
+		
+
+				]
+
+			})
+
+
+	二、作用
+
+		vue-router路由元信息说白了就是通过meta对象中的一些属性来判断当前路由是否需要进一步处理，如果需要处理，按照自己想要的效果进行处理
+
+	即可
+		
+		使用：this.$router.meta.keepAlive

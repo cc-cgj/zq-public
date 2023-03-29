@@ -1,0 +1,34 @@
+
+	
+
+	const Func = function() {}(); // Commonly used
+
+	(function() {})(); // Commonly used
+
+	(function() {}()); // Commonly used
+
+	[function() {}()];
+
+	+ function() {}();
+
+	- function() {}();
+	
+	~ function() {}();
+
+	! function() {}();
+
+	new function() {};
+
+	new function() {}();
+
+	void function() {}();
+
+	typeof function() {}();
+
+	delete function() {}();
+
+	1, function() {}();
+
+	1 ^ function() {}();
+
+	1 > function() {}();

@@ -1,0 +1,31 @@
+
+
+	概念：将窗口滚动到文档中的特定位置或将指定DOM节点滚动到指定位置
+
+	语法：
+
+		window.scroll（ top，left ）//window.srcoll( 0,0 )
+
+		window.scroll( options ) 	
+
+	参数：
+		
+		left：表示你想要置于左上角的像素点的横坐标。
+
+		top：表示你想要置于左上角的像素点的纵坐标
+
+		options：{ //是一个具有三种可能属性的对象：
+
+			top：0，
+			
+			left：0,
+
+			behavior：smooth(光滑的)，instant(立即)或auto的字符串。默认是auto。
+		
+		}
+
+	注意：
+
+		1、scroll方法也可用来操作DOM
+
+		2、数值不带单位(px)

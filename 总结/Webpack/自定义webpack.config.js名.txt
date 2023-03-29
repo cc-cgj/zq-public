@@ -1,0 +1,15 @@
+
+
+	"scripts": {
+   
+   		 "build": "webpack" ---->"webpack --config zidingyi.config.js"
+  
+	}
+
+	//package.json	
+
+	当执行npm run build会默认找webpack.config.js文件（没有会报错）
+
+	
+	
+	

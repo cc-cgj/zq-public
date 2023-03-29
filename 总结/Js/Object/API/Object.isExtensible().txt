@@ -1,0 +1,26 @@
+	
+	一、概念
+
+		Object.isExtensible() 方法判断一个对象是否是可扩展的（是否可以在它上面添加新的属性）。
+
+	二、语法
+
+		Object.isExtensible(obj)
+
+	三、参数
+
+		obj：需要检测的对象
+
+	四、返回值
+    
+		表示给定对象是否可扩展的一个Boolean 。
+
+	五、注意
+
+		1、默认情况下，对象是可扩展的：即可以为他们添加新的属性。以及它们的 __proto__ 属性可以被更改。
+
+		2、Object.preventExtensions，Object.seal 或 Object.freeze 方法都可以标记一个对象为不可扩展
+
+		3、在 ES5 中，如果参数不是一个对象类型，将抛出一个 TypeError 异常。在 ES6 中， non-object 参数将被视为一个不可扩展的普通对象，
+
+	因此会返回 false 。

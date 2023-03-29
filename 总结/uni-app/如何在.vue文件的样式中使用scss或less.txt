@@ -1,0 +1,7 @@
+
+
+	一、如何在.vue文件的样式中使用scss或less
+
+		1、在Hbuilder中安装scss或less插件
+
+		2、在<style>中声明语言模式，即 <style lang = "scss/less" >

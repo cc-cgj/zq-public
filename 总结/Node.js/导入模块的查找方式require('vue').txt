@@ -1,0 +1,17 @@
+
+
+	当导入的是一个模块，即没有指明相对或绝对路径时，如: require('vue')
+
+		导入第三方模块的顺序是：
+
+			1、先查找当前文件所属目录下是否有node_modules文件夹
+			
+			2、再找node_modules文件夹中是否有vue文件夹
+
+			3、再找vue文件夹下是否有package.json文件
+
+			4、再找package.json文件内容中main的值对应的文件,没有main值或对应的文件不存在则接着在vue文件中查找index.js或
+
+		index.json或index.node文件，若都没有则返回上一级目录或当前文件所属磁盘的根目录找node_modules文件夹，规则同上，若都没有
+
+		查找到则会报错

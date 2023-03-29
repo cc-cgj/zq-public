@@ -1,0 +1,54 @@
+
+
+	注意
+
+		1、mixin 对象的钩子将在组件自身钩子之前调用。
+
+			const myMixin = { 
+
+				created() { onsole.log('mixin 对象的钩子被调用') }
+
+			}
+
+			const app = Vue.createApp({
+  
+				mixins: [myMixin],
+  
+				created() { console.log('组件钩子被调用') }
+
+
+			})
+
+			// => "mixin 对象的钩子被调用"
+			
+			// => "组件钩子被调用"
+
+		2、值为对象的选项，例如 methods、components 和 directives，将被合并为同一个对象。两个对象键名冲突时，取组件对象的键值对。
+
+		3、Mixin 也可以进行全局注册。使用时格外小心！一旦使用全局 mixin，它将影响每一个之后创建的组件 (例如，每个子组件)。
+
+
+	全局 mixin
+
+		3.x
+
+			const app = Vue.createApp({
+  
+				myOption: 'hello!'
+
+			})
+
+			// 为自定义的选项 'myOption' 注入一个处理器。
+
+			app.mixin({
+  
+				created() {
+    
+					const myOption = this.$options.myOption
+    	
+					if (myOption) { console.log(myOption) }
+  
+				}
+			})
+
+app.mount('#mixins-global') // => "hello!"

@@ -1,0 +1,90 @@
+
+
+一、概念
+
+	ES6 原生提供了 Promise 对象这个系统对象。将js中异步操作队列化，按照期望的顺序执行，返回符合预期的结果，最常见的就是网络请求。如：
+
+promise构造函数是同步执行的，then方法是异步执行的
+	
+二、基本使用
+
+	1、实例promise系统构造函数，并且传入一个回调函数
+
+	2、在回调函数的参数中，必须声明两个形参：1.resolve(fullfilled表示成功的状态) 2.reject(表示拒绝，错误的状态，就是不成功)
+
+	3、promise本身是一个状态对象，它有一共有3状态(resolved（成功）,rejected(失败),pennding（等待）)
+
+	4、在回调函数参数中resolve和reject都是函数
+
+	5、在声明了promise对象后，如果没有在传入的回调函数内调用resolve状态函数，则promise默认为pennding的状态
+
+		
+		例：
+			const p = new Promise( function( resolve,reject ){
+	
+				resolve()
+				
+			} )
+
+三、then()
+
+	概念：
+
+		1、promise对象自带then方法
+
+		2、promise对象的then方法内有两个参数，这两个参数都是回调函数,第一个参数为resolveEvent，第二个参数为rejectEvent
+
+		3、promise中调用resolve函数触发resolveEvent，调用reject函数触发rejectEvent
+
+		4、promise中调用resolve和reject函数时可以将参数传递给then方法中对应的回调函数中
+
+		5、promise的then方法内的参数本身默认有返回值，返回值是一个新的promise对象且默认传递一个回调函数并在函数内调用reslove函数)
+
+		6、如果希望控制then返回的promise对象的状态，必须在函数内返回一个新的promise对象，并在传入的回调函数内调用状态对应的函数
+
+			例：
+
+				const p = new Promise( ( resolve,reject )=>{
+
+					resolve("hello world")
+
+				} )
+
+				p.then( (aa)=>{
+
+					console.log(aa) //hello world
+
+					return new Promise( (resolve,reject){
+
+						resolve()						
+
+					} )
+
+				},()=>{
+
+					console.log( "这是调用reject函数时所触发的函数" )
+
+				} ).then(()=>{
+
+					console.log( "我是上一个then方法返回的promise对象所触发的函数" )
+				})
+
+		注意：
+
+			在实例Promise系统对象时，传入的回调函数同时调用resolve和reject，此时并不会同时触发then方法的两个回调函数，只会触发第一个
+
+		调用的函数所触发then方法内相对应的回调函数。
+
+四、catch
+
+	概念：在实例promise系统构造函数，在传入一个回调函数中调用reject后，一定会进入then中的第二个回调，如果then中没有写第二个回调，则进入catch
+
+　　网络异常（比如断网），会直接进入catch而不会进入then的第二个回调
+
+	例：
+
+		new Promise(( resolve,reject )=>{ reject( "错误信息" ) }).catch( err ){ console.log( err )//"错误信息" }
+	
+
+
+	

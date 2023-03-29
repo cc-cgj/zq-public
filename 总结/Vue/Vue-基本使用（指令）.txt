@@ -1,0 +1,757 @@
+
+
+一、概念
+
+	Vue是一套用于构建用户界面的渐进式框架，也是一种MVVM框架。
+
+		渐进式的简单介绍：
+			
+				渐进式意味着你可以将Vue作为你应用的一部分嵌入其中，带来更丰富的交互体验。
+
+
+二、MVVM
+	
+	M：Model(数据模型)
+
+	V：View（视图模型，负责将数据模型转化为UI展现在页面上，即那些DOM结构）
+
+	VM：（一个同步View和Model的对象）
+
+	核心：改变常规的方式，即每次修改数据时，都需要通过DOM来同步到视图中去。MVVM将业务与视图进行分离。如在vue实例中修改数据时，页面上展示
+
+的数据也会跟着发生改变，即不需要操作DOM，html标签中的内容也会跟着改变。
+
+
+	Vue3.x
+
+		const app = Vue.createApp({})
+
+		app.component('SearchInput', SearchInputComponent)
+
+		app.directive('focus', FocusDirective)
+
+		app.use(LocalePlugin)
+
+		应用实例暴露的大多数方法都会返回该同一实例，允许链式：
+
+			Vue.createApp({}).component('SearchInput', SearchInputComponent).directive('focus', FocusDirective).use(LocalePlugin)
+
+		注意：与大多数应用方法不同的是，mount 不返回应用本身。相反，它返回的是根组件实例。
+ 
+三、基本使用
+
+	1、实例Vue构造函数		
+
+	2、选择操作的DOM对象 //不能挂载到body和html
+
+		例：
+
+			const app = new Vue({
+
+				el:"#app",//挂载id为app的html元素
+						
+				data:{ //定义数据
+					
+				    msg:"hello world"		
+				}，
+				methods:{ //存放方法
+				
+				}
+			})	
+		
+四、插值表达式
+
+	概念：将vue实例里的数据显示在页面上
+
+	使用方法：使用在vue实例对象对应的DOM元素的html的正反标签之间	
+
+	语法：<div>{{msg}}</div>
+
+	参数：
+
+		msg：
+
+			1、可以是data里的属性名，当属性值发生改变时页面显示的数据也会发生改变。
+
+			2、可以是methods里的方法名，表示调用该方法，即方法名()
+
+			3、可以是computed里的函数，表示调用该函数，注意的是计算属性里的函数为一个属性，即调用时只需要写函数名。	
+
+
+	注意：
+
+		1、插值表达式内可以进行运算，如加减乘除、三目运算符、比较运算符、支持数值类型的一些内置方法。
+			
+		2、支持数组的索引取值方法
+		
+		3、支持对象属性的取值方法，即对象名.属性名
+		
+
+五、指令 //都是穿插在标签内
+
+	------ v-cloak
+
+		概念：当vue代码没被解析时，插值表达式显示的是它本身，即显示的是{{message}}，而在解析之后，属性v-cloak会自动移除，所以可以通过
+
+	给含有插值表达式的标签添加该属性来控制vue代码解析之前不显示该标签，即[v-cloak]:{display:none}。
+
+		语法：<div v-cloak>{{message}}</div>
+
+	------ v-text
+
+		概念：相当于插值表达式的功能
+
+		语法：<div v-text="msg"></div>
+
+		参数：
+
+			msg：可以是变量，也可以是数值和字符串
+
+		------使用插值表达式和v-text的区别：
+
+					1、{{}}在vue解析之前，插值表达式显示的是它本身，即显示的是{{message}}
+
+					2、v-text或v-html指令在vue解析之前是不会在标签内插入数据的
+
+	------ v-html	
+
+		概念：相当于插值表达式的功能，不过可以解析标签	
+
+		语法：<div v-html="msg"></div>
+
+		参数：
+			msg：可以是变量，也可以是数值和字符串，不过变量或字符串内可以包含标签
+
+	------ v-pre
+
+		概念：相当于<pre>标签，表示的是不解析
+
+		语法：<div v-html="msg">{{message}}</div>  //浏览上显示为：{{message}}
+
+		
+	------ v-once
+
+		概念：元素和组件只渲染一次，不会随着数据的改变而改变
+
+		语法：<div v-once="msg">{{message}}</div>
+
+		注意：修改vue实例data里的属性message的属性值，此时div里显示的数据不会发生改变
+
+		适用场景：
+
+			在 Vue 中渲染纯 HTML 元素的速度非常快，但有时你可能有一个包含很多静态内容的组件。在这些情况下，可以通过向根元素添加 v-once 指令
+		来确保只对其求值一次，然后进行缓存
+
+			注意：
+				再次提醒，不要过度使用这种模式。虽然在需要渲染大量静态内容的极少数情况下使用这种模式会很方便，但除非你注意到先前的渲染
+			速度很慢，否则就没有必要这样做——另外，过度使用这种模式可能会在以后引起很多混乱。例如，假设另一个开发人员不熟悉 v-once 或者没
+			有在模板中发现它，他们可能会花上几个小时来弄清楚为什么模板没有正确更新
+
+	------ v-model
+
+		概念：数据的双向绑定，常用在<input>、<select>、<textarea>、components中使用。
+
+		语法：<input type = "text" v-model="msg" /> 
+
+		注意：
+			1、input绑定的变量为msg，当输入框内输入值时，vue实例里data内的msg属性值也会发生改变，修改vue实例里data内的msg属性值时，
+		
+		输入框内的值value值也会发生改变。
+
+			2、给单选按钮(radio)进行双向绑定时，单选按钮需要添加value值。vue实例里data内的msg属性值用来接收value的值。当两个按钮
+
+		v-model值相同时也会发生互斥，即只能选中一个，跟添加name属性是一样的。
+
+			3、给复选框(checkbox)进行双向绑定时，复选框需要添加value值。vue实例里data内的msg属性值必须为数组，用来接收选中的复选
+
+		框的值，否则选中其中一个就会默认将所有双向绑定的复选框选中，因为v-model的值不是数组时，此时选中时msg不为value值，而是true。
+
+			4、给下拉列表进行双向绑定时，是给标签<select>添加v-model属性，msg用来接收option标签的value值且当<select>添加multiple
+
+		（规定可选择多个选项）属性时，msg会自动变为数组，数组的值为选中的option标签的value值。
+
+
+		------表单输入框修饰符 //v-model指令的修饰符
+		
+			1、number
+		
+				概念：输入框输入内容默认为string类型，修改默认输入值类型为number，即当输入框输入内容时，双向绑定的data中属性
+
+			msg的值为number类型。
+								
+				语法：<input type="text" v-model.number="msg" />
+
+			2、trim
+
+				概念：当输入框输入内容时，去掉双向绑定的data中属性msg的值的前后空格。
+
+				语法：<input type="text" v-model.trim="msg" />
+
+			3、lazy
+
+				概念：在默认情况下，v-model 在每次 input 事件触发后将输入框的值与数据进行同步 (除了上述输入法组织文字时)。你可以添加
+
+			lazy修饰符，从而转为在 change 事件之后进行同步
+
+				语法：<input type="text" v-model.lazy="msg" />
+
+				
+
+		注意：
+
+			对于需要使用输入法 (如中文、日文、韩文等) 的语言，你会发现 v-model 不会在输入法组织文字过程中得到更新。如果你也想响应
+
+		这些更新，请使用 input 事件监听器和 value 绑定来替代 v-model。
+
+
+	------ v-on
+		
+		概念：给标签添加监听事件 //	当一个 ViewModel 被销毁时，所有的事件处理器都会自动被删除。你无须担心如何清理它们
+
+		语法：<button v-on:click = "事件处理函数"></button> 
+
+		简写：v-on: => @ 
+
+		绑定多个事件： 
+
+			v-on/@ = "{ click:clickFn, mousemove:mousemoveFn }"
+
+		参数：
+
+			事件处理函数：
+
+					1、可以为Vue实例里的methods的方法
+			
+					2、可以为表达式，如将data内的属性值自增(num++),即每次点击时num都会加1
+
+			------vue获取事件对象的方法：
+
+					1、通过$event传递给事件处理函数的形参，该参数为固定写法，当要传递值时该参数在值的后面，否则无法将值传递
+
+				给事件处理函数
+
+				如 <button @click = "btn($event,20)"> ===> btn( e,id ){ console.log( e,id ) } //只会打印出事件对象
+
+					2、通过window.event直接获取
+
+					3、当事件处理函数只有一个参数时，浏览器会默认将事件对象传递给这个参数
+
+				如 <button @click = btn > ===> btn( e,id ){ console.log( e,id ) } //默认只打印出事件对象
+
+				注意：获取当前事件源(DOM对象)：e.target
+
+
+			------事件修饰符
+
+				1、stop
+
+					概念：阻止事件冒泡
+
+					语法：<div @click.stop = "btn">我是子元素</div>
+
+				2、prevent
+
+					概念：阻止默认事件
+
+					语法：<a href="#" @click.parent = "btn"></a>
+					
+						注意： 加#才会发生跳转
+
+				3、once
+
+					概念：只触发事件监听一次
+
+					语法：<div @click.once = "btn">只调用一次方法</div>
+
+					注意：once 修饰符还能被用到自定义的组件事件上。
+
+
+				4、只有修饰符 
+
+					<form @submit.prevent></form>
+
+				5、capture
+
+					概念：
+					
+						1、添加事件监听器时使用事件捕获模式
+
+						2、即内部元素触发的事件先在此处理，然后才交由内部元素进行处理（由内向外进行冒泡）
+
+					例：<div @click.capture="doThis">...</div>
+
+				6、self
+
+					概念：
+					
+						1、只当在 event.target 是当前元素自身时触发处理函数
+
+						2、即事件不是从内部元素触发的
+
+					例：<div @click.self="doThat">...</div>
+
+				8、passive
+
+					一、概念：
+
+						1、浏览器都会去查询一下是否有preventDefault阻止该次事件的默认动作。我们加上passive就是为了告诉浏览器，
+
+					不用查询了，我们没用preventDefault阻止默认动作。
+
+						2、这里一般用在滚动监听，@scoll，@touchmove 。因为滚动监听过程中，移动每个像素都会产生一次事件，每次
+
+					都使用内核线程查询prevent会使滑动卡顿。我们通过passive将内核线程查询跳过，可以大大提升滑动的流畅度。
+
+					二、注意：
+
+						1、不要把 .passive 和 .prevent 一起使用，因为 .prevent 将会被忽略，同时浏览器可能会向你展示一个警告。请
+
+					记住，.passive 会告诉浏览器你不想阻止事件的默认行为。
+
+						2、浏览器只有等内核线程执行到事件监听器对应的JavaScript代码时，才能知道内部是否会调用preventDefault函数
+
+					来阻止事件的默认行为，所以浏览器本身是没有办法对这种场景进行优化的。这种场景下，用户的手势事件无法快速产生，
+
+					会导致页面无法快速执行滑动逻辑，从而让用户感觉到页面卡顿。
+
+						3、这个 .passive 修饰符尤其能够提升移动端的性能。
+
+					三、例
+						
+						<div @scroll.passive="onScroll">...</div>
+					
+				7、注意
+
+					使用修饰符时，顺序很重要；相应的代码会以同样的顺序产生。因此，用 v-on:click.prevent.self 会阻止所有的点击，
+
+				而 v-on:click.self.prevent 只会阻止对元素自身的点击。
+
+				
+			
+			------键盘按键修饰符
+
+				1、enter
+
+					概念：当按下回车键时触发事件监听
+
+					语法：<input type = "text" @keyup.enter = "btn()" />
+
+				2、delete
+
+					概念：当按下删除/退格键时触发事件监听
+
+					语法：<input type = "text" @keyup.delete = "btn()" />	
+
+	
+				3、page-down
+
+					概念：当按下PageDown按键时触发
+
+					语法：<input @keyup.page-down="onPageDown" />
+
+				4、键码//3.x移除
+
+					概念：当按下回车键(enter)时触发事件监听
+
+					语法：<input type = "text" @keyup.13 = "btn()" />
+
+				5、注意
+
+					请注意修饰键与常规按键不同，在和 keyup 事件一起用时，事件触发时修饰键必须处于按下状态。换句话说，只有在按住
+
+				ctrl 的情况下释放其它按键，才能触发 keyup.ctrl。而单单释放 ctrl 也不会触发事件。
+
+				6、系统修饰键
+
+					概念：
+
+						.ctrl
+
+						.alt
+
+						.shift
+
+						.meta
+
+					例：
+
+						<!-- Alt + Enter -->
+
+						<input @keyup.alt.enter="clear" />
+
+						<!-- Ctrl + Click -->
+
+						<div @click.ctrl="doSomething">Do something</div>
+
+					注意：
+
+						在 Mac 系统键盘上，meta 对应 command 键 (⌘)。在 Windows 系统键盘 meta 对应 Windows 徽标键 (⊞)。
+
+					在 Sun 操作系统键盘上，meta 对应实心宝石键 (◆)。在其他特定键盘上，尤其在 MIT 和 Lisp 机器的键盘、以及其
+
+					后继产品，比如 Knight 键盘、space-cadet 键盘，meta 被标记为“META”。在 Symbolics 键盘上，meta 被标记为
+
+					“META”或者“Meta”。
+
+				7、exact 	
+					
+					概念：.exact修饰符允许你控制由精确的系统修饰符组合触发的事件
+
+					例：
+
+						<!-- 即使 Alt 或 Shift 被一同按下时也会触发 -->
+							
+						<button @click.ctrl="onClick">A</button>
+
+						<!-- 有且只有 Ctrl 被按下的时候才触发 -->
+
+						<button @click.ctrl.exact="onCtrlClick">A</button>
+
+						<!-- 没有任何系统修饰符被按下的时候才触发 -->
+
+						<button @click.exact="onClick">A</button>
+
+				8、鼠标按钮修饰符
+
+					.left
+
+					.right
+
+					.middle
+
+			------自定义键盘按键修饰符//3.x移除
+
+				概念：自定义按键修饰符名字是自定义的，但是对应的值必须是按键对应event.keyCode值
+
+				设置：Vue.config.keyCode.A = 65  //65表示的是ASCII码，设置的是全局按键修饰符
+
+				使用：<input type = "text" @keyup.A = "btn()" /> //当按下大写A时触发事件监听
+
+				注意：可以通过事件对象返回按键的ASCII码：console.log(event.keyCode)	
+
+		多事件处理器
+
+			概念：事件处理程序中可以有多个方法，这些方法由逗号运算符分隔
+
+			例：
+
+				<!-- 这两个 one() 和 two() 将执行按钮点击事件 -->
+
+				<button @click="one($event), two($event)"> Submit </button>
+				
+				methods: { 
+
+					one(event) { // 第一个事件处理器逻辑... },
+  		
+					two(event) { // 第二个事件处理器逻辑... }
+
+				}		
+		
+		
+	------ v-bind
+
+		概念：绑定标签的属性，绑定的属性值可以是变量、数组、对象或者值。
+
+		简写：v-bind: => :
+
+		语法：v-bind:class = "msg"
+
+		参数：msg可以是变量、数组、对象 //js中数组可以包括对象，对象可以包括数组
+
+			绑定class：
+
+				对象形式：
+		
+					<div v-bind:class = "{类名:isActive}"></div> //isActive=true时该类名存在
+	
+				数组形式：			
+
+					<div v-bind:class = "[变量1,变量2,{ className3:变量3,class-name4:变量4 }，三元运算符]"></div> 
+
+					//变量表示的是类名，为空时类名不存在
+
+						new Vue({
+					
+				    			     el:"div",
+	
+				    			     data:{
+		
+							     	isActive:true,
+					
+							    	变量1：类名1,
+
+								变量2：类名2,
+
+								变量3：类名3,
+
+								变量4：类名4,
+
+				   			      }
+
+							})
+
+				注意：
+
+					1、当你在带有单个根元素的自定义组件上使用 class attribute 时，这些 class 将被添加到该元素中。此元素上的现有
+
+				class 将不会被覆盖。
+
+					Vue 3.x
+
+					2、如果你的组件有多个根元素，你需要定义哪些部分将接收这个 class。可以使用 $attrs 组件 property 执行此操作
+					
+					// <p :class="$attrs.class">Hi!</p>	
+	
+			绑定行内style：
+
+
+				对象形式:
+						
+					<div :style = "{width:aa,height:bb}"></div>
+
+					new Vue({el:"div",data:{ aa:"200px",bb:"200px" }})
+
+				变量形式：
+
+					<div :style = "objStyle"></div>
+
+					new Vue({el:"div",data:{ objStyle:{ width:"200px",height:"200px" } }})
+
+				自动添加前缀
+					
+					1、在 :style 中使用需要一个 vendor prefix (浏览器引擎前缀) 的 CSS property 时，Vue 将自动侦测并添加相应的前缀。
+	
+					2、Vue 是通过运行时检测来确定哪些样式的 property 是被当前浏览器支持的。
+
+					3、如果浏览器不支持某个 property，Vue 会进行多次测试以找到支持它的前缀。
+		
+					例：
+
+						<div :style="{ display: ['-webkit-box', '-ms-flexbox', 'flex'] }"></div>
+
+						//这样写只会渲染数组中最后一个被浏览器支持的值。在本例中，如果浏览器支持不带浏览器前缀的 flexbox，
+
+					那么就只会渲染 display: flex。
+
+		注意：
+
+			1、标签内可以同时有v-bind:class和class两个属性
+
+			2、msg为数组时，里面可以包含对象，为对象时也可以包含数组。
+
+
+	------ v-if / v-else / v-else-if
+
+		概念：满足条件即存在，当不满足条件时，该标签会直接消失在DOM中
+
+		语法：<input type="text" v-if = "bool">
+
+		参数：bool：布尔值。
+
+		案例：
+
+			<div>
+				
+				<input type="text" name="user"  v-if = "bool">
+			
+				<input type="password" name="pwd" v-else>
+
+				<button @click="bool=!bool">切换</button>
+			<div>
+	
+			
+			new Vue({ el:"div",data:{ bool:true } })
+
+		注意：
+
+		------key的作用：
+
+			默认name为pwd的标签是不存在的，当点击按钮进行切换时，此时user消失pwd显示，但是user输入框内的值会存在在pwd输入框内，这
+		
+		是因为Vue在进行DOM渲染时，出于性能的考虑，会尽可能复用已经存在的元素，而不是重新创建新的元素，所以需要给每个元素添加唯一key值
+		
+		来解决。
+
+		------在 <template> 元素上使用 v-if 条件渲染分组
+
+			一、概念
+
+				因为 v-if 是一个指令，所以必须将它添加到一个元素上。但是如果想切换多个元素呢？此时可以把一个 <template>
+
+			元素当做不可见的包裹元素，并在上面使用 v-if。最终的渲染结果将不包含 <template> 元素。
+
+			二、例
+
+				<template v-if="ok">
+  
+					<h1>Title</h1>
+  
+					<p>Paragraph 1</p>
+  
+					<p>Paragraph 2</p>
+
+				</template>
+
+	------ v-show
+
+		概念：控制元素的显示与隐藏，当元素不满足条件时添加属性display：none
+
+		语法：<div v-show="true"></div>
+
+		注意：
+
+			1、不同的是带有 v-show 的元素始终会被渲染并保留在 DOM 中。v-show 只是简单地切换元素的 display CSS property。
+
+			2、在Vue3.x中v-show 不支持 <template> 元素，也不支持 v-else。	
+
+	------ v-for //只能在操作的DOM对象 内 使用
+
+		概念：对vue实例data内属性值为对象或数组进行遍历
+
+		语法：
+
+			一、遍历对象
+
+				<ul>
+			   	     <li v-for="(item,key,index) in msg" key="index">{{item}}---{age}</li> //循坏2次，即产生2个li标签
+				</ul>
+
+				new Vue({ el:"ul",data:{ msg:{name:"zs",age:18} } })
+
+				参数：
+					
+					item：属性值
+
+					key：属性名
+
+					index：索引值
+
+			二、遍历数组
+
+				<ul>
+			   	     <li v-for="(item,index) in msg" key="index">姓名：{{item}}</li> //循坏2次，即产生2个li标签
+				</ul>
+
+				new Vue({ el:"ul",data:{ msg:["zs","ls"] } })				
+
+				参数：
+					
+					item：数组内的值
+
+					index：索引值
+
+			三、遍历整数
+
+				<span v-for="n in 10" :key="n">{{ n }} </span>
+
+			四、遍历对象
+
+				<ul id="v-for-object" class="demo">
+  
+					<li v-for="(value, name, index) of myObject">{{ index }}.{{ name }}:{{ value }} </li>
+
+					//0.title:How to do lists in Vue
+
+					//1.author:Jane Doe
+
+					//2.publishedAt:2016-04-10
+
+				</ul>
+
+				Vue.createApp({
+
+					data() {
+    
+						return { myObject: { title: 'How to do lists in Vue', author: 'Jane Doe', publishedAt: '2016-04-10' }}  				
+					
+					}
+
+				}).mount('#v-for-object')
+
+				注意：
+
+					1、在遍历对象时，会按 Object.keys() 的结果遍历，但是不能保证它在不同 JavaScript 引擎下的结果都一致。
+
+					2、你也可以用 of 替代 in 作为分隔符，因为它更接近 JavaScript 迭代器的语法：<div v-for="item of items"></div>
+
+		注意：
+
+			1、通过插值表达式可以将参数表示的值渲染到页面上，但只在循环的标签内(包括子标签)有效。
+
+			2、建议给循环的每个标签内都添加唯一表示key
+
+			3、当 Vue 正在更新使用 v-for 渲染的元素列表时，它默认使用“就地更新”的策略。如果数据项的顺序被改变，Vue 将不会移动 DOM 元素
+
+		来匹配数据项的顺序，而是就地更新每个元素，并且确保它们在每个索引位置正确渲染。这个默认的模式是高效的，但是只适用于不依赖子组件状态或
+
+		临时 DOM 状态 (例如：表单输入值) 的列表渲染输出。
+
+			4、为了给 Vue 一个提示，以便它能跟踪每个节点的身份，从而重用和重新排序现有元素，你需要为每项提供一个唯一的 key attribute
+
+
+		Vue 3.x
+
+			在 <template> 中使用 v-for
+
+				类似于 v-if，你也可以利用带有 v-for 的 <template> 来循环渲染一段包含多个元素的内容。比如：
+
+				<ul>
+  
+					<template v-for="item in items" :key="item.msg">
+    
+						<li>{{ item.msg }}</li>
+    
+						<li class="divider" role="presentation"></li>
+  
+					</template>
+
+				</ul>
+
+			注意：
+
+				1、在 Vue 2.x 中，<template> 标签不能拥有 key。不过，你可以为其每个子节点分别设置 key。
+
+				2、在 Vue 3.x 中，key 则应该被设置在 <template> 标签上。
+
+	v-if vs v-show
+
+		1、v-if 是“真正”的条件渲染，因为它会确保在切换过程中，条件块内的事件监听器和子组件适当地被销毁和重建。
+
+		2、v-if 也是惰性的：如果在初始渲染时条件为假，则什么也不做——直到条件第一次变为真时，才会开始渲染条件块。
+
+		3、相比之下，v-show 就简单得多——不管初始条件是什么，元素总是会被渲染，并且只是简单地基于 CSS 进行切换。
+
+		4、一般来说，v-if 有更高的切换开销，而 v-show 有更高的初始渲染开销。因此，如果需要非常频繁地切换，则使用 v-show 较好；
+
+	如果在运行时条件很少改变，则使用 v-if 较好。
+
+
+	v-for 与 v-if 一同使用
+
+		2.x
+
+			2.x 版本中在一个元素上同时使用 v-if 和 v-for 时，v-for 会优先作用。
+
+		3.x
+
+			当它们处于同一节点，v-if 的优先级比 v-for 更高，这意味着 v-if 将没有权限访问 v-for 里的变量：
+
+				<!-- 这将抛出一个错误，因为“todo” property 没有在实例上定义 -->
+
+				<li v-for="todo in todos" v-if="!todo.isComplete"> {{ todo.name }} </li>
+
+				解决方案：
+
+					可以把 v-for 移动到 <template> 标签中来修正：
+
+					<template v-for="todo in todos" :key="todo.name">
+  			
+						<li v-if="!todo.isComplete"> {{ todo.name }} </li>
+
+					</template>
+
+
+				
+
+			
+

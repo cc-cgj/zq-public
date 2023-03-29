@@ -1,0 +1,31 @@
+
+	
+	一、概念
+
+		强制触发依赖于一个浅层 ref 的副作用，这通常在对浅引用的内部值进行深度变更后使用。
+
+	二、例
+
+		const shallow = shallowRef({
+  
+			greet: 'Hello, world'
+
+		})
+
+
+		// 触发该副作用第一次应该会打印 "Hello, world"
+
+		watchEffect(() => {
+  
+			console.log(shallow.value.greet)
+
+		})
+
+
+		// 这次变更不应触发副作用，因为这个 ref 是浅层的
+
+		shallow.value.greet = 'Hello, universe'
+
+		// 打印 "Hello, universe"
+
+		triggerRef(shallow)

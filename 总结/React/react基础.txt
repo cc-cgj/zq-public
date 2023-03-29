@@ -1,0 +1,185 @@
+
+一、概念
+
+	React是一个用于构建用户界面的javaScript库，起源于facebook(脸书)的内部项目，后续在2013年开源了出来
+
+
+二、特点
+
+	1、声明式
+
+		你只需要描述UI看起来是什么样式，就跟写HTML一样，React负责渲染UI(用户界面(User Interface))。
+
+		当数据改变时 React 能有效地更新并正确地渲染组件。
+
+	2、基于组件
+	
+		组件是React最重要的内容，组件表示页面中的部分内容。
+
+		组件逻辑使用 JavaScript 编写而非模板，因此你可以轻松地在应用中传递数据，并使得状态与 DOM 分离。
+
+	3、一次学习，随处编写
+
+		使用React可以开发Web应用，还可以使用 Node 进行服务器渲染或使用 React Native 开发原生移动应用使，还可以开发VR应用
+
+	4、使用虚拟DOM、高效
+
+		虚拟DOM其实质是一个JavaScript对象，当数据和状态发生了变化，都会被自动高效的同步到虚拟DOM中，最后再将仅变化的部分同步到DOM中
+
+	（不需要将整个DOM树重新渲染）,而vue的虚拟DOM是将整个DOM树全部替换。
+
+三、React基本使用
+
+	1、安装：npm react react-dom //react 包是核心，提供创建元素，组件等功能 react-dom 包提供DOM相关功能
+	
+	2、引入react和react-dom的两个js文件
+
+		<script src="./node_modules/react/umd/react.development.js"></script>
+
+		<script src="./node_modules/react‐dom/umd/react‐dom.development.js"></script>
+
+		注意：引入顺序，react-dom在后
+
+	3、创建react元素 //console.log(ul)打印出来的是一个对象
+
+		let ul = React.createElement('ul', null, 'hellow react');
+
+		参数：
+
+			第一个参数：元素名称
+
+			第二个参数：元素属性 传递的是个对象，若不传递则传入null。
+
+				//键表示属性名，值则表示属性值。例：{ className:"box" } 则表示该标签具有类名为box的类
+			
+			第三个参数：元素内容
+	
+		注意：
+			第三个参数还可以是创建的react元素，当有多个创建的react元素时，它们之间用逗号分隔
+
+			例：
+
+				let li1 = React.createElement( 'li',null,'我是第一个li' )
+				
+				let li2 = React.createElement( 'li',null,'我是第二个li' )
+
+				let ul = React.createElement( 'ul',{ id:"aa" },li1,li2)
+ 
+				ReactDOM.render( ul,document.querySelector('#app') )
+
+	4、渲染到页面
+
+		ReactDOM.render( 创建的react对象或html标签,所要渲染在哪个DOM元素内 )
+
+		例：ReactDOM.render( ul,document.getElementById('#app'))
+
+
+四、React脚手架
+
+	说明：React脚手架自动安装 Webpack，Babel，ESLint等工具辅助项目开发，零配置，无需手动配置繁琐的工具即可使用
+
+	1、初始化项目 
+
+		npx create-react-app my-pro  ----> npm i create-react-app (-g) | create-react-app 项目名
+
+			//create-react-app：脚手架的名称  
+
+			//my-pro：创建的项目名称
+
+	2、启动项目
+
+		npm start //注意：需要在项目根目录下执行该命令
+
+	3、导入react和react-dom包
+
+		import React from 'react'
+
+		import ReactDOM from 'react-dom'
+
+	4、将创建的react标签在指定的DOM元素中渲染
+
+		ReactDOM.render( React.createElement('li',{ className:'类名' },'hello world'),document.querySelector('#app') )
+
+五、JSX
+
+	------背景
+
+		由于通过createElement()方法创建的React元素导致代码比较繁琐，结构不直观，无法一眼看出描述的结构，不优雅，用户体验不爽
+
+	------概念
+
+		JSX是JavaScript XML 的简写，相当于在JavaScript代码中写HTML标签。JSX不是一个字符串，它是react对象
+
+		注意：需要使用Babel编译处理后，才能在浏览器环境中使用。编译JSX语法的包： @bable/preset-react
+			
+	------基本使用
+
+		1、创建react对象
+
+			let aa = ( <h1> hello world </h1> )
+
+		2、渲染元素
+
+			ReactDOM.render( aa,document.querySelector('#app') )
+
+			注意：
+
+				1、React元素的属性名使用驼峰命名法。如特殊属性名：class -> className，for -> htmlFor，tabindex -> tabIndex
+
+				2、如果没有子节点的React元素可以用 /> 来结束。如：<li />
+
+				3、推荐使用小括号包裹JSX，从而避免JS中自动插入分号报错
+
+				4、必须要有根标签，建议使用JSX提供的<></>进行包裹，跟小程序的<block>相同，该标签不会渲染到页面上
+
+				5、在JSX中使用 { 变量 } 来解析变量。标签属性值为变量时不需要加双引号，如 <p className={ aa }></p>
+
+			//<label> 标签的 for 属性应当与相关元素的 id 属性相同。在 label 元素内点击文本，就会使input标签自动聚焦。	
+
+
+	------嵌入js变量和条件渲染
+
+			let content = "插入的内容"
+
+			let aa = ()=>{
+
+				if(content!==""){ return <> <h1> { content } </h1> </> }
+
+			}
+	
+			ReactDOM.render( aa,document.querySelector('#app') )
+
+			注意：在{}中不能出现语句。js中的对象是一个例外，一般只会出现在style属性中。
+
+
+	------列表渲染
+
+			let arr = [{ id:1,name:"zs" },{ id:2,name:"ls" }]
+
+			let aa = <ul>  
+
+					{ arr.map( (v)=> <li key={ v.id }>{ v.name }</li> ) } 
+
+				</ul>
+
+			ReactDOM.render(aa,document.querySelector("#app"))
+
+			注意：
+
+				1、在{}中可以调用方法
+				
+				2、在react中的jsx语句中可以直接使用map()方法进行列表渲染，跟vue中v-for指令一样。
+
+				3、在map()中必须return 返回 JSX 语句
+
+
+	------样式处理
+
+		1、在index.js文件中 import './css/index.css' //引入css文件
+
+		<li className='css文件内的类名' key={item.id} style={{'color': 'red',"backgroundColor": 'pink'}}></li>
+		
+		注意：在style里面我们通过对象的方式传递数据
+		
+
+	

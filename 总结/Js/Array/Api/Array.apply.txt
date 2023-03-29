@@ -1,0 +1,11 @@
+
+
+
+	Array.apply(null, {length: 5}) length为特殊字段，意思是生成一个长度为5的数组，由于没赋值，所以都是undefined;
+
+
+ 	如果要赋值，可以这样
+
+	console.log(Array.apply(null, {0:'a', 1: 'b', 2: 'c', 3: 'd', 4: 'e', length:5})); //["a", "b", "c", "d", "e"]
+
+	和ES6的Array.from有点类似, Array.from

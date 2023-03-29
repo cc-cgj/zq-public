@@ -1,0 +1,24 @@
+
+
+	一、navigator对象(系统对象)
+
+		navigator.userAgent返回的是浏览器用于 HTTP 请求的用户代理头的值（包括浏览器内核）
+
+	二、用来判断网页是在手机端打开还是电脑端打开
+
+		if((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEM obile|MQQBrowser|JUC|Fennec|
+
+	wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) 
+
+			{ window.location.href = ""; //手机 } 
+
+		else 
+
+			{ window.location.href = ""; //电脑 }
+
+
+		注意：
+
+			match() 方法可在字符串内检索指定的值并返回，或找到一个或多个正则表达式的匹配。
+
+	

@@ -1,0 +1,15 @@
+
+	一、概念
+
+		但是replace仅替换第一次出现的子字符串，而replaceAll会替换所有
+
+	
+	二、例
+
+		// 以前
+
+			console.log('aaa'.replace(/a/g,'A')) //AAA
+
+		// 简化后
+
+			console.log('aaa'.replaceAll('a','A')) //AAA

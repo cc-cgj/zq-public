@@ -1,0 +1,9 @@
+{
+	"Print to console": {
+		"scope": "javascript,vue", //作用范围
+		"prefix": "cc", //设置快捷键
+		"body": [
+			"<template>\n<div>\n</div>\n</template>\n\n<script>\nexport default{\n}\n</script>\n\n<style>\n</style>\n"
+		] //输出的内容
+	}
+}

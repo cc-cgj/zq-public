@@ -1,0 +1,24 @@
+
+
+	module.exports = {
+
+		 resolve:{
+
+			 //自动添加文件扩展名设置
+        
+			enxtensions:['.vue','.js','.jsx','.json','.tsx','.mjs','.ts'],
+        
+			alias:{ //路径别名设置，注意只配置alias仅支持.js文件使用
+            
+				"@":path.resolve(__dirname,'./src'),
+            
+				"js":path.resolve(__dirname,'./src/js')
+        
+			}
+   	
+
+		},
+
+	}
+
+	 

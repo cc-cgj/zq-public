@@ -1,0 +1,41 @@
+
+	概念：Axios 是一个基于 promise 的 HTTP 库，可以用在浏览器和 node.js 中。
+
+	axios的特点
+
+		1、在浏览器中发送XMLHttpRequest请求
+
+		2、在node.js中发送http请求
+
+		3、支持Promise API
+
+		4、拦截请求和响应
+
+		5、转换请求和响应的数据
+
+		6、取消请求
+
+		7、自动转换 JSON 数据
+
+
+	例：
+
+		axios({ //默认为get请求
+
+			url:"http://locahost/home/",
+		
+			params:{//专门针对get请求的参数拼接
+
+				name:"zs"		
+		
+			}，
+				
+			 headers: {},		
+	
+		})
+
+	注意：
+
+		axios为插件需要安装
+
+		调用axios的方法返回的是Promise对象

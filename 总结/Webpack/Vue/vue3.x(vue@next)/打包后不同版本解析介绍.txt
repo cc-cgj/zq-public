@@ -1,0 +1,27 @@
+
+
+	import { createApp } from 'vue' 
+
+
+	const app = createApp({
+
+		template:`<h2>Hello Wolrd</h2>`
+	
+
+	}).mount("#app")
+
+	//webpack编译后页面的app元素的内容不会替换和渲染显示template的内容
+
+	原因：打包默认使用的是vue/dist/vue.runtime.esm-bundler.js，此时template只会解析并不会编译
+
+	在webpack打包时，vue源代码对其进行解析包括
+
+		vue版本一：runtime + compiler -->解析template
+
+		vue版本二：runtime-only(默认) --> 解析render、.vue文件
+	
+	注意：vue打包后有多个不同版本解析，可参考node_module/vue/dist
+		
+	vue.runtime.global.js //不包括compiler(编译)内容，包更小
+
+	vue.global.prod.js //压缩版本

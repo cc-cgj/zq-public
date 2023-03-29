@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="like_button_container"></div>
+  <div id="app"></div>
+  <!-- 加载 React。-->
+  <!-- 注意: 部署时，将 "development.js" 替换为 "production.min.js"。-->
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script>
+    const LikeButton = React.createElement(
+      'button',
+      { onClick: () => this.setState({ liked: true }) },
+      'Like'
+    );
+    const domContainer = document.querySelector('#like_button_container');
+    const root = ReactDOM.createRoot(domContainer);
+    root.render(LikeButton);
+  </script>
+  <!-- 使用jsx -->
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js" crossorigin></script>
+  <script type="text/babel">
+    const arr = [1, 2]
+    arr.length = 10
+    class App extends React.Component {
+      constructor() {
+        super()
+        this.msg = 'hello wrold'
+        this.names = ['a', 'b', 'c']
+      }
+      render() {
+        return (
+          <div>
+            { /*  我是注释 */}
+            <h1> {this.msg} </h1>
+            <h1> {this.names} </h1>
+            <div className="header">
+              <span>header</span>
+            </div>
+            <div className="container">
+              <p>container</p>
+            </div>
+            <div className="footer">
+              <div className="footer-header">
+                {
+                  arr.map(() => <h1>footer</h1>)
+                }
+              </div>
+            </div>
+          </div>
+        )
+      }
+    }
+    ReactDOM.createRoot(document.querySelector('#app')).render(<App />)
+    // React.createElement("div", null, React.createElement("div", {
+    //   className: "header"
+    // }, React.createElement("span", null, "header")), React.createElement("div", {
+    //   className: "container"
+    // }, React.createElement("p", null, "container")), React.createElement("div", {
+    //   className: "footer"
+    // }, React.createElement("div", {
+    //   className: "footer-header"
+    // }, React.createElement("h1", null, "footer"))));
+  </script>
+</body>
+
+</html>

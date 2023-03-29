@@ -1,0 +1,7 @@
+
+	
+		function fn(a, b, c, d, e, f) {
+
+		}
+
+		console.log(fn.length); // 6

@@ -1,0 +1,24 @@
+
+一、概念
+	
+	yarn 是Facebook(脸书)发布的包管理器，可以看做是npm的替代品，功能与npm相同
+
+二、特点
+
+	yarn具有快速，可靠和安全的特点
+
+三、安装
+
+	npm i yarn -g
+
+四、初始化项目
+
+	yarn init
+
+五、安装包
+
+	yarn add 包名称
+
+六、安装项目依赖
+
+	yarn //相当于 npm i(install) 

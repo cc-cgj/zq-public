@@ -1,0 +1,61 @@
+
+
+	
+	一、连接数据库：mysqli_connect("网址","用户名","密码","数据库名","端口号");
+
+		例：$conn = mysqli_connect("localhost","root","root","stu","5503");
+
+		注意：端口号可不写，默认为3306
+		
+	二、执行SQL语句：mysqli_query(连接的数据库, 所要执行的sql语句) 
+			
+		例：
+			
+			$sql = "select * from stu";
+				
+			mysqli_query($conn,$sql);//从上到下返回表中所有行记录的结果集
+
+		注意：
+			
+			1、执行的是非查询sql语句时，mysqli_query()执行成功返回true,失败返回false
+				
+			2、而执行查询的sql语句时，mysqli_query()执行成功，返回查询数据的结果集，失败返回false
+		
+	三、返回错误描述：mysqli_error($conn); //若连接数据库失败则返回错误信息
+
+	四、关闭数据库连接：mysqli_close($conn); //关闭stu数据的连接
+
+	五、从结果集中取得一行作为关联数组返回:mysqli_fetch_assoc($res); //一次只取一条记录，从第一行开始, 如果没取到, 返回null
+
+		例：
+			$sql = "select * from stu";
+				
+			$res = mysqli_query($conn,$sql);//以升序返回表中所有行记录的结果集
+				
+			$row = mysqli_fetch_assoc($res);//此时返回的关联数组包含的是第一行记录。
+
+		注意：
+
+			1、在数组中，属性名为字段名，每个属性名对应着每行记录中的每个值。 //Array(["id"]=>1)
+
+			2、打印关联数组$row，打印结果只包含表中一行记录,默认是从表中第一行记录开始。
+
+			3、但若再添加一次$row = mysqli_fetch_assoc($res);此时print_r()打印在页面上可以看出$row数组包含的是表中第二行记录
+			
+		所以，可以通过循环的方式将每行记录都打印出来。
+
+				例：while($row=mysqli_fetch_assoc($res)){
+						
+					echo("<pre>");
+
+					print_r($row);
+				}
+				
+	六、返回结果集的行数：mysqli_num_rows($res); 
+
+	七、返回前一次 MySQL 操作（select、insert、update、replace、delect）所影响的记录行数。
+
+				语法：mysqli_affected_rows($conn)
+
+				参数： $conn必需。规定要使用的 MySQL 连接。
+

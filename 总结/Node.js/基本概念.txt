@@ -1,0 +1,26 @@
+
+
+	一、概念
+
+		1、Node.js 是一个基于 Chrome V8 引擎开发的 JavaScript 运行环境。在该运行环境中，js文件可直接运行，无需通过浏览器的js引擎来
+
+	解析Node.js一般用于做服务器开发。
+
+	注意：Node.js中无法调用 DOM 和 BOM 等浏览器内置 API。
+
+		2、Node应用由模块组成，采用的commonjs模块规范。每一个文件就是一个模块，拥有自己独立的作用域，变量，以及方法等，对其他的模块
+
+	都不可见。CommonJS规范规定，每个模块内部，module变量代表当前模块。这个变量是一个对象，它的exports属性（即module.exports）是对外的接
+
+	口。加载某个模块，其实是加载该模块的module.exports属性。require方法用于加载模块。
+
+
+	二、安装
+
+		LTS 为稳定版，Current为最新版，具有不稳定性
+
+	三、执行js代码
+
+		1、打开终端
+	
+		2、输入 node+空格+要执行的js文件的路径

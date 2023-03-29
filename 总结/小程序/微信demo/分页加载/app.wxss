@@ -1,0 +1,6 @@
+page {
+    font-size: 12px;
+    background-color: #EFEFF5;
+    min-height: 100vh;
+    color: #333;
+}

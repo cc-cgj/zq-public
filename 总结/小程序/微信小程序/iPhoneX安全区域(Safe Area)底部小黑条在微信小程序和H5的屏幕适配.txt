@@ -1,0 +1,27 @@
+
+
+	https://segmentfault.com/a/1190000022191869/
+	
+	env()和constant()，是IOS11新增特性，Webkit的css函数，用于设定安全区域与边界的距离，有4个预定义变量：
+
+	safe-area-inset-left：安全区域距离左边边界的距离
+
+	safe-area-inset-right：安全区域距离右边边界的距离
+
+	safe-area-inset-top：安全区域距离顶部边界的距离
+
+	safe-area-inset-bottom ：安全距离底部边界的距离
+
+	注意：
+
+		1、而env()和constant()函数有个必要的使用前提，当网页设置viewport-fit=cover的时候才生效，根据微信小程序的表现和我在实际真机
+	
+	测试时这两个函数生效，推测小程序里的viewport-fit默认是cover。
+
+		2、
+			
+			padding-bottom: constant(safe-area-inset-bottom); /*兼容 IOS<11.2*/
+
+			padding-bottom: env(safe-area-inset-bottom); /*兼容 IOS>11.2*/
+
+		3、env()和constant()需要同时存在，而且顺序不能换。

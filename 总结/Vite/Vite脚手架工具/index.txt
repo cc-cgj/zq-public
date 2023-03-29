@@ -1,0 +1,11 @@
+
+
+	安装
+
+		npm create vite@latest
+
+		/** or */
+		
+		npm i vite@latest -D
+
+		npx create-vite '项目名称'

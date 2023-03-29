@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>07-散点图</title>
+	</head>
+	<body>
+		<script src="lib/echarts.min.js" type="text/javascript" charset="utf-8"></script>
+		<div class="box" style="width: 600px;height: 400px;margin: 100px auto;"></div>
+		<script type="text/javascript">
+			/**
+			 * 1、散点图需要的数据是一个二维数组
+			 * 2、二维数组中的元素只能为数值
+			 * 3、给 xAxis 和 yAxis 配置 scale 的值为 true 。表示调整配置项, 脱离0值比例
+			 */
+			
+			var axisTwoArr = [
+				[1,180],
+				[2,170],
+				[3,140],
+				[4,110],
+				[5,190]
+			]
+			
+			var myEchart = echarts.init(document.querySelector(".box"))
+			
+			var option = {
+				xAxis:{
+					type:"value",
+					scale:true
+				},
+				yAxis:{
+					type:"value",
+					scale:true
+				},
+				series:[
+					// 普通散点
+					// {
+					// 	type:"scatter",
+					// 	data:axisTwoArr,
+					// 	// 控制散点的大小
+					// 	symbolSize:20,
+					// 	// 控制散点的颜色
+					// 	itemStyle:{
+					// 		color:"pink"
+					// 	}
+					// },
+					
+					// 有涟漪效果的散点
+					{
+						// 涟漪类型
+						type:"effectScatter",
+						data:axisTwoArr,
+						// 涟漪动画的大小
+						rippleEffect:{
+							scale:10
+						},
+						// 控制散点的颜色
+						itemStyle:{
+							color:"pink"
+						},
+						// 控制涟漪动画在什么时候产生
+						showEffectOn:"emphasis" , //render | emphasis
+						// render:代表界面渲染完成就开始涟漪动画
+						// emphasis:鼠标移入某个散点的时候, 该散点开始涟漪动画，移出时消失
+					}
+				]
+			}
+			
+			myEchart.setOption(option)
+		</script>
+	</body>
+</html>

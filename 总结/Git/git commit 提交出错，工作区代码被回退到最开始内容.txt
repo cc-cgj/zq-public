@@ -1,0 +1,5 @@
+
+
+	运行git stash list 即可看到当前最新一次错误提交得代码
+
+	接着运行git stash apply --index stash@{0} 即可恢复

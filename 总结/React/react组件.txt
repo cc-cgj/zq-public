@@ -1,0 +1,153 @@
+
+一、概念
+
+	组件表示页面中的部分功能，组合多个组件来实现完整的页面功能。
+
+二、使用函数创建组件
+
+	1、创建组件函数
+
+		function Cpt( props ){
+
+			console.log( props ) //{ uname:"zs",age:20 }
+
+			return <div>这是一个组件</div>		
+
+		}
+
+	2、渲染到页面
+
+		ReactDOM.render( < Cpt uname="zs" age={ 20 } />,document.querySelect('#app') )
+
+		注意：
+
+			1、在react中组件也是标签，如果没有子节点的标签可以用 /> 来结束。
+
+			2、函数名称必须以大写字母开头
+
+			3、函数组件必须有返回值，表示该组件的结构。返回值为JSX且JSX内必须有根标签。
+
+			4、通过组件标签传递的值，函数会默认有一个形参接收，该形参为一个对象，对象内包含所有传递的参数
+
+			5、不能修改以及添加props里的属性。
+
+			6、在函数组件中this值为undefined,即该函数没有被实例化对象的。
+
+三、类组件的基本使用
+
+	1、引入Component  //也可以不导入，直接用React.Component
+
+		import React,{ Component } from 'react'
+
+	2、创建类组件并继承Component类
+
+		class Cpt extends Component{
+	
+			constructor( props ){
+
+				super()					
+
+				console.log(props) //{ uname:"zs",age:20 }				
+
+			}
+
+			render(){
+
+				return ( <><h1> hello world <h1/> { this.props.uname } </> )		
+
+			}			
+
+		}
+
+	3、渲染到页面
+
+		ReactDOM.render( < Cpt uname="zs" age={ 20 }><Hello/>,document.getElementById('app') )
+	
+		注意：
+
+			1、类名称也必须要大写字母开头
+			
+			2、创建的类必须使用extends关键字继承React.Component父类
+		
+			3、类组件必须提供 render 函数，函数内必须有返回值且返回值为JSX且JSX内必须有根标签。 
+
+			4、使用constructor函数时必须在this之前调用super方法,否则会报错
+
+			5、类组件有实例化对象，this指向的是自己类的实例化对象
+
+
+	4、类组件传值
+
+		注意：
+
+			1、在constructor函数内获取传递的参数，必须在函数内声明一个形参来接收，接收的是一个对象，对象内包含所有传递的参数。
+
+			2、在constructor函数外，如JSX中{ this.props }来使用传递参数，该属性值也是一个对象，对象内包含所有传递的参数
+
+			4、不能修改以及添加props里的属性
+
+四、类组件的状态(数据)
+	
+	------概念：
+
+		由于函数组件中没有自己的data数据，即无法实现数据和视图动态绑定，而类组件有自己的状态(数据),可以实现数据和视图的动态绑定，即修改
+
+	数据的同时还可以更新页面上的内容。
+
+	------添加状态(数据)方式(两种)  //this指向的就是当前这个类对象
+
+		1、在constructor函数里面定义
+
+			class Cpt extends React.Component{
+
+				constructor(){
+
+					this.state = { uname:'zs' } 
+
+				}
+
+			}
+
+		2、属性初始化
+
+			class Cpt extends React.Component{
+
+				state = { uname:'zs' }
+
+			}
+
+		3、获取数据方式： this.state.uname //zs
+
+		注意：属性state是默认属性
+
+	------修改状态(数据)
+		
+		this.setState( { uname:'lisi' } )
+
+		注意：
+			1、修改状态时页面上的内容也会跟着改变，因为React底层会有监听，一旦我们调用了setState导致了数据的变化，就会重新调用一次
+
+		render方法，重新渲染 当前组件
+
+			2、使用this.state.uname = "lisi"修改状态时，数据虽然改变了，但页面的内容不会跟着改变
+
+五、总结
+
+	类组件 : 有状态, 有生命周期钩子函数 ,功能比较强大
+
+	函数组件 : 无状态，渲染更快
+
+	props：外界传进来的
+
+	state：自己的私有属性 类似vue的data 
+
+
+六、react组件中使用组件和vue使用的区别
+
+	1、在react中组件的return JSX语句内使用另外一个组件标签，标签名为类名或函数名。此时确立了两个组件为父子关系
+
+	2、在vue中组件模板内使用另外一个组件标签且需要在当前组件的components属性中注册使用的组件才可确立两个组件为父子关系。
+
+
+
+	

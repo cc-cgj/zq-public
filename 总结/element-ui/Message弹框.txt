@@ -1,0 +1,3 @@
+
+
+	$confirm方法具有返回值，值为confirm和cancel

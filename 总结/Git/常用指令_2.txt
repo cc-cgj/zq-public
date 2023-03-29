@@ -1,0 +1,14 @@
+
+	链接：https://juejin.cn/post/7133045617877581831
+
+	git checkout -b feat/sass-v1 origin/feat/sass-v1 // 克隆远端分支feat/sass-v1到本地
+
+	git checkout -b feat/saas-0817 // 从当前分支新建一个分支feat/saas-0817
+
+	git merge [branchName] 将branchName合并到当前分支
+
+	git merge [branchName] --squash 将branchName合并到当前分支，并将branchName上的所有提交合并成一次提交
+
+	git commit --amend 修改上次的提交信息，push后不会增加新的commit记录，但是会修改本次的commithash(也可以理解为删掉了最新的一次commit
+
+，重新又提交了一次)

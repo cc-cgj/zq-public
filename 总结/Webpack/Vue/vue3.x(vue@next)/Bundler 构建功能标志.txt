@@ -1,0 +1,49 @@
+
+
+	https://github.com/vuejs/core/tree/main/packages/vue#bundler-build-feature-flags
+	
+	从 3.0.0-rc.3 开始，esm-bundler构建现在公开了可以在编译时覆盖的全局功能标志：
+
+		//vue.esm-bundler.js、vue.runtime.esm-bundler.js
+
+		__VUE_OPTIONS_API__（启用/禁用选项 API 支持，默认值true：）
+
+			该选项表示是否对Vue2.x的选项式进行适配
+
+		__VUE_PROD_DEVTOOLS__（在生产中启用/禁用 devtools 支持，默认值false：）
+
+			该选项表示是否在生产阶段（线上）使用vue的调试工具
+		
+		注意
+
+			当使用 import { createApp } from "vue"时会抛出这两个警告
+
+		使用
+
+			webpack //使用DefinePlugin
+
+				webpack.config.js
+
+					const { DefinePlugin } = require('webpack');
+
+					module.exports = {
+	
+						plugins:[
+
+							new DefinePlugin({ 
+
+								__VUE_OPTIONS_API__: true,
+
+								__VUE_PROD_DEVTOOLS__: false 
+
+							})
+
+						]
+
+					}
+
+			Rollup: 使用 @rollup/plugin-replace
+
+			Vite：默认配置，但可以使用define选项覆盖
+
+				

@@ -1,0 +1,35 @@
+
+	
+	<--  components:cpt1.vue、cpt2.vue、...    -->
+
+	<script>
+
+		const directory  = './components' / '@/components'
+
+		const files = require.context(directory, true, /\.vue$/)  
+
+		const components = {}
+
+		const reg = /^\.\/(.*)\.\w+$/   
+
+		files.keys().forEach(path => {
+
+			const tag = path.replace(reg, '$1') // cpt1、cpt2、...
+  
+			Object.assign(coms, {
+    
+				[ tag ]: files( path ).default
+  
+			})
+
+		})
+
+
+		export default {
+
+			components{ ...components,...// }
+
+
+		}
+	
+	</script>

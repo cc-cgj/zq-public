@@ -1,0 +1,5 @@
+
+
+	组件的VNode：虚拟DOM
+
+	组件的instance：保存状态各种状态data/setup/computed/methods

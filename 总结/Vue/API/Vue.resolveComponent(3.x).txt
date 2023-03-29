@@ -1,0 +1,29 @@
+
+
+	一、概念
+
+		如果在当前应用实例中可用，则允许按名称解析 component。
+
+		返回一个 Component。如果没有找到，则返回接收的参数 name。
+
+	二、参数
+
+		name：String //已加载的组件的名称
+
+	三、注意
+
+		//resolveComponent 只能在 render 或 setup 函数中使用。
+
+	四、例
+
+		const app = createApp({})
+
+		app.component('MyComponent', { /* ... */ })
+
+		import { resolveComponent } from 'vue'
+
+		render() {
+  
+			const MyComponent = resolveComponent('MyComponent')
+	
+		}

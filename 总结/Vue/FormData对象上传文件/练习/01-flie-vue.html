@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<script src="vue.js" type="text/javascript" charset="utf-8"></script>
+	<script src="axios.js" type="text/javascript" charset="utf-8"></script>
+	<script src="vue-router.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>
+	<div id="app">
+		<input type="file" ref="file">
+		<button @click.prevent="submit">提交</button>
+
+	</div>
+	<div class="arr"></div>
+</body>
+<script type="text/javascript">
+	const vm = new Vue({
+		el: "#app",
+		methods: {
+			submit(e) {
+				const formdata = new FormData()
+				console.log(e.target.previousElementSibling.files["0"])
+				console.log(this.$refs.file.files["0"])
+				formdata.append("img", this.$refs.file.files["0"])
+				console.log(formdata);
+				axios.post("http://localhost/aa.php", formdata, {
+					headers: {
+						'Content-Type': 'multipart/form-data'
+					}
+				}).then(res => {
+					console.log(res)
+				})
+			}
+		}
+
+	})
+
+
+
+		// async function bb() {
+		// 	const p = new Promise(resolve => {
+		// 		resolve(123)
+		// 	}).then(a => {})
+		// 	const aa = await p
+		// 	console.log(aa)
+		// }
+
+		// bb()
+		// // console.log(aa)
+		// var obj = {
+		// 	'0': 'tom',
+		// 	'1': '65',
+		// 	'2': '男',
+		// 	length:3
+		// }
+
+		// let aa = document.querySelectorAll(".arr")
+		// console.log(Array.isArray(Array.from(aa))) //[]
+</script>
+
+</html>

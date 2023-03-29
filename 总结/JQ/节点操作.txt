@@ -1,0 +1,37 @@
+
+
+
+	一、创建节点 (注意：创建的元素节点是保存在内存中的，要想显示在页面上需要通过添加元素节点来实现)
+		
+		1、var 变量名 = $("<div>创建成功</div>")
+	
+	二、添加节点
+
+		1、append()：$("targetNode").append("Node") //将目标节点添加到指定父节点的子节点列表末尾。
+
+		2、appendTo(): $("Node").appendTo("targetNode") //被选元素的子节点列表结尾插入指定内容。
+
+		3、prepend(): $("targetNode").prepend("Node") //将目标节点添加到指定父节点的子节点列表最前。
+
+		4、prependTo(): $("Node").prependTo("targetNode") //被选元素的子节点列表最前插入指定内容。
+		
+		5、after():$("targetNode").after("Node") //在被选元素后插入指定的内容。	
+
+		6、before()：$("targetNode").before("Node") //在被选元素前插入指定的内容。
+
+	三、清空节点和删除节点
+		
+		1、empty(): $("targetNode").empty() //移除被选元素的所有子节点和内容，自己包留
+
+		2、html(): $("targetNode").html("") //注意被选元素绑定的事件不会被清除
+
+		3、remove()：$("targetNode").remove() //移除被选元素的所有子节点和内容，包括自己
+
+	四、克隆节点
+
+		1、clone(): $("targetNode").clone(true) //复制匹配的元素。默认复制内容包含匹配元素的子元素。参数表示是否复制元素的事件，
+
+	即当参数为true时复制匹配元素的事件。	
+	
+	
+

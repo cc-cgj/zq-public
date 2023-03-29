@@ -1,0 +1,13 @@
+
+
+	<select> 元素用来创建下拉列表。
+
+
+	<select> 元素中的 <option> 标签定义了列表中的可用选项。
+
+	<option>中value属性：定义送往服务器的选项值。
+
+	注意：
+		获取下拉列表中选项值，通过监听select标签，获取select标签的value值，此时select标签的value值为option标签中的value属性的值。常用
+
+	事件有：oninput、onchange，不过一般是在行内添加监听事件。

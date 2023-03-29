@@ -1,0 +1,76 @@
+
+
+	一、概念：
+		
+		1、FileReader 对象允许Web应用程序异步读取存储在用户计算机上的文件（或原始数据缓冲区）的内容，使用 File 或 Blob 对象指定要读取的文件或
+	数据
+
+		2、其中File对象可以是来自用户在一个<input>元素上选择文件后返回的FileList对象,也可以来自拖放操作生成的 DataTransfer对象,还可以是来自在
+	
+	个HTMLCanvasElement上执行mozGetAsFile()方法后返回结果。
+
+
+	二、注意
+
+		 FileReader仅用于以安全的方式从用户（远程）系统读取文件内容 它不能用于从文件系统中按路径名简单地读取文件。 要在JavaScript中按路径名读
+	取文件，应使用标准Ajax解决方案进行服务器端文件读取，如果读取跨域，则使用CORS权限。
+
+		此特性在 Web Worker 中可用
+
+
+	三、例
+		
+		/**
+   			* 文件处理
+   			* @param {File} file
+   			* @param {String} type
+   		*/
+  	
+		fileReaders(file, type) {
+
+    			var reader = new FileReader()
+
+    			switch (type) {
+      			
+				case 'binary':
+        				
+					reader.readAsBinaryString(file) /*二进制编码*/
+
+					//开始读取指定的Blob中的内容。一旦完成，result属性中将包含所读取文件的原始二进制数据。
+
+        				break
+      				
+				case 'text':
+        
+					reader.readAsText(file, 'gb2312') /*文本*/
+
+					//开始读取指定的Blob中的内容。一旦完成，result属性中将包含一个字符串以表示所读取的文件内容。
+        
+					break
+      
+				case 'url':
+
+				default:
+        
+					reader.readAsDataURL(file) /*url*/
+
+					//读取指定的 Blob 或 File 对象。读取操作完成的时候，readyState 会变成已完成DONE，并触发 loadend (en-US) 事件
+
+					//同时 onload的 e.target.result 属性将包含一个data:URL格式的字符串（base64编码）以表示所读取文件的内容。
+        
+					break
+     
+			}
+    
+			return new Promise((resolve, reject) => {
+      
+				reader.onload = event => resolve(event.target.result) }
+			
+				//处理load (en-US)事件。该事件在读取操作完成时触发。
+      
+				reader.onerror = function () { reject(false) }
+
+				//处理error (en-US)事件。该事件在读取操作发生错误时触发。
+    
+			})
+  		}

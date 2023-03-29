@@ -1,0 +1,56 @@
+一、CSS3 3D转换
+
+	------特点：
+		1、进大远小
+		2、物体和面遮挡不可见
+
+	------三维坐标系：
+		1、x轴：水平向右 //空间坐标轴中右边是正值，左边是负值
+		2、y轴：垂直向下 //空间坐标轴中下面是正值，上面是负值
+		3、z轴：垂直屏幕 //空间坐标轴中外边是正值，里面是负值
+
+	------3D移动translate3d
+		概念：就是在 2D 移动的基础上多加了一个可以移动的方向，就是 z 轴方向。
+		1、transform:translateX(100px)//只在X轴上移动
+		2、transform:translateY(100px)//只在Y轴上移动
+		3、transform:translateZ(100px)//只在Z轴上移动
+		4、transform:translate3d(x,y,z)//x, y, z 对应的值不能省略，不需要填写用 0 进行填充
+		注意：
+			当三个属性分开写且顺序为从上到下，此时也会发生覆盖，以最后一个为准。
+
+	------透视
+		perspective:MAXpx;
+
+		概念：
+			1、如果想要网页产生 3D 效果需要透视(理解成 3D 物体投影在 2D 平面上)
+			2、透视也称为视距，所谓的视距就是人的眼睛到屏幕的距离
+			3、距离视觉点越近的在电脑平面成像越大，越远成像越小
+
+		要点：
+			1、透视的单位是px
+			2、该属性需要写在被观察元素的父元素
+
+		注意：
+			通过设置元素的transform:translateZ(npx)属性来控制呈现的效果，n为正数，n越大,此时元素就会被放大，即元素离我们越来越近，当
+		达到n=MAX时就占满整个屏幕，即相当于遮住了我们的眼睛，而本质上元素的大小并没有改变。n为负数，n越大则元素离我们越远，即元素变得越来
+		越小。
+
+	------translateZ与perspective的区别
+		1、perspective给父级进行设置，translateZ给子元素进行设置不同的大小
+
+	------3D旋转rotate3d
+		1、transform: rotateX(45deg) //沿着 X 轴顺时针旋转 45 度
+		2、transform: rotateY(45deg) //沿着 Y 轴逆时针旋转 45 度
+		3、transform: rotateZ(45deg) //沿着 Z 轴顺时针旋转 45 度
+		------transform: rotate3d(x,y,z,45deg) //沿着自定义轴旋转 45 度
+			1、x, y, z 表示旋转轴的矢量，是标识你是否希望沿着该轴进行旋转，值为0时则该轴不进行旋转，最后一个标识旋转的角度
+			2、transform: rotate3d(1, 1, 0, 45deg) -- 沿着对角线旋转 45deg 
+			3、transform: rotate3d(1, 0, 0, 45deg) -- 沿着 x 轴旋转 45deg
+
+	------3D呈现transform-style:
+		1、transform-style: flat默认，代表子元素不开启3D立体空间，
+		2、transform-style: preserve-3d，表示子元素开启立体空间
+		3、代码是给观察元素的，但是实际上影响的是观察元素的子盒子	
+
+
+

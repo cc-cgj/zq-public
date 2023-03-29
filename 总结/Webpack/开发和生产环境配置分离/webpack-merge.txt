@@ -1,0 +1,26 @@
+
+
+	安装
+
+		npm i webpack-merge -D
+
+	使用
+
+
+		/** webpack.comm.js
+
+			module.exports = {  entry:"./src/main.js" }
+
+		/** webpack.produ.js
+
+		import { merge } = require('webpack-merge')
+
+		const common = require("./webpack.comm.config.js")
+
+		module.exports = merge(common,{
+
+			mode: "production",
+
+			plugins:[]
+
+		})

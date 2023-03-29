@@ -1,0 +1,45 @@
+
+
+	function Func() {
+    
+		console.log("x");
+    
+		Func = function() {
+        
+			console.log("y");
+    		}
+	}
+
+	场景：
+		
+		1、延迟加载函数
+
+
+			概念：当函数中的复杂判断分支越来越多时，可以大大节省资源开销。
+
+
+			例：
+
+				
+				function Func() {
+    					if (a === b) {
+        					console.log("x");
+    					} else {
+        					console.log("y");
+   					}
+				}
+				// replace with
+				function Func() {
+    					if (a === b) {
+       	 					Func = function() {
+            						console.log("x");
+       						}
+    					} else {
+        					Func = function() {
+            						console.log("y");
+        					}
+    					}
+    					return Func();
+				}
+
+				

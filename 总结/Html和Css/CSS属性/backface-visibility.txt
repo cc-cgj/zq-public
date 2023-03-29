@@ -1,0 +1,25 @@
+
+
+	一、概念
+
+		1、backface-visibility 属性定义当元素背面向屏幕时是否可见。
+
+		2、如果在旋转元素不希望看到其背面时，该属性很有用。
+
+	二、例
+
+		div{
+    
+			backface-visibility:hidden;
+    
+			-webkit-backface-visibility:hidden; /* Chrome 、Safari */
+    
+			-moz-backface-visibility:hidden; /* Firefox */
+    
+			-ms-backface-visibility:hidden; /* Internet Explorer */
+
+		}
+
+	三、注意
+
+		1、只有当元素旋转时生效

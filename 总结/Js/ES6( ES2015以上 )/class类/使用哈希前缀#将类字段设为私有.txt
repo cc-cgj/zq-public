@@ -1,0 +1,24 @@
+
+
+	class ClassWithPrivateField {
+    
+		#privateField;
+    
+		#privateMethod() {
+        
+			return 'hello world';
+    
+		}
+    
+		constructor() {
+        
+			this.#privateField = 42;
+    
+		}
+	}
+
+	const instance = new ClassWithPrivateField()
+
+	console.log(instance.privateField); //undefined
+
+	console.log(instance.privateMethod); //undefined

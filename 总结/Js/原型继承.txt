@@ -1,0 +1,153 @@
+	
+	一、原型对象继承
+
+		概念：将构造函数的原型对象(prototype)重定义为另外一个构造函数的实例对象，此时该构造函数就继承了另一个构造函数的属性和方法了。
+
+		注意：包括另一个构造函数原型对象(prototype)的属性和方法
+
+		例：
+			function Parent( name,age ){
+
+				this.name = name
+
+				this.age = age
+
+			}
+
+			Person.prototype.sayHi = ()=>{ console.log( "hello world" ) }
+
+			function Child(){}
+
+			Fn.prototype = new Person( "张三",20 )
+
+				var fn1 = new Child()
+
+				var fn2 = new Child()
+
+				console.log( fn1.name,fn2.name ) //张三 张三
+
+				console.log( fn.sayHi() ) //"hello world"
+
+		优点：可以继承父构造函数原型链的属性和方法
+
+		缺陷： 
+
+			1、因为改变原型指向的同时实现继承,直接初始化了属性，所以当前构造函数的所有实例对象所继承过来的属性的值都是一样的了
+
+			2、如果要修改继承的属性只能通过重新调用对象的属性进行重新赋值
+
+	二、借用构造函数继承
+			
+		概念：
+
+			1、通过修改(父)构造函数的this指向并调用该(父)构造函数来实现继承
+
+			2、修改后的this指向为所要继承的(子)构造函数的实例对象
+
+			3、此时(子)构造函数的每个实例对象都拥有继承的属性且属性值可以自定义
+
+		缺陷：不能继承(父)构造函数原型链的属性和方法
+	
+		例：
+			function Parent( pName,pAge ){
+
+				this.name = pName
+
+				this.age = pAge
+
+				this.sayHi = ()=>{ console.log( "hello world" ) }
+
+			}
+
+			Person.prototype.sayHi = ()=>{ console.log( "hello world" ) }				
+			
+			function Child( cName,cAge ){
+
+				Parent.call( this,cName,cAge )
+			
+			}
+
+				var fn1 = new Child( "张三",20 )
+
+				var fn2 = new Child( "李四",40 )
+
+				console.log( fn1.name,fn1.age ) //张三 20
+
+				console.log( fn2.name,fn2.age )	//李四 40
+
+				fn1.sayHi() //报错
+
+
+	三、组合继承
+
+		概念：即结合原型对象和借用构造函数进行继承
+
+		优点：继承后的属性可以自定义且可以调用(父)构造函数原型对象的属性和方法
+
+		例：
+			function Parent( pName,pAge ){
+
+				this.name = pName
+
+				this.age = pAge
+
+				this.sayHi = ()=>{ console.log( "hello world" ) }
+
+			}
+
+			Person.prototype.sayHi = ()=>{ console.log( "hello world" ) }				
+			
+			function Child( cName,cAge ){
+
+				Parent.call( this,cName,cAge )
+			
+			}
+
+			Child.prototype = new Parent()
+
+				var fn1 = new Child( "张三",20 )
+
+				var fn2 = new Child( "李四",40 )
+
+				console.log( fn1.name,fn1.age ) //张三 20
+
+				console.log( fn2.name,fn2.age )	//李四 40
+
+				fn1.sayHi() // "hello world"
+
+	四、拷贝继承
+
+		概念：把一个对象中的属性或者方法直接复制到另一个对象中，即两个对象共用一个地址，该地址(堆区)保存的是对象的属性和方法
+
+		特点：修改其中一个对象内的属性，另一个对象的属性也会发生改变
+
+		注意：
+
+			通过 for in 遍历对象来将属性复制给另一个对象，这种方式不会公共一个地址
+
+			例：
+				var obj1 = { name:"张三",age:20 }
+
+				var obj2 = {}
+
+				for( key in obj1 ){ obj2[ key ] = obj1[ key ] }
+
+				console.log( obj2.name ) //张三			
+				
+				obj2.name = "李四"
+
+				console.log( obj1.name ) //张三
+			
+				console.log( obj2.name ) //李四
+
+	五、总结
+
+		1、面向对象特性:封装,继承,多态。
+
+		2、继承,类与类之间的关系,面向对象的语言的继承是为了多态服务的。
+
+		3、ES6之前，js不是面向对象的语言,但是可以模拟面向对象.模拟继承.为了节省内存空间。	
+
+		4、通过原型和借用构造函数来继承，实现数据共享。目的则是为了节省内存空间。
+
+

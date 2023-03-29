@@ -1,0 +1,8 @@
+
+	例如，当用户使用拼音输入法开始输入汉字时，这个事件就会被触发。
+
+	inputElement.addEventListener('compositionstart', handleEvent);
+
+	inputElement.addEventListener('compositionupdate', handleEvent);
+
+	inputElement.addEventListener('compositionend', handleEvent);

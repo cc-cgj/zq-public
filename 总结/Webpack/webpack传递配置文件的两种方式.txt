@@ -1,0 +1,9 @@
+
+
+	1、通过执行命令行的指令（node_modules/.bin/webpack）将配置文件的内容（webpack.config.js）传给webpack函数
+
+	2、自己拿到配置文件的内容，再通过webpack函数将webpack.config.js的内容传递给该函数
+
+		// const webpack = require('webpack')
+
+		// const compile = webpack(webpackConfig)

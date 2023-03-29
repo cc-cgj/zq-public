@@ -1,0 +1,51 @@
+
+	
+	例
+
+		<template id="element-details-template">
+
+			<style> dl{ color:red; } </style>
+
+			 <slot name="attributes"><p>None</p></slot>
+			
+		<template/>
+
+
+		//创建自定义组件
+
+		customElements.define('element-details',
+  
+			class extends HTMLElement {
+    
+				constructor() {
+      
+					super();
+      
+					var template = document.getElementById('element-details-template').content;
+      
+					const shadowRoot = this.attachShadow({mode: 'open'}).appendChild(template.cloneNode(true));
+  
+				}
+
+			}
+
+		})
+
+		<element-details>
+
+			<dlv slot="attributes" />
+
+		</element-details>
+
+	注意
+
+		1、技术上来讲没有<template> 使用 <slot> 也是可以的。例如，  <slot> 在一个常规的<div> 标签里，仍然有占位符的特性，就像在 shadow DOM 中
+	
+	一样，这样我们能避免需要先获取模板对象的 content 属性再使用它的麻烦。然而这个特性在向一个 <template> 元素中添加槽时更加实用, 因为你不
+	
+	会基于一个渲染的元素定义一个模式。
+
+
+
+
+	

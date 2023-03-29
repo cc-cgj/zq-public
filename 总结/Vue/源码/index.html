@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html>
+
+<body>
+    <div id="app">
+        <h1>{{msg}}</h1>
+        <input v-model="msg" type="text">
+        <button @click="time">修改time:</button>
+        {{time}}
+    </div>
+</body>
+<script src="./simple.vue.js"></script>
+<script>
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            msg: 'hello world',
+            aa: {
+                bb: {
+                    msg: 'hello world'
+                }
+            },
+            time: new Date().getTime()
+        },
+        methods: {
+            time() {
+                this.time = new Date().getTime()
+            }
+        }
+    })
+
+</script>
+
+</html>

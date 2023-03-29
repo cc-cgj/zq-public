@@ -1,0 +1,31 @@
+
+   
+
+
+
+	* documents.cookie = 'cookieName'+ '=' + escape('cookievalue') + ';expires=' + expirationDateObj.toGMTString();
+
+   	* cookieName 表示 Cookie 的名称
+
+   	* cookievalue 表示 Cookie 的值
+
+   	* expirationDateObj 表示储存着失效日期的日期对象名，如果不需要指定失效日期，则不需要第二行。不指定失效日期,则浏览器默认是在
+
+关闭浏览器（也就是关闭所有窗口）之后过期。
+   	
+   	* 首先 escape() 方法：为什么一定要用？因为 Cookie 的值的要求是“只能用可以用在 URL 编码中的字符”。
+
+   	* 然后“expires”前面的分号：注意到就行了。是分号而不是其他。
+
+   	* toGMTString() 方法：设定 Cookie 的时效日期都是用 GMT 格式的时间的，其它格式的时间是没有作用的。
+
+
+	例：
+	
+		var d = new Date()
+	
+  		d.setDate(d.getDate()/当前时间 + timeNum（1）/'往后推几天')//设置 Date 对象中月的某一天 (1 ~ 31)。
+
+		document.cookie = 'token' + '=' + encodeURI(cookieValue) + ';expires=' + d.toGMTString()
+ 
+

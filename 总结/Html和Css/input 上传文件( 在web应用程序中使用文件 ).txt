@@ -1,0 +1,182 @@
+
+	一、FileList	
+
+		概念：
+
+			1、一个 FileList 对象通常来自于一个 HTML <input> 元素的 files 属性，你可以通过这个对象访问到用户所选择的文件。
+
+			2、该类型的对象还有可能来自用户的拖放操作，查看 DataTransfer (en-US) 对象了解详情。
+
+		例：
+
+			所有type属性(attribute)为file的 <input> 元素都有一个files属性(property),用来存储用户所选择的文件. 例如:
+
+				<input id="fileItem" type="file">
+
+			下面的一行代码演示如何获取到一个FileList对象中的第一个文件(File 对象):
+
+				var file = document.getElementById('fileItem').files[0];
+
+		属性：
+			
+			length //integer -- 一个只读的整数值,用来返回列表中的文件数量。
+
+		方法概述
+
+			File item(index);
+
+				根据给定的索引值，返回 FileList 对象中对应的 File 对象。
+
+		 	File item(index); //index File 对象在 FileList 对象中的索引值，从 0 开始。
+
+	在web中使用文件（MDN）：https://developer.mozilla.org/zh-CN/docs/Web/API/File/Using_files_from_web_applications
+		
+	二、使用对象URL来显示图片：
+
+		< input type = 'file' multiple id="file"/>
+
+		const input = document.getElementById('file')
+
+		input.onchange = function(e){
+					
+			var i = 0
+
+			var fileList = e.target.files 
+				
+			var objectURLs = []
+				
+			while( i < fileList.length){
+					
+				objectURLs.push( URL.createObjectURL( fileList[i] ) )
+					
+				i++
+
+			}
+
+			console.log( fileList )
+
+			// { 
+
+				file:{ 
+			
+					lastModified: 1611023889516
+
+					lastModifiedDate: Tue Jan 19 2021 10:38:09 GMT+0800 (中国标准时间) {}
+
+					name: "1.png" //文件名称，只读字符串。只包含文件名，不包含任何路径信息。
+
+					size: 95853 //以字节数为单位的文件大小，只读的64位整数。
+
+					type: "image/png" //文件的 MIME 类型，只读字符串，当类型不能确定时为 ""。
+
+					webkitRelativePath: "" 
+				} ,
+
+				...,
+			
+				length:1 
+			}
+		
+			console.log( objectURLs ) //[ 'blob:http://127.0.0.1:8848/1d9f0626-9832-4197-8128-a9aefcbc3c90' ]		
+				
+		}
+
+	三、通过 click() 方法使用隐藏的 file input 元素
+
+		你可以隐藏公认难看的 file <input> 元素并显示你自己的界面来打开文件选择器，然后显示哪个或哪些文件被用户选中了。你可以通过给 input 元素添
+	
+	加 display:none 的样式，再调用 <input> 元素的 click() 方法来实现。
+
+	四、使用 label 元素来触发一个隐藏的 file input 元素
+		
+		允许在不使用 JavaScript（click() 方法）来打开文件选择器，可以使用 <label> 元素。注意在这种情况下，input 元素不能使用 display: none（或
+ 
+	visibility: hidden）隐藏，否则 label 将无法通过键盘访问。使用 visually-hidden technique 作为替代。
+
+		<input type="file" id="fileElem" multiple accept="image/*" class="visually-hidden">
+
+		<label for="fileElem">Select some files</label>
+
+		.visually-hidden {
+  
+			position: absolute !important;
+  
+			height: 1px;
+  
+			width: 1px;
+  
+			overflow: hidden;
+  
+			clip: rect(1px, 1px, 1px, 1px);
+		}
+
+		/* Separate rule for compatibility, :focus-within is required on modern Firefox and Chrome */
+
+		input.visually-hidden:focus + label { outline: thin dotted; }
+
+		input.visually-hidden:focus-within + label { outline: thin dotted; }
+
+		注意：
+		
+			1、这里不需要添加任何 JavaScript 代码来调用fileElem.click()，
+
+			2、另外，这时你也可以给 label 元素添加你想要的样式。您需要在其 label 上提供隐藏 input 字段的焦点状态的视觉提示，比如上面用的轮
+		
+		廓，或者背景颜色或边框阴影。（截至编写时为止，Firefox 不显示 <input type="file"> 元素的视觉提示。）
+
+
+	五、使用拖放来选择文件（HTML5 拖放（ draggable="true"  和 ondrop））
+
+		第一步是创建一个drop区域。虽然你网页内容的哪部分接受拖放取决于你的应用设计，但是使一个元素接收drop事件是很容易的。
+
+		let dropbox;
+
+		dropbox = document.getElementById("dropbox");
+
+		dropbox.addEventListener("dragenter", dragenter, false);
+
+		dropbox.addEventListener("dragover", dragover, false);
+
+		dropbox.addEventListener("drop", drop, false);
+
+		在这个例子中，我们将ID为dropbox的元素变为了我们的drop区域。这是通过给元素添加dragenter (en-US), dragover (en-US), 和drop (en-US) 事件监		
+	听器实现的。
+
+		我们其实并不需要对dragenter and dragover 事件进行处理，所以这些函数都很简单。他们只需要包括禁止事件传播和阻止默认事件：
+
+		function dragenter(e) {
+  
+			e.stopPropagation();
+  
+			e.preventDefault();
+
+		}
+
+		function dragover(e) {
+  
+			e.stopPropagation();
+  		
+			e.preventDefault();
+
+		}
+
+		function drop(e) {
+  
+			e.stopPropagation();
+  
+			e.preventDefault();
+		
+			var dt = e.dataTransfer;
+  
+			var files = dt.files;
+
+ 			handleFiles(files);
+		}
+
+		这里，我们从事件中获取到了dataTransfer 这个域，然后从中得到文件列表，再将它们传递给handleFiles()函数。在这之后，处理文件的方法和用input
+	元素或者用拖拽就是一样的了。
+
+	
+
+
+

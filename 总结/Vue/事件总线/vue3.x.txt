@@ -1,0 +1,63 @@
+
+
+	mitt
+
+		//utils/eventbus
+
+			import mitt from 'mitt'
+
+			const emmiter = mitt()
+
+			export default emmiter
+
+		//Child1.vue
+
+			import emitter from '@/utils/eventbus';
+
+			methods:{
+            
+				btnClick(){
+                
+					emitter.emit('btn1',{ name:"btn1" })
+                
+					emitter.emit('btn2',{ name:"btn2" })
+           
+				}
+        		}
+
+		//Child2.vue
+
+			
+			import emitter from '@/utils/eventbus';
+
+			function btn1() {
+    
+				console.log(arguments);
+
+			}
+
+			export default {
+    
+				created() {
+        
+					emitter.on('btn1',btn1)
+        
+					emitter.on('*',function (type,params){
+            
+						console.log(type,params);
+        
+					})
+    
+				},
+    
+				methods: {
+        
+					cancleBtn1() {
+            
+						emitter.off('btn1',btn1)
+        
+					}
+    
+				}
+
+			}

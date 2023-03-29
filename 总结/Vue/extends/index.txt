@@ -1,0 +1,24 @@
+
+	
+	一、概念
+
+		要继承的“基类”组件。
+
+		使一个组件可以继承另一个组件的组件选项。
+
+		从实现角度来看，extends 几乎和 mixins 相同。通过 extends 指定的组件将会当作第一个 mixin 来处理。
+
+		然而，extends 和 mixins 表达的是不同的目标。mixins 选项基本用于组合功能，而 extends 则一般更关注继承关系。
+
+		同 mixins 一样，所有选项都将使用相关的策略进行合并。
+
+	二、例
+
+		const CompA = { ... }
+
+		const CompB = {
+  
+			extends: CompA,
+  			
+			...
+		}

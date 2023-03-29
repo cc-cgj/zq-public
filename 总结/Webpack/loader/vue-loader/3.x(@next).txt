@@ -1,0 +1,39 @@
+
+	安装
+
+		npm i vue-loader@next @vue/compiler-sfc -D
+
+	配置
+
+		const { VueLoaderPlugin } = require('vue-loader/dist/index')
+
+		module.exports = {
+
+			module:{
+
+				rules:[
+
+			
+					{ test:/\.vue$/ },
+
+					loader:"vue-loader"		
+
+				]
+
+			},
+
+			plugins:[
+			
+				new VueLoaderPlugin()
+	
+			]
+
+		}
+
+	使用
+
+		import { createApp } from 'vue'
+
+		import App from '../vue/App.vue'
+
+		createApp(App).mount('#app')

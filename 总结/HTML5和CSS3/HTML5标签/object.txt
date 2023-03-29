@@ -1,0 +1,5 @@
+
+
+	预览pdf文件
+
+	https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/object#attr-type

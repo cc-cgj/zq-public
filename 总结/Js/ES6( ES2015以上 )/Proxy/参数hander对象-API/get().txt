@@ -1,0 +1,65 @@
+
+	一、概念
+
+		handler.get() 方法用于拦截对象的读取属性操作。
+
+	二、触发方式
+
+		1、访问属性: proxy[foo]和 proxy.bar
+
+		2、访问原型链上的属性: Object.create(proxy)[foo]
+		
+		3、Reflect.get()
+
+	三、语法
+
+		var p = new Proxy(target, {
+  
+			get: function(target, property, receiver) {}
+
+		});
+
+	四、参数
+
+		以下是传递给get方法的参数，this上下文绑定在handler对象上.
+
+			target：目标对象。
+
+			property：被获取的属性名。
+
+			receiver：Proxy或者继承Proxy的对象
+
+	五、返回值
+
+		get方法可以返回任何值。
+
+	六、注意：
+	
+		1、get方法必须具有返回值
+
+		2、handler.get 方法用于拦截对象的读取属性操作。
+
+		3、如果要访问的目标属性是不可写以及不可配置的，则返回的值必须与该目标属性的值相同，否则proxy会抛出 TypeError。
+
+		4、如果要访问的目标属性没有配置访问方法，即get方法是undefined的，则返回值必须为undefined，否则proxy会抛出 TypeError。
+
+
+	七、例
+
+		var obj = {}
+
+		var p = new Proxy(target, {
+  
+			get: function(target, property, receiver) { target + ' world'  }
+
+		});
+
+		obj.a = 'hello'
+		
+		p.b = 'hello'
+
+		console.log( obj ) //{ a:'hello world',b:'hello world' }
+
+		console.log( p ) //{ a:'hello world',b:'hello world' }
+	
+	

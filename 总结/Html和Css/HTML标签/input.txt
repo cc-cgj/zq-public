@@ -1,0 +1,51 @@
+		
+		  
+
+	<input type="datetime-local">
+
+
+	 <input type="file">
+
+		FileList
+
+		例：
+
+			multiple 属性允许用户选择多个文件
+
+			<input id="myfiles" multiple type="file">
+
+			var pullfiles = function(){
+    			
+				var fileInput = document.querySelector("#myfiles");
+    
+				var files = fileInput.files;
+    
+				// 获取所选文件数量
+    
+				var fl = files.length;
+    
+				var i = 0;
+
+    				while ( i < fl) {
+        
+        				var file = files[i]/files.item(i);
+        
+					alert(file.name);
+        				
+					i++;
+    				}
+
+			}
+
+			// 设置 change 事件处理函数
+
+			document.querySelector("#myfiles").onchange=pullfiles;
+
+		change事件对象获取用户上传的文件：
+
+			苹果：e.target.files //Array
+
+			安卓：e.path[0].files //Array
+
+
+	

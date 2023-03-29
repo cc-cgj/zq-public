@@ -1,0 +1,58 @@
+
+
+
+	一、history对象(系统对象)
+
+	概念：
+
+		window对象给我们提供了一个 history对象，与浏览器历史记录进行交互。该对象包含用户（在浏览器窗口中） 访问过的URL。
+
+	方法：
+
+		1、history.back()：添加后退功能
+
+		2、history.forward()：添加前进功能
+
+		3、history.go(参数)：添加前进后退功能，参数为1前进1个页面，-1后退1个页面
+
+		4、history.pushState( state，title，url )和history.replaceState( state，title，url )
+		
+			概念：用来在浏览历史中添加和修改记录
+			
+
+			参数：
+
+				state：一个与指定网址相关的状态对象，popstate事件触发时，该对象会传入回调函数。如果不需要这个对象，此处可以填null。
+
+				title：新页面的标题，但是所有浏览器目前都忽略这个值，因此这里可以填null或''。
+
+				url：新的网址，必须与当前页面处在同一个域。浏览器的地址栏将显示这个网址。
+
+
+			注意：
+
+				1、replaceState的使用方法跟pushState一样
+
+				2、不会刷新当前页面（不会重载）
+
+	事件：
+
+		1、hashchange事件（IE8已支持该事件）
+
+			概念：
+
+　　				①当URL的片段标识符更改时，将触发hashchange事件（跟在#符号后面的URL部分，包括#符号）
+
+　　				②hashchange事件触发时，事件对象会有hash改变前的URL（oldURL）和hash改变后的URL（newURL）两个属性
+
+			例：
+
+				window.addEventListener('hashchange',function(e) { console.log(e.oldURL);  console.log(e.newURL) },false);
+
+
+		2、popstate事件
+
+
+
+
+			

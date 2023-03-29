@@ -1,0 +1,154 @@
+
+
+	一、provide
+
+		概念
+
+			在 setup() 中使用 provide 时，我们首先从 vue 显式导入 provide 方法。这使我们能够调用 provide 来定义每个 property。
+
+		语法
+			
+			provide( name,value )
+
+		参数
+
+			provide 函数允许你通过两个参数定义 property：
+
+				name (<String> 类型)
+
+				value		
+
+	二、inject
+		
+		概念
+			
+			在 setup() 中使用 inject 时，也需要从 vue 显式导入。导入以后，我们就可以调用它来定义暴露给我们的组件方式。
+
+		语法
+			
+			provide( name,value )
+
+		参数
+
+			name：要 inject 的 property 的 name
+
+			value：默认值 (可选)
+
+		例
+
+			<script>
+
+				import { inject } from 'vue'
+
+				export default {
+  
+					setup() {
+    
+						const userLocation = inject('location', 'The Universe')
+    
+						const userGeolocation = inject('geolocation')
+
+   	 					return { userLocation, userGeolocation }
+  
+					}
+
+				}
+			
+			</script>
+
+
+	三、添加响应性
+
+		概念
+
+			为了增加 provide 值和 inject 值之间的响应性，我们可以在 provide 值时使用 ref 或 reactive。
+
+
+	例
+
+		父组件：
+			
+			<template> <MyMarker /> </template>
+
+			<script>
+
+				import { provide,reactive, ref，readonly } from 'vue'
+
+				import MyMarker from './MyMarker.vue'
+
+				export default {
+  
+					components: { MyMarker },
+  
+					setup() {
+    
+						provide('location', 'North Pole')
+    
+						provide('geolocation', { longitude: 90, latitude: 135 })
+
+						//添加响应式
+
+						const location = ref('North Pole')
+    
+						const geolocation = reactive({ longitude: 90, latitude: 135 })
+
+						//该方式在vue2.x中通过Vue.observable无响应式
+
+    						provide('location', location)
+    
+						provide('geolocation', geolocation)
+
+
+						// 修改响应式 property ( 两种 )
+
+						const updateLocation = () => { location.value = 'South Pole' }
+
+						const updateUserLocation = inject('updateLocation')
+
+						// 如果要确保通过 provide 传递的数据不会被 inject 的组件更改，我们建议对提供者的 property 使用 readonly
+						
+						provide('geolocation', readonly(geolocation))
+							
+  
+					},
+
+					methods:{
+			
+						//修改响应式 property
+						
+						updateLocation(){ this.location = 'South Pole' }
+
+					}
+				}
+
+			</script>
+
+		子组件：
+
+			<script>
+
+				import { inject } from 'vue'
+
+				export default {
+  
+					setup() {
+    
+						const userLocation = inject('location', 'The Universe')
+    
+						const userGeolocation = inject('geolocation')
+
+						//内部修改provide传递的值
+
+						 const updateUserLocation = inject('updateLocation')
+
+   	 					return { userLocation, userGeolocation }
+  
+					}
+
+				}
+			
+			</script>
+
+			
+
+

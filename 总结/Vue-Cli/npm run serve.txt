@@ -1,0 +1,22 @@
+
+
+	//package.json 
+
+	{
+		
+		"scripts": { "serve": "vue-cli-service serve" }
+
+	}
+
+
+	当执行npm run serve具体执行的是 
+
+			./node_modules/.bin/vue-cli-service ---> 
+
+			./node_modules/@vue/cli-service/bin/vue-cli-service.js --->
+				
+			./node_modules/@vue/cli-service/lib/Service.js
+
+			
+
+	 

@@ -1,0 +1,26 @@
+
+
+	https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Reflect
+
+	一、概念
+		
+		1、Reflect 是一个内置的对象，它提供拦截 JavaScript 操作的方法。
+
+		2、Reflect不是一个函数对象，因此它是不可构造的。
+
+		3、与大多数全局对象不同Reflect并非一个构造函数，所以不能通过new运算符对其进行调用，或者将Reflect对象作为一个函数来调用。Reflect的所有属
+
+	性和方法都是静态的（就像Math对象）。
+
+		4、其中的一些方法与 Object相同, 尽管二者之间存在 某些细微上的差别 .
+
+		5、可以用于获取目标对象的行为，它与 Object 类似，但是更易读，为操作对象提供了一种更优雅的方式。它的方法与 Proxy 是对应的。
+
+
+	二、Reflect是什么，有什么作用？
+
+		1、是将原生的一些零散分布在Object、Function或者全局函数里的方法(如apply、delete、get、set等等)，统一整合到Reflect上，这样可
+	以更加方便更加统一的管理一些原生API。
+
+		2、因为Proxy可以改写默认的原生API，如果一旦原生API别改写可能就找不到了，所以Reflect也可以起到备份原生API的作用，使得即使原
+	生API被改写了之后，也可以在被改写之后的API用上默认的API。

@@ -1,0 +1,30 @@
+
+	一、禁止用户缩放
+
+		< meta name="viewport" content="user-scalable=no" >
+
+
+	三、使用FastList插件
+
+		1、引入 fastlist.js文件
+
+		2、js版
+
+			if ('addEventListener' in document) {
+
+    				document.addEventListener('DOMContentLoaded', function() {
+        			
+					FastClick.attach(document.body);
+    				
+				}, false);
+
+			}		
+
+		3、jq版
+
+			$(function() {
+    				
+				FastClick.attach(document.body);
+
+			})
+		

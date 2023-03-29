@@ -1,0 +1,15 @@
+
+	一、场景	
+
+		当遇到页面顶部header固定的布局结构时，如果在页面中加入了锚点链接的跳转动作，不做处理的情况下点击锚点链接跳到的位置会被
+	header覆盖一部分区域。
+
+	二、解决方案
+
+		这个时候scroll-padding-top属性就派上用场了。scroll-padding-top属性用来定义滚动窗口的最佳查看区域对于顶部的偏移量。我们可以
+	通过给html设置scroll-padding-top的值为一个固定的高度来解决这个问题。
+
+		html {
+  
+			scroll-padding-top: 6rem;
+		}

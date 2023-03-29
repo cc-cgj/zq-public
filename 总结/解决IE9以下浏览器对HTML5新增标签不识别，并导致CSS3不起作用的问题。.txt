@@ -1,0 +1,10 @@
+
+
+	html5shiv.min.js //用于解决IE9以下版本浏览器对HTML5新增标签不识别，并导致CSS3不起作用的问题。
+
+
+	导入：<!--[if lt IE 9]><script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script><![endif]—>
+
+
+
+	复制网页html代码，鼠标右击，在copy中copy element

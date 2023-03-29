@@ -1,0 +1,10 @@
+
+
+
+	function padLeftZero(time){
+
+		time = time.toString()
+
+		return "00" + time.slice(time.length)
+
+	}

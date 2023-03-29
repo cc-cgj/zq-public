@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+<script src="../03_渲染器处理_patch的children处理/render.js"></script>
+<script src="../04_渲染器处理_响应式系统/reactive.js"></script>
+<script src="./index.js"></script>
+<script>
+    const App = {
+        data:reactive({
+            count: 0
+        }),
+        render(){
+            return h('div',{ class:"cgj",style:"padding:20px;background-color:pink;" },[
+                h('h2',null,`当前计数：${this.data.count}`),
+                h('button',{
+                    onClick: ()=> {
+                        // this.data.count +=1
+                        console.log(this.data.count);
+                    }
+                },'+1')
+            ])
+        }
+    }
+    createApp(App).mount('#app')
+
+    const data = reactive({
+        msg:"cgj"
+    })
+    watchEffect(function(){
+        console.log('data.msg(1)',data.msg);
+    })
+    watchEffect(function(){
+        console.log('data.msg(2)',data.msg);
+    })
+    watchEffect(function(){
+        console.log('hhhh');
+    })
+    data.msg = 'chenzq'
+</script>
+</html>

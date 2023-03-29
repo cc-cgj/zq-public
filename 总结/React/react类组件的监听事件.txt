@@ -1,0 +1,89 @@
+
+
+一、react中给html添加监听事件 //<button onClick = { this.btn } ></button>
+
+	1. 在react中注册事件与给html注册事件基本是一样的， onclick onmouseenter onblur onkeyup
+
+	2. 在react中注册事件，采用驼峰命名法， onClick onMouseEnter onBlur
+
+	3. 在react中注册事件，通过{}传入的是类中一个方法, 而不是一个字符串，注意在{}内只需写函数名，不用加括号，这跟原始的html注册事件不一样
+
+	4. 在react中，事件处理函数也有事件对象，如果想要组件浏览器的默认行为，不要使用return false，使用e.preventDefault()
+
+
+
+二、react的事件对象
+
+	概念： react事件对象只能默认传入到事件处理函数，跟vue中不一样，即没有vue中的$event声明
+
+	1、< button onClick = { this.clickFn } />  clickFn( e ){ console.log( e ) } //SyntheticBaseEvent(事件对象)
+
+		注意：
+			事件对象会默认传入函数中，使用形参接收。{}内是直接调用事件处理函数时才会默认传入事件对象，注意不要加()
+
+	2、< button onClick = { ()=> this.clickFn() } /> clickFn( e ){ console.log( e ) } //undefined
+
+		注意：
+			可以解决this问题，但事件对象是默认传入到箭头函数了，所以需要在箭头函数内将事件对象传入到真正的事件处理函数中
+
+	3、< button onClick = { ( e )=> this.clickFn( e ) } /> clickFn( e ){ console.log( e ) } //SyntheticBaseEvent(事件对象)
+
+	4、最佳：< button onClick = { this.clickFn.bind( this ) } /> clickFn( e ){ console.log( e ) } //SyntheticBaseEvent(事件对象)
+			
+		//即解决了this问题也可以将默认事件对象传入到事件处理函数中
+		
+
+三、react的事件传参和事件对象
+
+	1、< button onClick = { this.clickFn( 1 ) } /> clickFn( e ){ console.log( e ) } //1
+
+		注意：在react中this.clickFn()是直接调用该方法，虽然可以传值但只是自调用一次，触发点击事件不会调用该方法且没有默认事件对象传入
+
+	2、< button onClick = { ( e )=> this.clickFn( e，20 ) } /> clickFn( e，id ){ console.log( e，id ) } //SyntheticBaseEvent(事件对象) 20
+
+		注意：
+			在react里面事件处理函数是调用内部的方法，跟vue是不一样的。即 { this.方法名 }，所以传参时是没有vue中的$event参数。
+
+	3、< button onClick = { this.clickFn.bind( this,20 ) } /> clickFn( e,id ){ console.log( e，id ) } //20 SyntheticBaseEvent(事件对象) 
+
+		注意：
+			当使用bind()传值时，在事件处理函数的形参中，最后一个形参才是用来接收事件对象的且该形参刚好是接收传递的值后多余出来的
+
+		一个。
+
+四、类组件的事件处理函数中this指向的问题
+
+	概念：在类组件中，html标签的监听事件的事件处理函数的this指向为空，即undefined
+
+	例：
+		class Cpt extends React.Component{
+
+			clickFn(){ console.log( this ) } //undefined
+
+			render(){ return < button onClick={ btn } ></button> }
+
+		}
+			
+		ReactDOM.render( <Cpt/>,document.querySelect( "#app" ) )			
+
+	//传统js事件处理函数的this指向的是调用该函数的DOM元素,html事件处理函数this指向的是window
+
+	解决方式：
+
+		1、在constructor函数内重新定义clickFn函数的this的指向
+
+			constructor(){ this.btn = this.clickFn.bind( this ) } //在constructor函数内this指向的就是当前这个类对象
+
+		2、提供了一个箭头函数
+
+			clickFn = ()=>{ console.log( this ) } //输出的就是Cpt这个对象
+
+			注意：这里clickFn依旧是一个方法
+
+		3、在函数外面包一层箭头函数
+			
+			render(){ return < button onClick = { () => this.clickFn() } ></button> } //在render函数内this指向的就是当前这个类对象
+
+			
+		
+	

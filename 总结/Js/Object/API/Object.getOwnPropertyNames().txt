@@ -1,0 +1,49 @@
+
+
+	一、概念
+
+		Object.getOwnPropertyNames()方法返回一个由指定对象的所有自身属性的属性名（包括不可枚举属性但不包括Symbol值作为名称的属性）组成的数组。
+
+	二、语法
+
+		Object.getOwnPropertyNames(obj)
+
+	三、参数
+	
+		obj：一个对象，其自身的可枚举和不可枚举属性的名称被返回。
+	
+	四、返回值
+
+		在给定对象上找到的自身属性对应的字符串数组。
+	
+	五、注意
+		
+		Object.getOwnPropertyNames() 返回一个数组，该数组对元素是 obj自身拥有的枚举或不可枚举属性名称字符串。 数组中枚举属性的顺序与通过
+	
+	 for...in 循环（或 Object.keys）迭代该对象属性时一致。数组中不可枚举属性的顺序未定义。
+
+	六、例
+
+		var arr = ["a", "b", "c"];
+
+		console.log(Object.getOwnPropertyNames(arr).sort()); // ["0", "1", "2", "length"]
+
+		//不可枚举属性
+		
+		var my_obj = Object.create({}, {
+  
+			getFoo: {
+    
+				value: function() { return this.foo; },
+    	
+				enumerable: false
+  			}	
+		});
+	
+		my_obj.foo = 1;
+
+		console.log(Object.getOwnPropertyNames(my_obj).sort()); // ["foo", "getFoo"]
+
+		//如果你只要获取到可枚举属性，查看Object.keys或用for...in循环（还会获取到原型链上的可枚举属性，不过可以使用hasOwnProperty()方法过滤掉）
+
+。

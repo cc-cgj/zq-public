@@ -1,0 +1,40 @@
+
+
+
+	一、概念
+
+		1、接受一个对象 (响应式或纯对象) 或 ref 并返回原始对象的只读代理。
+
+		2、只读代理是深层的：任何被访问的嵌套 property 也是只读的。
+
+	二、例
+
+		import { reactive,readonly } from 'vue'
+ 
+		const original = reactive({ count: 0 })
+
+		const copy = readonly(original)
+
+		// 用于响应性追踪
+
+		watchEffect(() => { console.log(copy.count) })
+
+		// 变更 original 会触发依赖于副本的侦听器
+
+		original.count++
+
+		// 变更副本将失败并导致警告
+
+		copy.count++ // 警告!
+
+	三、注意
+
+		与 reactive 一样，如果任何 property 使用了 ref，当它通过代理访问时，则被自动解包：
+
+			const raw = { count: ref(123) }
+
+			const copy = readonly(raw)
+
+			console.log(raw.count.value) // 123
+
+			console.log(copy.count) // 123

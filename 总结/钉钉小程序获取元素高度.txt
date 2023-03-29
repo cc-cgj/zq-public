@@ -1,0 +1,6 @@
+// 获取高度，动态赋值给scroll-view
+dd.createSelectorQuery().select('#sw').boundingClientRect().exec((res) => {
+  this.setData({
+    height:res[0].height - 10
+  })
+})

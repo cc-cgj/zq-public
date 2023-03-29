@@ -1,0 +1,11 @@
+
+
+	// 之前 - Vue 2
+
+	Vue.prototype.$http = () => {}
+
+	// 之后 - Vue 3
+
+	const app = createApp({})
+
+	app.config.globalProperties.$http = () => {}

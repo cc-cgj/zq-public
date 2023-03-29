@@ -1,0 +1,9 @@
+
+
+	npx tsc ./index.ts
+
+		// 将ts文件编译为js文件
+
+	npx tsc --init
+
+		// 生成一个带有默认配置的tsconfig.json文件

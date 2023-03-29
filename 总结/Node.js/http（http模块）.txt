@@ -1,0 +1,83 @@
+
+
+	一、概念： Node.js 提供的用来创建 web 服务器的系统模块
+
+		注意：
+
+			1、如果要在 JavaScript 代码中，使用 http 模块来搭建web服务器，则需要先导入
+
+				例：const http = require("http") //返回的是一个对象
+
+			2、创建好web服务器后还需要执行该js文件
+
+			3、默认创建的web服务器地址为本地http服务器地址 //HTTP服务器，默认的端口号为80
+
+	二、方法：
+
+		------createServer()
+
+			概念：快速创建web服务器实例
+
+			语法：const server = http.createServer() //返回的是一个对象
+				
+			方法：
+
+				1、on()
+
+					概念：绑定监听事件
+
+					语法：如为web服务器实例绑定请求事件：
+
+						server.on("request",function(req,res){
+								
+						//req：请求对象，它包含了与客户端相关的数据和属性
+
+							方法：
+
+								1、req.url：返回请求的参数，如浏览器url地址栏后的参数和/1.jpg、/aa.js
+										
+									注意：可在调式器的NetWork中查看请求的文件
+
+								2、req.method 是客户端的请求类型，如get、post
+
+						//res：响应对象，它包含了与服务器相关的数据和属性
+
+							方法：
+
+								res.end(data)：该方法是向客户端发送指定的内容，并结束这次请求的处理过程
+
+								，参数data为向客户端发送的数据，还可以使用res.write()。
+								
+
+								注意：
+
+								     当调用 res.end()方法，向客户端发送中文内容的时候，会出现乱码问题，此时，
+
+								需要手动设置发送给客户端内容的编码格式：
+
+									res.setHeader("Content-Type","text/html;charset=utf-8")
+
+									---text/plain(告诉浏览器对响应的数据当文本处理 //默认)
+									
+
+							})
+
+
+						注意：只要有客户端发送请求，就会触发request事件
+
+					2、listen()
+
+						概念：启动当前web服务器实例
+
+						语法：
+						
+							server.listen(端口号,function(){
+
+								console.log("启动服务器成功")
+							})
+
+						参数：
+
+							第一个参数为服务器的端口号
+						
+							第二个参数为回调函数，在执行js文件时调用该函数

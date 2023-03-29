@@ -1,0 +1,8 @@
+
+	const obj = { name:"aa" }
+	
+	with( obj ){
+
+		console.log( name ) // 'aa'
+
+	}

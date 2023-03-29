@@ -1,0 +1,48 @@
+
+	一、innerText和innerHTML的区别(作用都是改变或获取元素的内容)：
+
+		1、获取内容时的区别： innerText会去除空格和换行，而innerHTML会保留空格和换行 
+
+		2、设置内容时的区别： innerText不会识别html标签，而innerHTML会识别
+
+		注意：
+
+			1、获取和设置表单元素的值：元素对象.value = "输入框的值" | 元素对象.value
+
+			2、表单元素中有一些属性如：disabled、checked、selected，元素对象的这些属性的值是布尔型。
+
+	二、常见元素属性操作：src(img)、href(a)、id、alt(img)、title
+
+		HTML标签的title属性：鼠标移到元素上时显示一段工具或提示文本。
+
+		表单(form)元素的属性操作：type、value、checked、selected（option）、disabled
+
+		表单元素中有一些属性如：disabled、checked、selected，元素对象的这些属性的值是布尔型。
+
+	三、<select>和<option>
+
+		select标签是创建单选或多选下拉列表。
+		
+		option标签定义下拉列表中的一个选项
+		
+		option标签中的selected属性是预先选择一个选项
+
+	四、checked和<textarea>
+
+		checked属性：预先选定复选框或单选按钮。
+		
+		checked 属性 与 <input type="checkbox"> 或 <input type="radio"> 配合使用。
+
+		<textarea> hello world </textarea> :文本域标签中文本内容是在标签之间，该标签没有value属性，在js中只能通过 innerText 来添加
+
+	、修改输入的内容
+
+
+	五、样式和类属性操作：
+	
+		1、元素.className//修改和添加类
+
+		2、元素.style//修改和添加行内样式
+
+	(注意：JS里面的样式采取的是驼峰命名法，如fontSize，JS修改样式操作产生的是行内样式，CSS权重比较高)
+

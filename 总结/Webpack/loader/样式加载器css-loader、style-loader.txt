@@ -1,0 +1,42 @@
+
+
+	一、css-loader
+
+		安装
+
+			npm install css-loader -D
+
+		使用方案
+
+			1、内联方式: import 'css-loader!./style/index.css'
+
+			2、CLI方式（webpack5不再使用）--module-bind
+
+			3、配置方式(具体可参考 webpack.config.js的module)
+
+		注意
+
+			1、css-loader只是负责.css文件进行解析，并不会将解析之后的css插入到页面中
+
+			2、如果需要样式生效，还需要搭配style-loader
+
+
+	二、style-loader
+
+		安装
+
+			npm install style-loader -D
+
+		使用
+
+			1、内联方式: import 'style-loader!css-loader!./style/index.css'
+
+			2、配置方式(具体可参考 webpack.config.js的module)
+
+		注意
+
+			1、当没有使用插件时，webpack是通过一个style标签注入到index.html中
+			
+				此时生成的页面是<head><style> .title:{ color:red; } </style></head>
+
+

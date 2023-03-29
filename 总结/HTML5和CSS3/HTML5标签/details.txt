@@ -1,0 +1,22 @@
+
+
+	一、概念
+	
+		<details> 标签用于描述文档或文档某个部分的细节。
+
+
+		与 <summary> 标签 配合使用可以为 details 定义标题。标题是可见的，用户点击标题时，会显示出 details。
+
+	二、属性
+
+		open ：定义 details 是否可见。
+	
+	三、例
+
+		<details>
+
+			<summary>HTML 5</summary>
+
+			This document teaches you everything you have to learn about HTML 5.
+
+		</details>

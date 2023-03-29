@@ -1,0 +1,44 @@
+
+
+
+	在表格中，每行的数据可以通过作用域插槽来获取,还可以获取每行的索引值：listrow.$index
+
+	在表格中每个开关的状态是相对独立的，即每行的数据时不一样的，所以在<el-table-column>需要使用作用域插槽将每个开关独立起来。
+
+		例：
+
+			<el-table :data="list" border style="width: 100%">
+				
+				<el-table-column label="状态">
+
+					<template slot-scope = "listrow">
+
+						{{ listrow }}
+						
+						<el-switch v-model="listrow.row.state"></el-switch> //开关需要添加v-model才具有能控制开关的功能
+					
+					</template>
+	
+				<el-table-column>
+				
+			
+			</el-table>
+
+
+	注意：
+		1、获取表格中每行的数据，只能将表格中每行的标签放在作用域插槽内。
+
+		2、例：
+			
+			<el-table-column>
+
+				<template slot-scope="接收每行的数据(自定义变量)"> 该区域是表格每行的标签 </template>
+
+			</el-table-column>
+
+		3、每行中在作用域插槽外的标签不会进行解析
+
+		4、该自定义变量是一个对象
+
+		
+				

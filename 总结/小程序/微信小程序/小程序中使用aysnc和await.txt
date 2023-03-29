@@ -1,0 +1,24 @@
+
+
+	es7的 async 号称是解决回调的最终方案，但在小程序中无法直接使用async
+
+	需要设置才能使用：
+
+		1. 在小程序的开发工具中，勾选 es6转es5语法 
+
+		2. 下载 facebook的regenerator库中的 regenerator/packages/regenerator-runtime/runtime.js 
+
+		3. 在小程序目录下新建文件夹 lib/runtime/runtime.js ，将代码拷贝进去  //lib：存放第三方库
+
+		4. 在每一个需要使用async语法的页面js文件中，都引入。
+
+	引入：import regeneratorRuntime from '../../lib/runtime/runtime'
+	
+	注意：
+
+		1、不能全局引入，即再app.js中引入
+
+		2、引入好之后就可以直接使用 async 和 await了
+
+
+	

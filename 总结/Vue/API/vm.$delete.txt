@@ -1,0 +1,27 @@
+
+
+	一、概念
+
+		删除对象的 property。如果对象是响应式的，确保删除能触发更新视图。这个方法主要用于避开 Vue 不能检测到 property 被删除的限制，但是你应该
+	很少会使用它。
+
+
+	二、例
+			
+		vm.$delete( target, propertyName/index )
+
+			
+
+	三、参数
+
+		target：{Object | Array} 
+
+		propertyName/index：{string | number}
+
+	四、注意
+
+		1、这是全局 Vue.delete 的别名。
+
+		2、在 2.2.0+ 中同样支持在数组上工作。
+		
+		3、目标对象不能是一个 Vue 实例或 Vue 实例的根数据对象。

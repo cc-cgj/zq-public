@@ -1,0 +1,65 @@
+
+
+	一、概念
+
+		Object.entries()方法返回一个给定对象自身可枚举属性的键值对数组，其排列与使用 for...in 循环遍历该对象时返回的顺序一致
+
+	（区别在于 for-in 循环还会枚举原型链中的属性）。
+
+	二、语法
+
+		Object.entries(obj)
+
+	三、参数
+
+		obj：可以返回其可枚举属性的键值对的对象。
+	
+	四、返回值
+
+		给定对象自身可枚举属性的键值对数组。
+
+	五、注意
+
+		Object.entries()返回一个数组，其元素是与直接在object上找到的可枚举属性键值对相对应的数组。属性的顺序与通过手动循环对象的属性值所给出
+
+	的顺序相同。
+
+	六、例
+
+		const object1 = { a: 'somestring' };
+
+		Object.defineProperty(object1,'b',{
+				
+				enumerable:false,
+
+				value:111
+		})
+
+		console.log( object1 ) //{ a:'somestring',b:111 }
+	
+		console.log( Object.entries(object1) ) //[ [ 'aa','somestring' ] ]
+
+		for (const [key, value] of Object.entries(object1)) {
+  
+			console.log(`${key}: ${value}`); // "aa: somestring"
+	
+		}
+
+	七、将Object转换为Map
+		
+		概念：
+
+			new Map() 构造函数接受一个可迭代的entries。借助Object.entries方法你可以很容易的将Object转换为Map
+
+		例：
+
+			var obj = { foo: "bar", baz: 42 };
+
+			var map = new Map(Object.entries(obj));
+
+			console.log(map); // Map { foo: "bar", baz: 42 }
+
+			console.log(map.get('foo')) //'bar'	
+
+		
+		

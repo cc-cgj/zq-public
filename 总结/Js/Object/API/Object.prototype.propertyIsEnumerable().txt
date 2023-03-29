@@ -1,0 +1,26 @@
+
+
+	一、概念
+
+		propertyIsEnumerable() 方法返回一个布尔值，表示指定的属性是否可枚举。
+
+	二、语法
+
+		obj.propertyIsEnumerable(prop)
+
+	三、参数
+
+		prop：需要测试的属性名。
+
+
+	四、例
+
+		const obj = {}
+
+		Object.defineProperty( obj,'a',enumerable:false )
+
+		obj.b = 111
+	
+		Object.propertyIsEnumerable('a') //false
+
+		Object.prototype.propertyIsEnumerable('b') //true

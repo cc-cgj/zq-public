@@ -1,0 +1,13 @@
+
+
+	在设置中的setting.json文件中加入以下
+
+		"emmet.includeLanguages": {
+        		
+			"javascript": "javascriptreact"
+		
+		}
+
+	在设置中搜索 trigger 并打钩： Trigger Expansion On Tab 选项
+
+	设置后就可以通过 标签名+Tab 键快速码出标签  

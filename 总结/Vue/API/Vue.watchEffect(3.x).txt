@@ -1,0 +1,93 @@
+
+	一、概念
+
+		1、为了根据响应式状态自动应用和重新应用副作用，我们可以使用 watchEffect 函数。
+
+		2、它立即执行传入的一个函数（立即执行一次），同时响应式追踪其依赖，并在其依赖变更时重新运行该函数。
+
+	二、语法
+
+		import { ref, watchEffect } from 'vue'
+
+
+		watchEffect(
+		
+			onInvalidate => {
+        		
+				console.log(root.value) // => <div>This is a root element</div>
+      			}, 
+
+      			{ 
+	
+				flush: 'pre/post/sync'，
+
+				//flush 选项还接受 sync，这将强制效果始终同步触发。然而，这是低效的，应该很少需要。
+			
+				onTrack( e ){},
+
+				onTrigger( e ){}
+
+
+			}
+		)
+
+
+	三、参数
+
+		flush
+
+			//watch() 和 watchEffect() 在 DOM 挂载或更新之前运行副作用，所以当侦听器运行时，模板引用还未被更新。
+
+			因此，使用模板引用的侦听器应该用 flush: 'post'( 默认为 'pre' ) 选项来定义，这将在 DOM 更新后运行副作用，确保模板引用与 DOM 保
+		
+		持同步，并引用正确的元素。
+
+		onInvalidate
+		
+			概念
+
+				有时副作用函数会执行一些异步的副作用，这些响应需要在其失效时清除 (即完成之前状态已改变了) 。所以侦听副作用传入的函数可
+			
+			以接收一个 onInvalidate 函数作入参，用来注册清理失效时的回调。当以下情况发生时，这个失效回调会被触发：
+
+				1、副作用即将重新执行时
+
+				2、侦听器被停止 (如果在 setup() 或生命周期钩子函数中使用了 watchEffect，则在组件卸载时)
+
+			例
+
+				watchEffect(onInvalidate => {
+  
+					const token = performAsyncOperation(id.value)
+  
+					onInvalidate(() => {
+    
+						// id has changed or watcher is stopped.
+    
+						// invalidate previously pending async operation
+    
+						token.cancel()
+  					})
+				})
+
+				注意：我们之所以是通过传入一个函数去注册失效回调，而不是从回调返回它，是因为返回值对于异步错误处理很重要。
+
+
+		onTrack 将在响应式 property 或 ref 作为依赖项被追踪时被调用。
+
+		onTrigger 将在依赖项变更导致副作用被触发时被调用。
+
+			注意：onTrack 和 onTrigger 只能在开发模式下工作。
+
+
+	
+	四、与 watchEffect 比较，watch 允许我们：
+
+		1、懒执行副作用；
+		
+		2、更具体地说明什么状态应该触发侦听器重新运行；
+
+		3、访问侦听状态变化前后的值。
+
+		4、watch 相应地 onInvalidate 会作为回调的第三个参数传入
+

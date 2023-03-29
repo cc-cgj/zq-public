@@ -1,0 +1,18 @@
+
+
+	一、概念
+
+		toLocaleString() 方法使用区域设置将 Date 对象转换为字符串。
+
+		默认语言取决于您计算机上的区域设置。
+
+	二、例
+
+		var n = new Date();
+	
+		n.toLocaleString() //2021/11/30 下午2:47:30
+
+		n.toLocaleString("zh-CN") //2021/11/30 下午2:43:43
+
+
+	

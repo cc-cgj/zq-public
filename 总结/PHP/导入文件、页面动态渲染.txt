@@ -1,0 +1,25 @@
+
+
+	一、PHP导入文件
+
+		作用： PHP 文件的内容(所有文本/代码/标记)插入另一个 PHP 文件中（在服务器执行它之前）。
+
+		语法：include | include_once "文件路径"
+		
+		include和include_once区别：
+
+				1、include 可以重复引入文件
+				2、include_once 只引入一次，防止多次引入文件
+
+
+	二、PHP页面动态渲染
+	
+		概念：
+
+			1、PHP本身支持与HTML混编
+
+			2、混编的文件后缀必须为 .php， Apache 才会调用 PHP引擎进行解析	
+
+			3、PHP与HTML混编时，服务器中的 PHP 引擎 只会执行php标签内部的PHP代码，非PHP的代码(PHP标签外部的内容)直接忽略，
+
+		最后会将PHP的执行结果和非PHP代码 一起返回给浏览器,由浏览器再进行解析。

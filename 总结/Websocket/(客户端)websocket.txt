@@ -1,0 +1,46 @@
+
+
+	//连接服务器
+	var conn = document.querySelector(".connector")
+	
+	//发送数据
+	var send = document.querySelector(".send")
+
+	//断开连接	
+	var close = document.querySelector(".close")
+	
+	conn.onclick=function(){
+		
+		// 跟服务器进行连接
+		ws = new WebSocket('ws://localhost:9998')
+		
+		// 监听连接服务器成功的回调函数
+		ws.onopen = function(){
+			console.log("连接服务器成功")
+		}
+		// 监听服务器发送数据的回调
+		ws.onmessage = rps => {
+			console.log("这是服务器发送的数据：" + rps.data)
+		}
+		// 监听服务器关闭连接的回调
+		ws.onclose = err => {
+			console.log(err)
+			console.log("已断开与服务器的连接")
+		}
+		send.disabled = false
+		close.disabled = false
+	}
+
+	// 发送给服务器的数据
+	send.onclick=function(){
+
+		ws.send('服务器的数据')
+
+	}
+
+	// 断开与服务器的连接
+	close.onclick=function(){
+
+		ws.close()
+
+	}

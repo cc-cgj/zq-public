@@ -1,0 +1,43 @@
+
+
+	isolation是CSS3的属性之一，顾名思意就是"隔离"的意思，它可以决定一个元素是否要创建一个新的层叠上下文。它在与mix-blend-mode 和 z-
+
+index属性一起使用时特别有用。
+
+	场景
+			
+		有一天，在文章中某一个部分加了一个tooltip的提示。正常情况下tooltip的z-index设置为1即可。但是当文章滚动使得tooltip出现在h1旁
+	边的时候，就会发现tooltip会被遮挡。
+
+		通常这种问题的解决方案有两种：
+
+			重新设置tooltip和h1 span的z-index值
+
+			使用 position: relative 为它们各自的父元素设置 z-index 以创建新的层叠上下文
+
+
+		h1 {
+  			
+			isolation: isolate;
+  
+			/* ... */
+
+		}
+
+		.tooltip {
+  
+			isolation: isolate;
+  
+			/* ... */
+		}
+
+		h1 span {
+  			
+			position: relative;
+  
+			z-index: 999999;
+  
+			padding: 0 0.25em;
+		}
+
+		//可以看到这时即使把h1 span的z-index设置为999999也没关系。大功告成。

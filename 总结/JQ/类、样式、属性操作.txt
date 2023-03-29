@@ -1,0 +1,88 @@
+
+
+	一、jQuery类操作
+
+		------addClass()：$("targetNode").addClass("类名")：添加类,不会覆盖标签原有的类名
+
+		------removeClass()：$("targetNode").removeClass("类名"):删除类
+
+		------hasClass()：$("targetNode").hasClass("类名"):检查当前的元素是否含有某个特定的类，如果有则返回true，没有则返回false。
+
+		------toggleClass()：$("targetNode").toggleClass("类名")：切换类名，如果有就移除掉，没有则添加
+
+	二、jQuery样式操作 //css()
+	
+		------设置单个样式
+
+			$("targetNode").css("样式名","样式值")
+
+		------设置多个样式 //参数是一个对象，对象中包含了需要设置的样式名和样式值
+
+			$("targetNode").css(
+						{
+							"样式名1":"样式值1",
+
+							"样式名2":"样式值2"	
+			    			 }
+			  		    )
+
+		------获取样式
+
+			$("targetNode").css("样式名")  //注意：获取样式操作只会返回第一个元素对应的样式值。
+
+
+	三、jQuery属性操作 attr()/prop()
+	
+		$("targetNode").attr/.prop("获取目标属性")  
+
+		$("targetNode").attr/.prop("属性名","属性值")
+
+		都是设置元素的属性和属性值或返回被选元素的属性值。
+				
+	------设置单个属性
+
+		$("targetNode")attr("属性名","属性值") //设置自定义属性
+
+		$("targetNode")prop("属性名","属性值")
+	
+	------设置多个属性 //参数是一个对象，包含了需要设置的属性名和属性值
+
+		$("targetNode").attr({
+
+			属性名:"属性值",
+			
+		})
+		$("targetNode").prop({
+			
+			属性名:"属性值",
+			
+		})
+	
+	------删除属性
+		$("targetNode").removeAttr("属性名")
+		$("targetNode").removeProp("属性名")
+	
+	------获取属性值
+		$("targetNode").attr("属性名")	
+		$("targetNode").prop("属性名")
+	
+	------prop()和attr()的区别：
+
+		1、input标签为type = "checkbox/radio",获取checked、disabled属性的属性值或获取select标签中option标签中的selected(被选中)属性
+
+	的属性值，当有该属性时attr返回的是属性值，而prop返回的是布尔值true，而属性为空时attr()返回的是undefined，prop返回的是布尔值false。
+
+		2、当input标签的type = "checkbox/radio"且没有checked、disabled属性时，不管input标签是否被选中，通过attr方法获取的该属性的值
+
+	，值都为undefined，而通过prop方法获取该属性的值，input标签被选中返回的是true，没有选中则返回false。同理获取option标签中的selected属
+
+	性的值也是一样，前提是该标签没有selected属性。所以在jQuery1.6之后，对于checked、disabled这类boolean类型的属性来说，用prop方法。
+
+		3、对于自定义属性，使用attr方法 （abc、index）
+
+		4、对于固有属性，使用prop方法（title、id、style、selected、checked、disabled）
+
+	------文档操作
+		
+		1、remove():该方法移除被选元素，包括所有文本和子节点以及绑定的事件、附加的数据等都会被移除。
+

@@ -1,0 +1,10 @@
+		
+	一、概念
+
+		Teleport 提供了一种干净的方法，允许我们控制在 DOM 中哪个父节点下渲染了 HTML，而不必求助于全局状态或将其拆分为两个组件。
+
+	https://v3.cn.vuejs.org/guide/teleport.html#%E4%B8%8E-vue-components-%E4%B8%80%E8%B5%B7%E4%BD%BF%E7%94%A8
+
+		 <teleport to="body"> ... </teleport>
+
+		 <teleport to="#id"> ... </teleport>

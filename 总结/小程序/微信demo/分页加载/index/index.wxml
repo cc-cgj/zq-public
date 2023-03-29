@@ -1,0 +1,4 @@
+<view>
+    <view class="title">文章</view>
+    <list/>
+</view>

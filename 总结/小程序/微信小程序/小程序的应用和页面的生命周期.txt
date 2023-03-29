@@ -1,0 +1,164 @@
+
+ 一、小程序的生命周期类型
+
+	1、应用生命周期：特指小程序从启动 --> 运行 --> 销毁的过程；
+
+	2、页面生命周期：特指小程序中，每个页面的加载 --> 渲染 --> 销毁的过程；
+
+ 二、小程序的生命周期函数
+
+	概念：
+	
+		1、小程序框架提供的内置函数，会伴随着小程序的生命周期，自动按次序执行
+
+		2、app.js 是小程序执行的入口文件，在 app.js 中必须调用 App() 函数，且只能调用一次。其中， App() 函数是用来注册并执行小程序的。
+	
+		3、App(Object) 函数接收一个 Object 参数，可以通过这个 Object 参数，指定小程序的生命周期函数。
+
+	函数：
+
+		------onLaunch:()=>{}
+
+			概念：小程序第一次启动时自调用的函数
+
+			语法：App({ onLaunch(){ console.log( "onLaunch" ) } })
+
+			注意：此时页面还没有生成，一般用于获取用户的个人信息
+
+		------onShow:()=>{}
+
+			概念：小程序显示时自调用的函数
+
+			语法：App({ onShow(){ console.log( "onShow" ) } })
+
+			注意：一般用于对应用的数据或者页面效果进行重置
+	
+		------onHide:()=>{}
+
+			概念：小程序隐藏时自调用的函数
+
+			语法：App({ onHide(){ console.log( "onHide" ) } })
+
+			注意：一般用于暂停或者清除定时器
+
+		------onError:(err)=>{}
+
+			概念：小程序发生错误时，如应用的代码发生了报错的时候 就会自调用该函数
+
+			语法：App({ onError(){ console.log( "报错的内容：" + err ) } })
+
+			注意：该函数有一个默认形参用来接收报错的信息，一般用于收集用户的错误信息，通过异步请求 将错误的信息发送后台去
+
+		------onPageNotFound:()=>{}
+
+			概念：应用第一次启动的时候，如果找不到第一个入口页面 才会自调用该函数
+
+			语法：App({ onPageNotFound(){ console.log( "onPageNotFound" ) } })
+
+			注意：如果页面不存在了，通过js的方式来重新跳转页面 重新跳到第二个首页
+
+ 三、页面生命周期函数
+
+	概念：
+
+		1、每个小程序页面，必须拥有自己的 .js 文件，且必须调用 Page() 函数，否则报错。其中 Page() 函数用 来注册小程序页面。
+
+		2、Page(Object) 函数接收一个 Object 参数，可以通过这个 Object 参数，指定页面的生命周期函数。
+
+	函数
+
+		------onLoad:( options )=>{}
+
+			概念：当页面加载时自调用的函数
+
+			语法：Page({ onLoad( options ){ console.log( "传递的参数：" + options ) } })
+
+			注意：
+
+				1、当页面有导航传递的参数时，该函数默认有一个形参，形参为一个对象，对象内保存着传递的参数
+
+				2、tabbar 的页面展现过一次后就保留在内存中。所以当页面为tabBar页面时，从另外的tabBar页面切换到当前tabBar页面只会
+
+			触发当前tabBar页面的onLoad函数一次，而onShow函数则是切换一次自调用一次。
+
+		------onShow:()=>{}
+
+			概念：当页面显示时自调用的该函数
+
+			语法：Page({ onShow(){ console.log( "onShow" ) } })
+
+		------onReady:()=>{}
+
+			概念：页面初次渲染完成时自调用的函数
+
+			语法：Page({ onReady(){ console.log( "onReady" ) } })
+
+		------onHide:()=>{}
+
+			概念：页面隐藏时自调用的函数
+
+			语法：Page({ onHide(){ console.log( "onHide" ) } })
+
+		------onUnload:()=>{}
+
+			概念：页面卸载自调用的函数
+
+			语法：Page({ onUnload(){ console.log( "onHide" ) } })
+
+		------onPullDownRefresh:()=>{}
+
+			概念：页面下拉刷新时自调用的函数
+
+			语法：Page({ onPullDownRefresh(){ console.log( "刷新成功" ) } })
+
+			注意：
+
+				1、必须在.json文件的window对象中设置"enablePullDownRefresh"：true来开启页面的下拉后出现刷新的页面
+
+				2、通过wx.stopPullDownRefresh()方法直接关闭刷新的页面，若没有刷新页面执行该方法也不会报错
+
+				3、一般用于页面的数据 或者效果 重新 刷新
+
+		------onRefreshBottom:()=>{}
+
+			概念：当用户上拉触底时自调用的函数
+
+			语法：Page({ onRefreshBottom(){ console.log( "onRefreshBottom" ) } })
+
+			注意：一般用于上拉触底后加载下一页数据
+
+		------onShareAppMessage:()=>{}
+
+			概念：用户点击右上角分享时自调用的函数
+
+			语法：Page({ onShareAppMessage(){ console.log( "onShareAppMessage" ) } })
+
+		------onPageScroll:()=>{}
+
+			概念：页面滚动时自调用的函数
+
+			语法：Page({ onPageScroll(){ console.log( "onPageScroll" ) } })
+
+		------onResize:()=>{}
+
+			概念：页面的尺寸发生改变的时候或小程序 发生了 横屏竖屏 切换的时候自调用的函数
+
+			语法：Page({ onPageScroll(){ console.log( "onPageScroll" ) } })
+
+			注意：必须在当前页面的 .json文件的window对象中设置"pageOrientation": "auto"
+
+		------onTabTtemTap:()=>{}
+		
+			概念：当用户点击tabBar按钮时自调用的函数
+
+			语法：Page({ onTabTtemTap(){ console.log( "onTabTtemTap" ) } })
+
+			注意：
+
+				1、在当前tabBar页面中点击自己的tabBar按钮会自调用该函数
+
+				2、当前显示的tabBar页面，当点击别的tabBar按钮时触发的是点击的那个tabBar按钮所对应页面的onTabTtemTap函数
+		
+			
+
+	

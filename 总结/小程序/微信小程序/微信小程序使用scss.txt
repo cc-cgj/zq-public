@@ -1,0 +1,20 @@
+
+	//https://developers.weixin.qq.com/miniprogram/dev/devtools/projectconfig.html#useCompilerPlugins
+
+	//编译插件配置，目前支持编译插件有 typescript、less、sass
+
+	project.config.json
+
+		{
+  
+			"setting": {
+    
+				"useCompilerPlugins": [
+      
+					"typescript",
+     				
+					"less"
+    				]
+  		}
+
+	}

@@ -1,0 +1,9 @@
+{
+  "useTabs": false,
+  "tabWidth": 2,
+  "printWidth": 80,
+  "singleQuote": true,
+  "trailingComma": "none",
+  "semi": false,
+  "endOfLine": "auto" //尾部换行替换为 auto。结尾是 \n \r \n\r auto
+}

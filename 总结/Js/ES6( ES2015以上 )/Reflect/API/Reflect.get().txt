@@ -1,0 +1,50 @@
+
+	一、概念
+
+		Reflect.get()方法与从 对象 (target[propertyKey]) 中读取属性类似，但它是通过一个函数执行来操作的。
+
+	二、语法
+
+		Reflect.get(target, propertyKey[, receiver])
+
+	三、参数
+
+		target：需要取值的目标对象
+
+		propertyKey：需要获取的值的键值
+
+		receiver：如果target对象中指定了getter，receiver则为getter调用时的this值。
+
+	四、返回值
+
+		属性的值。
+	
+	五、注意
+
+		1、如果目标值类型不是 Object，则抛出一个 TypeError。
+		
+		2、Reflect.get方法允许你从一个对象中取属性值。就如同属性访问器 语法，但却是通过函数调用来实现。
+
+	六例、
+
+		// Object
+
+		var obj = { x: 1, y: 2 };
+
+		Reflect.get(obj, "x"); // 1
+
+		// Array
+
+		Reflect.get(["zero", "one"], 1); // "one"
+
+		// Proxy with a get handler
+
+		var x = {p: 1};
+
+		var obj = new Proxy(x, {
+  
+			get(t, k, r) { return k + "bar"; }
+		});
+
+		Reflect.get(obj, "foo"); // "foobar"
+

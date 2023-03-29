@@ -1,0 +1,19 @@
+
+
+	一、概念
+
+		instanceof 运算符用于检测构造函数的 prototype 属性是否出现在某个实例对象的原型链上。
+
+	二、语法
+
+		object instanceof constructor
+
+	三、参数
+		
+		object
+
+			某个实例对象
+
+		constructor
+
+			某个构造函数

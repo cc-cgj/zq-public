@@ -1,0 +1,16 @@
+
+	 自定义选定的文本样式
+
+	.box-custom::selection {
+
+		  color: #ffffff;		
+
+		background-color: #ff4c9f;
+	}
+
+	不允许选择文本	
+	
+	.box p:last-child {
+  			
+		user-select: none;
+	}

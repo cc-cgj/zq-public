@@ -1,0 +1,39 @@
+
+
+	一、概念
+
+		Object.isFrozen()方法判断一个对象是否被冻结。
+
+	二、语法
+
+		Object.isFrozen(obj)
+
+	三、参数
+
+		obj：被检测的对象。
+
+	四、返回值
+
+		表示给定对象是否被冻结的Boolean。
+
+	五、注意
+
+		一个对象是冻结的是指它不可扩展，所有属性都是不可配置的，且所有数据属性（即没有getter或setter组件的访问器的属性）都是不可写的。
+
+	六、例
+
+		// 一个不可扩展的空对象同时也是一个冻结对象.
+
+		var vacuouslyFrozen = Object.preventExtensions({});
+
+		Object.isFrozen(vacuouslyFrozen) //=== true;
+
+		// 一个冻结对象也是一个密封对象.
+
+		Object.isSealed(frozen) //=== true
+
+		// 当然,更是一个不可扩展的对象.
+		
+		Object.isExtensible(frozen) //=== false
+
+		https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/isFrozen

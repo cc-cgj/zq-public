@@ -1,0 +1,122 @@
+
+
+	一、计算属性 computed //调用vue构造函数，实参内的默认属性
+
+		概念：跟methods一样，存放的也是方法，一般用来处理data数据，然后return返回该数据，不过调用时函数时不需要加括号()
+
+		语法：
+
+			new Vue({
+			
+				el:"div",
+		
+				computed:{
+
+					属性名:function(){
+					
+						return 值
+
+					},
+			
+					//另一种写法
+
+					属性名:{
+				
+						set( newValue ){}, //当属性值发生改变时触发
+
+						get(){},
+	
+					}
+
+					另一种写法试例：
+
+					computed: {
+  			
+						fullName: {
+    							
+							// getter
+    					
+							get: function () {  return this.firstName + ' ' + this.lastName },
+    						
+							// setter
+    					
+							set: function (newValue) {
+      				
+								var names = newValue.split(' ')
+      
+								this.firstName = names[0]
+      						
+								this.lastName = names[names.length - 1]
+    							}
+  
+						}
+					}
+				
+					// 现在再运行 vm.fullName = 'John Doe' 时，setter 会被调用，vm.firstName 和 vm.lastName 也会相应地被更新。
+			
+				}
+
+			})
+
+		注意：
+
+			1、在插值表达式内调用时，要想在页面上显示值，必须通过return返回该值，methods里的方法也是一样。
+
+			2、动态绑定一个属性，属性的属性值也可以为计算属性内的函数，属性值为函数的返回值。
+
+	二、方法 methods
+
+		我们用 methods 选项向组件实例添加方法，它应该是一个包含所需方法的对象：
+
+
+		const vm = Vue.createApp({
+
+			data() {
+    
+				return { count: 4 }
+  			},
+  
+			methods: {
+    
+				increment() {
+      
+					// `this` 指向该组件实例
+
+      					this.count++
+    				}
+  			}
+
+		})
+
+		vm.mount('#app')
+
+		vm.increment()
+
+		console.log(vm.count) // => 5
+
+
+		注意：
+
+			1、Vue 自动为 methods 绑定 this，以便于它始终指向组件实例。这将确保方法在用作事件监听或回调时保持正确的 this 指向。
+
+			2、在定义 methods 时应避免使用箭头函数，因为这会阻止 Vue 绑定恰当的 this 指向。
+
+			3、这些 methods 和组件实例的其它所有 property 一样可以在组件的模板中被访问。在模板中，它们通常被当做事件监听使用
+	
+
+二、计算属性(computed)和methods的区别：
+
+	1、定义methods :多次使用同一方法时使用几次调用几次，即会一直重复执行方法内代码块。
+
+	2、计算属性computed :多次使用同一方法时只调用一次，往后调用该方法只拿结果，不会再执行方法内的代码块,因为方法的结果会缓存在浏览器内。
+
+	3、methods和computed里都是函数，但methods里的函数需要手动调用，所以一般都是事件处理函数，而computed是计算属性，调用方式就跟属性一样
+
+	4、计算属性将基于它们的响应依赖关系缓存。计算属性只会在相关响应式依赖发生改变时重新求值，而methods不管状况都会再次执行函数。
+
+	5、我们为什么需要缓存？假设我们有一个性能开销比较大的计算属性 list，它需要遍历一个巨大的数组并做大量的计算。然后我们可能有其他的计算属性
+
+依赖于 list。如果没有缓存，我们将不可避免的多次执行 list 的 getter！如果你不希望有缓存，请用 method 来替代。
+
+直接写函数名就行
+

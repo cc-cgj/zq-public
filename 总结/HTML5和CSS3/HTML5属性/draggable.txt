@@ -1,0 +1,7 @@
+
+
+	draggable 属性规定元素是否可拖动。
+
+	<p draggable="true">这是一个可拖动的段落。</p>
+
+

@@ -1,0 +1,30 @@
+
+
+	一、dependencies和devDependencies
+
+		相同点：这两个属性中保存的都是当前包所有的依赖信息
+
+		dependencies：运行时依赖项。即上传到服务器器时，表示这个包仍被需要
+
+		devDependencies：开发时依赖项。表示包只是开发时被需要，不需要上传到服务器。
+
+		npm install 包名 --save(-s) 表示将依赖信息保存到dependencies
+
+		npm install 包名 --save-dev(-D) 表示将依赖信息保存到devDependencies
+
+		注意：
+
+			1、npm install(i) 这条命令会自动根据package.json中保存的包信息进行下载
+
+			2、只下载运行时依赖项可以使用命令npm install --production
+
+	^意思是将当前库的版本更新到第一个数字，例："^4.1.0"是库会更新到4.X.X的最新版本，但不会更新到5.X.X版本。
+
+	~意思是更新到中间数字的版本，例："~4.7.4"是库会更新到4.7.X的最新版本，但不会更新到4.8.X版本。
+
+	// npm5: package.json.lock文件，在这之前通过yarn的yarn.lock文件 记录安装的包管理记录的详细信息;
+
+		如: ^1.2.0 的^符号表示小版本的更新,如有1.2.1时，重新安装依赖会更新到该版本，而package.json.lock中记录该版本更新的详细记录
+
+
+			

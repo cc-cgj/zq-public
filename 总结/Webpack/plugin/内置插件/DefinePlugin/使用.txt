@@ -1,0 +1,24 @@
+
+
+	DefinePlugin 允许在编译时创建配置的全局常量，是一个webpack内置的插件（不需要单独安装）
+
+	使用：// webpack.config.js
+
+		const { DefinePlugin } = require("webpack");
+
+		module.exports = {
+
+			plugins :[
+
+				new DefinePlugin({
+
+					BASE_URL:"变量" / "'常量'"
+
+					//变量时会全局查找
+
+				})
+
+			]
+
+
+		} 

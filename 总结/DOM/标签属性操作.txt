@@ -1,0 +1,41 @@
+
+	一、获取属性值：
+
+		element.属性和element.getAttribute('属性')的区别：
+
+			1、element.属性：获取内置属性值，即元素本身自带的属性,没有则返回undefined
+
+			2、element.getAttribute('属性')：获取元素本身的属性，但可以获取程序员自定义的属性
+
+	二、设置属性值
+
+		element.属性 = "值"和element.setAttribute('属性'，值/"值")的区别：
+
+			1、element.属性 = "值"：只能设置元素本身自带的属性
+
+			2、element.setAttribute('属性',值/"值") ：既能设置元素本身自带的属性，又能设置自定义的属性
+
+	三、移出属性
+
+		1、element.属性 = ""(缺点：键(属性)依旧存在，只是值没了)
+
+		2、element.removeAttribute("属性")
+
+	四、H5自定义属性
+
+		自定义属性目的：是为了保存并使用数据。有些数据可以保存到页面中而不用保存到数据库中。
+
+		自定义属性获取是通过getAttribute(‘属性’)获取。 
+
+		但是有些自定义属性很容易引起歧义，不容易判断是元素的内置属性还是自定义属性。 H5给我们新增了自定义属性
+			
+			1、设置自定义属性：h5规定自定义属性以data-开头做为属性名并且赋值，
+
+				如：<div data-index = "1"></div>或者使用JS设置element.setAttribute('data-属性名',属性值)
+
+			2、获取H5自定义属性：
+
+				兼容性获取:element.getAttribute("data-index")
+
+				H5:element.dataset.index(属性名)或者element.dataset["index(属性名)"]（IE11以上支持）
+

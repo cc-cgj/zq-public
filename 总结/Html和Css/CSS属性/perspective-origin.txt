@@ -1,0 +1,7 @@
+
+
+	https://developer.mozilla.org/zh-CN/docs/Web/CSS/perspective-origin
+
+	一、概念
+
+		CSS 属性 perspective-origin 指定了观察者的位置，用作 perspective 属性的消失点。

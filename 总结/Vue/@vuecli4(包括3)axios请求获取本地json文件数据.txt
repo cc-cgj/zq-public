@@ -1,0 +1,19 @@
+
+
+	概念：
+
+		1、在vueCli3.0之前访问本地文件，应该把 json文件放在最外层的static文件夹，这个文件夹是vue-cli内置服务器向外暴露的静态文件夹
+
+		2、在vueCli3、4没有static文件夹，如果手动在根目录下创建static文件夹保存json文件，请求时也会报错，请求404找不到文件
+
+		3、在vueCli3、4已经默认将内置服务器向外暴露的静态文件夹改为public，所以json文件只能保存在public中
+
+		4、只能通过get方法获取json文件的数据，请求的路径不需要加public。
+
+	语法：
+		
+		this.$axios.get('http://localhost:8080/api/list.json')
+
+	注意：
+			
+		json文件不能存放在项目的src目录下

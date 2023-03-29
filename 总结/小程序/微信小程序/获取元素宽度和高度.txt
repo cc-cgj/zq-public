@@ -1,0 +1,41 @@
+
+
+	 wx.createSelectorQuery()
+        
+		.in(this)
+        
+		.selectAll('.tab-active')
+        
+		.boundingClientRect()
+        
+		.exec(function (rect) {
+          
+			console.log(111,rect); 
+
+			// [ 
+			
+				{ 
+
+					bottom: 427.8000183105469,
+				
+					dataset: {item: {…}},
+
+					height: 32,
+
+					id: "",
+
+					left: 18,
+
+					right: 110,
+
+					top: 395.8000183105469,
+
+					width: 92 
+
+				} 
+
+			]
+        	});
+
+
+		

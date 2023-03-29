@@ -1,0 +1,9 @@
+
+
+	可以通过 appear attribute 设置节点在初始渲染的过渡
+
+	<transition appear>
+  
+		<!-- ... -->
+
+	</transition>

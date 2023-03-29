@@ -1,0 +1,3 @@
+
+
+	Wireshark是通用的抓包工具，能获取HTTP，也能获取HTTPS，但是不能解密HTTPS，所以wireshark看不懂HTTPS中的内容，但如果是TCP、UDP协议可以用wireshark；

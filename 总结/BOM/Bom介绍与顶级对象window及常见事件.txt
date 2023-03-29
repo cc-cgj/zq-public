@@ -1,0 +1,66 @@
+
+一、BOM(Browser object Model)
+
+	浏览器对象模型，它提供了独立于内容而与浏览器窗口进行交互的对象，其核心对象是 window。
+
+	BOM缺乏标准，JavaScript语法的标准化组织是ECMA，DOM的标准化组织是W3C，BOM最初是Netscape浏览器标准的一部分。
+
+	DOM和BOM的区别：
+
+		DOM(文档对象模型)
+
+			1、把文档当做一个对象看待
+
+			2、顶级对象是document
+
+			3、主要用来操作页面元素
+
+			4、DOM是W3C标准规范
+
+		BOM(浏览器对象模型)
+
+			1、把浏览器当做一个对象看待
+
+			2、顶级对象是window
+
+			3、主要从来对浏览器窗口交互的一些对象
+
+			4、BOM是浏览器厂商在各自浏览器上定义的，兼容性差
+
+	注意：BOM包含DOM
+
+
+二、顶级对象window
+
+	1、它是JS访问浏览器窗口的一个接口
+
+	2、它是一个全局对象。定义在全局作用域中的变量、函数都会变成window对象的属性和方法。
+
+	3、调动时可以省略
+
+	注意：window下的一个特殊属性window.name
+
+
+三、window对象的常见事件
+
+	------页面加载事件
+
+		1、window.onload ：是窗口(页面)加载事件，当文档内容完全加载完成会触发该事件(包括图像、脚本文件、CSS 文件 等), 就调用的处理函数。
+			
+			注意：
+				window.onload传统注册事件方式只能写一次，有多个的话只以最后一个为准，使用addEventListener则没有限制
+
+		2、window.addEventListener('DOMContentLoaded',function(){})//IE9以上
+			
+			跟load一样注意的是：DOM加载完毕，不包含图片、falsh、css 等就可以执行 加载速度比load更快一些	
+	
+	------调整窗口大小事件
+
+		1、window.onresize:当调整窗口大小触发。
+
+			注意：
+				1、我们经常利用这个事件完成响应式布局。
+
+				2、innerWidth、innerHeight分别返回的是当前浏览器窗口可视区的宽度和高度。
+
+------H5的input标签新增属性：accessKey="快捷键"：设置输入框、复选框等获取焦点的快捷键

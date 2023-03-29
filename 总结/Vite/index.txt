@@ -1,0 +1,40 @@
+
+
+	启动速度快
+
+		开发阶段---> 在本地服务器（connect）中将源码(js、ts、css、less、scss)转为ESMoudle  （import export）//所以不支持require
+	
+		生产阶段---> 源码进行打包 //webpack则不分环境
+
+		Pre-bounding dependencies(预打包) --> node_modules/.vite //第一次执行npx vite会生成这么一个文件
+
+		依赖ESBuild插件
+
+	本地服务器
+
+		vite 1.x //koa
+
+		vite 2.x //Connect
+
+	预览打包生成的文件
+
+		npx vite preview
+
+	tree-shaking//摇树
+
+		通常用于描述移除 JavaScript 上下文中的未引用代码(dead-code)
+
+		它依赖于 ES2015 模块语法的 静态结构 特性，例如 import 和 export。
+
+		这个术语和概念实际上是由 ES2015 模块打包工具 rollup 普及起来的。
+
+
+	JavaScript转为机械码的过程
+
+		JS->AST树->V8引擎->字节码->机械码 
+
+			注意：V8引擎在转为字节码的过程一部分会直接转为机械码
+
+		
+
+		 

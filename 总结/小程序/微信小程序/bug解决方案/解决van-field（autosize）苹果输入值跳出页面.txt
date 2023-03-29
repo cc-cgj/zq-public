@@ -1,0 +1,10 @@
+
+ 	<van-field slot="work_address" bindtap="chooseLocation" label="工作地点" input-align="right" is-link required readonly>
+      
+		<view class="lh-40" slot="input" style="width:100%;text-align: right;color:{{form.work_address?'#55667F':'#CDD5EA'}}">
+			
+			{{form.work_address||'请选择'}}
+
+		</view>
+    
+	</van-field>

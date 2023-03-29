@@ -1,0 +1,5 @@
+
+
+	window.onerror = function(message, source, line, column, error) {};
+
+	它是一个全局的异常处理函数，可以抓取所有的 JavaScript 异常

@@ -1,0 +1,29 @@
+		
+
+	一、概念
+	
+		允许使用与 <component :is=""> 相同的机制来解析一个 component
+
+		返回已解析的 Component 或新创建的 VNode，其中组件名称作为节点标签。如果找不到 Component，将发出警告。
+
+
+	二、参数
+
+		接受一个参数：component---String | Object (组件的选项对象)
+
+
+	三、注意
+		
+		resolveDynamicComponent 只能在 render 或 setup 函数中使用。
+
+
+	四、例
+
+		import { resolveDynamicComponent } from 'vue'
+
+		render () {
+  
+			const MyComponent = resolveDynamicComponent('MyComponent')
+
+		}
+		

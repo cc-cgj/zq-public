@@ -1,0 +1,11 @@
+
+
+	Proxy的几点优势
+
+		1、Proxy 是对整个对象的代理，而 Object.defineProperty 只能代理某个属性
+
+		2、对象上新增属性，Proxy 可以监听到，Object.defineProperty 不能
+
+		3、数组新增修改，Proxy 可以监听到，Object.defineProperty 不能
+
+		4、若对象内部属性要全部递归代理，Proxy 可以只在调用的时候递归，而 Object.definePropery 需要一次完成所有递归，性能比 Proxy 差

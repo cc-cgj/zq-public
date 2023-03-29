@@ -1,0 +1,79 @@
+
+一、插件和依赖有什么区别？
+
+	依赖：运行时开发时都需要用到的包，比如项目中需要一个包，就要添加一个依赖，这个依赖在项目运行时也需要，因此在项目打包时需要把这些依赖也
+
+打包进项目里；
+
+	插件：在项目开发时需要，但是在项目运行时不需要，因此在项目开发完成后不需要把插件打包进项目中，比如有个可以自动生成getter和setter的插件
+
+，嗯对这就是插件了，因为这玩意在编译时生成getter和setter，编译结束后就没用了，所以项目打包时并不需要把插件放进去
+
+
+二、Vue插件  
+
+	概念：插件通常用来为 Vue 添加全局功能。通过全局混入来添加一些组件选项，如 vue-router。
+
+	例：
+		import VueRouter from "vue-router"
+
+		Vue.use(VueRouter)
+
+	注意：
+		1、导入的插件之前都需要先导入vue的库文件，因为vue插件都是基于vue本身
+
+		2、插件类似一个库，为vue增加一些API，如vue-router
+			
+		3、使用插件需要在调用 new Vue() 启动应用之前完成
+
+		4、Vue.js 官方提供的一些插件 (例如 vue-router) 在检测到 Vue 是可访问的全局变量时会自动调用 Vue.use()。然而在像 CommonJS 这样
+
+	的模块环境中，并不会自动调用 Vue.use()，如 webpack 提供的 CommonJS 模块环境时需要手动调用Vue.use()。
+
+
+三、Vue项目中后缀为vue的文件相当于一个组件
+
+	vue的脚手架安装之后会默认安装webpack，但在安装的webpack默认是隐藏的。
+
+
+四、$mount
+		
+	概念：手动挂载，即在项目中可用于延时挂载DOM元素（例如在挂载之前要进行一些其他操作、判断等），之后要手动挂载上。
+
+	语法：new Vue().$mount("#app")
+
+五、在vue文件中<style scoped>中scoped表示样式只在当前组件有效。
+
+六、ESLint 是在 ECMAScript/JavaScript 代码中识别和报告模式匹配的工具，它的目标是保证代码的一致性和避免错误。
+
+七、Vue.config.productionTip = false//true为生产模式，false为开发模式，默认为true。关闭生产模式下给出的提示
+
+八、render(渲染函数)//调用vue构造函数，实参内的默认属性
+
+	概念：在vue实例中对挂载的DOM元素直接进行渲染，将指定的组件模板，渲染为html结构后再将html结构替换挂载的DOM元素。
+
+	语法：new Vue({
+
+		el:"#app",
+
+		render:function(createEle){ 
+
+			return createEle({ template:`<div>hello world</div>` })
+		
+			}
+
+		})
+
+	
+	参数：createEle 是一个 方法，调用它，能够把 指定的 组件模板，渲染为 html 结构
+
+	注意：
+
+		1、这里 return 的结果，会 替换页面中 el 指定的那个DOM元素,包括挂载DOM元素内的所有内容
+
+		2、若调用createEle方法时，参数为变量时，只要变量为一个对象，对象中有template属性和对应的html标签字符串，就会将html标签字符串
+
+渲染为html结构，再替换挂载的DOM元素，包括挂载的DOM元素内的所有内容。
+
+
+

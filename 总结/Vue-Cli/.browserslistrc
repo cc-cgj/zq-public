@@ -1,0 +1,6 @@
+> 1% //浏览器的市场占有率大于1%
+last 2 versions //浏览器最新的两个版本
+not dead //不支持24个月没有官方支持或更新的浏览器。
+not ie 11 //不支持IE11
+
+https://github.com/browserslist/browserslist

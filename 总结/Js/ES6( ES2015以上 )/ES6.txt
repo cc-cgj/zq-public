@@ -1,0 +1,870 @@
+
+--------------------------ECMAScript6--------------------------
+
+一、let和const声明变量 //都没有变量提升
+
+	------let
+
+		暂时性死区：
+
+			即定义一个全局变量，若此时在{}内打印该变量，然后再通过let声明该变量，此时会报错。因为let声明的变量没有变量提升
+
+			例：var aa = 1 if(true){ console.log(aa) let aa = 2} //此时会报错
+
+		注意：
+			1、let声明的变量具有块级作用域
+
+			2、var可以声明多个相同的全局或局部变量名，let不可以。
+
+			3、在一个大括号中使用let声明的变量具有块级作用域，而函数内var声明的变量才有块级作用域。
+	
+	------const
+	
+		概念：声明常量，常量就是值（内存地址）不能变化的量
+
+		注意：
+	
+			1、声明的变量具有块级作用域
+
+			2、声明时必须赋值
+
+			3、常量赋值后，如果是基本数据类型，则不能修改值，如果是复杂数据类型，不能更改地址值。如声明数组，其数组的值和数组的长度
+
+		都是可以修改的。
+				 
+二、解构赋值
+
+	------概念：解构赋值就是把数据结构分解，然后再分别给定义的变量进行赋值
+
+	******注意：
+
+			1、若解构的对象对应的值为基本数据类型( Number、String...)，桟中表现也为重新创建内存保存解构的值
+
+			2、若解构的对象对应的值为复杂数据类型( Object、Array ），则指向的是同一内存地址。
+
+	------数组解构
+
+			例：
+
+				1、默认
+
+					let [a,b,c] = [1,2,3]
+
+					console.log( a,b,c ) //1 2 3
+
+				2、undefined设置默认值
+
+					let [ a,b = 'Placeholder' ] = [1]
+
+					console.log( a,b ) //1 'Placeholder' 
+
+			注意：
+				1、必须要声明变量
+				2、用中括号包裹，多个变量用逗号隔开
+				3、声明的每个变量都要跟数组中的值一一对应，若变量跟数值个数不匹配的时候，变量的值为undefined
+				4、console.log(a)//1
+
+	------对象解构
+
+			例：
+
+					1、默认
+
+						let { name,age } = { name:"zs",age:12 }
+
+						注意：console.log(name)//zs
+
+					2、重命名
+
+						let { name:myname,age:myage } = { name:"zs",age:12 }
+				
+						注意：
+							console.log(name)//为空
+							console.log(myname)//zs
+
+					3、undefined设置默认值
+
+						let { default = 'Placeholder' } = { name:"zs",age:12 }
+
+						console.log( default ) //'Placeholder'
+
+			
+			注意：
+				1、必须声明变量
+
+				2、用花括号包裹，多个变量用逗号隔开
+
+				3、声明的每个变量都要跟对象中的属性跟方法一一对应，若变量跟对象中的属性跟方法个数不匹配或变量名跟对象中的属性名
+
+			跟方法名不相同时，变量的值都为undefined
+
+				4、利用解构赋值能够让我们方便的去取对象中的属性跟方法		
+
+			技巧：
+
+				1、
+
+					const obj = {a:1,b:2,c:3}
+
+					const {a,...reg} = obj
+					
+					reg//{b:2,c:3}		
+
+三、箭头函数
+
+	------语法：() => {} //()：代表是函数； =>：必须要的符号，指向哪一个代码块；{}：函数体
+
+
+	------简写方式
+
+			1、函数体中只有一句代码，且代码的执行结果就是返回值，可以省略大括号和return
+
+				例：function(a,b){return a+b} ----------- (a,b)=>a+b
+
+			2、如果形参只有一个，可以省略小括号
+						
+				例：function(a){return a} ----------- a=>a
+
+	注意：
+
+		1、箭头函数不会创建自己的this,它只会从自己的作用域链的上一层继承this。
+
+		2、箭头函数本身的this指向不能改变，但可以修改它要继承的对象的this。
+
+		3、在箭头函数中不具有 arguments，可以用扩展运算符代替 (...arg)=>{}
+
+		4、箭头函数不能通过new来调用函数以及创建实例对象
+
+		5、箭头函数没有prototype（原型）。//可通过console.dir查看
+
+四、剩余参数(...)
+
+	------概念：
+
+		剩余参数语法允许我们将一个不定数量的参数表示为一个真数组，不定参数定义方式，这种方式很方便的去声明不知道参数情况下的一个函数，
+
+还解决了arguments伪数组的问题，当然还有其他作用，如：合并数组等。
+
+	------用法：	
+
+		1、函数形参:
+
+			function sum (first, ...args) { 
+
+				console.log(first); // 10
+				console.log(args); // [20, 30] 
+			} 
+			sum(10, 20, 30)
+
+		2、合并数组:
+			
+			------两种方式：
+				
+					声明两个数组	
+							var arr1 = [1,2,3]
+							var arr2 = [4,5,6]
+
+					1、
+						var marge = [...arr1,...arr2]
+						console.log(marge) //[1,2,3,4,5,6]
+
+					2、
+
+						arr1.push(...arr2)
+						console.log(arr1)//[1,2,3,4,5,6]
+
+			注意：当两个数组中有相同值时会重复出现在合并后的数组中
+
+		3、合并对象：
+
+				let obj1 = { name:"张三",age:19 }
+
+				let obj2 = { name:"李四",sex:"男" }
+
+				let sumObj = { ...obj1,...obj2 }
+
+				let obj3 = { name:"王五", ...obj1 ,age:20 }
+
+				console.log( sumObj ) //{ name:"李四",age:19,sex:"男" }
+
+				console.log( obj3 ) // { name:"张三",age:20,sex:"男" }
+
+			注意：
+
+				1、当两个对象同时结构赋值创建一个新的对象时，若两个对象中有相同的属性，则后一个使用剩余参数的对象的属性值会覆盖
+
+			前一个对象的属性值。
+
+				2、一个对象内有赋值解构的对象，赋值解构的对象内的属性跟当前对象内的属性有相同时，只会覆盖前面的属性。
+
+		3、将伪数组转换为真正的数组：
+
+			let oDivs = document.getElementsByTagName('div'); 
+
+			oDivs = [...oDivs];
+
+		
+
+
+五、剩余参数和解构赋值搭配使用
+
+	例：
+
+		let arr = ['zs', 'lisi', 'zslisi']
+
+		let [s1, ...s2] = arr
+
+		console.log(s1); // zs 
+
+		console.log(s2); // ['lisi', 'zslisi']
+
+
+六、系统构造函数Array的方法
+
+
+	------Array.from(objArr,map,thisArg)
+
+			作用：将类数组(伪数组)对象转换为真正的数组,返回的是一个新的数组
+
+
+			参数：
+
+				objArr：必须；被转换的的类数组对象
+
+				map：可选；回调函数,参数为每个元素。作用类似于数组的map方法,对被转换的对象中的每个元素进行处理,将处理后的值放入
+			
+			转换后的新数组中。
+
+				thisArg：map函数中this指向的对象
+						
+			注意：
+
+				1、类数组对象，即具有length属性的对象。
+
+				2、该类数组对象的属性名必须为数值型或字符串型的-----数字
+
+				例： 
+					var obj = { 'name': 'tom','age': '65','sex': '男',length:3 }
+
+					console.log(Array.from(obj)) //[]
+
+			//常用于DOM节点数组的转换
+
+
+
+七、操作数组
+
+	------find()方法
+
+			作用：返回符合测试条件的第一个数组元素值，如果没有找到返回undefined（函数return提供条件）
+
+			语法：array.find( function(currentEle, index, arr ){ return 条件 })
+
+			参数：
+				currentEle：必需。当前元素
+
+				index：可选。当前元素的索引值
+
+				arr：可选。当前元素所属的数组对象
+
+
+	------findIndex()方法
+
+			作用：用于找出第一个符合条件的数组成员的索引值，如果没有找到返回-1（函数return提供条件）
+	
+			语法：array.findIndex(function(currentEle, index, arr){ return 条件 })
+
+			参数：
+				currentEle：必需。当前元素
+
+				index：可选。当前元素的索引值
+
+				arr：可选。当前元素所属的数组对象
+
+	------filter()
+
+		作用：创建一个新的数组，新数组中的元素是通过检查指定数组中符合条件的所有元素（函数return提供条件）。
+
+		语法：arr.filter(function(value,index,arr){ return 条件 })
+
+		参数：
+			value：必需。当前元素
+
+			index：可选。当前元素的索引值
+
+			arr：可选。当前元素所属数组
+	
+
+	------some()
+
+		作用：检测数组中的元素是否满足指定条件（函数return提供条件）。
+
+		语法：arr.some(function(value,index){ return 条件 })
+		
+		参数：
+			value：必需。当前元素
+
+			index：可选。当前元素的索引值
+
+			arr：可选。当前元素所属数组
+
+		注意：	
+					
+			1、该方法会遍历数组的每个元素
+
+			2、如果有一个元素满足条件，则终止循环，返回true。
+
+			3、如果没有满足条件的元素，则返回false。
+
+	------every()
+
+		概念：检测数组所有元素是否都符合指定条件（通过函数return提供条件）。
+
+		语法：arr.every( function( value,index,arr ){ return 条件 } )
+
+		参数：
+			value：必需。当前元素
+
+			index：可选。当前元素的索引值
+
+			arr：可选。当前元素所属数组
+
+		注意：
+
+			1、该方法会遍历数组的每个元素
+
+			2、如果有一个元素未满足条件，则终止循环，返回false。
+
+			3、只有当所有元素都满足条件时才会返回true
+
+	------map()
+			
+		作用：遍历数组中的所有元素，返回一个新数组，新数组中的元素为原始数组元素调用函数处理后return返回的值。
+
+		语法：arr.map( function( value,index,arr){ return value * 2 },thisValue )
+
+		参数：
+	
+			value：必须，遍历的当前元素值。
+
+			index：可选。当前元素的索引值
+
+			arr：可选。当前元素所属数组
+
+			thisValue：可选。对象作为该执行回调时使用，传递给函数，用作 "this" 的值。
+
+				//如果省略了 thisValue，或者传入 null、undefined，那么回调函数的 this 为全局对象,如window。
+
+		注意：必须要有返回值，否则得到的新数组里的值都为undefined。
+
+
+	------forEach()
+		
+		概念：遍历(伪)数组中的所有元素并将元素传递给回调函数。
+
+		语法：arr.forEach( function( v,i,arr ){ },thisValue )
+
+		参数：
+	
+			value：必须，遍历的当前元素值。
+
+			index：可选。当前元素的索引值
+
+			arr：可选。当前元素所属数组
+
+			thisValue：可选。对象作为该执行回调时使用，传递给函数，用作 "this" 的值。
+
+				//如果省略了 thisValue，或者传入 null、undefined，那么回调函数的 this 为全局对象,如window。
+
+
+	------reduce()
+
+		概念：对数组中的所有元素调用指定的回调函数，该回调函数的返回值为累积结果，并且此返回值在下一次调用该回调函数时作为参数提供
+
+		语法：arr.reduce( function( total,value,index,arr ){ return "结果" },initialValue )
+
+		参数：
+
+			total：必需。初始值, 或者计算结束后的返回值。
+
+			value：必需。当前数组元素。
+
+			index：可选。当前数组元素的索引。
+		
+			arr：可选。当前元素所属数组。
+
+			initialValue：可选。传递给函数的初始值。
+
+		注意：
+
+			1、该方法有返回值，但前提必须是回调函数内有return，返回值为通过最后一次调用回调函数获得的累积结果
+
+			2、若没有设定初始值，则数组的第一个元素不会触发回调函数且数组的第二个元素触发的回调函数时，第一个参数的值为数组的第一个
+
+		元素值。
+
+	------for of
+
+		概念：循环来迭代可迭代的对象，可遍历 Arrays（数组）, Strings（字符串）, Maps（映射）, Sets（集合）等可迭代的数据结构等。
+
+		语法：for ( item of arr ) { console.log( item ) }
+
+		参数：	
+			
+			item：每个迭代的属性值被分配给该变量。	
+
+			arr：一个具有可枚举属性并且可以迭代的对象。
+
+		例： 
+
+			let arr = [1,2,3,4]
+
+			for( item of arr ){ console.log( item ) //1,2,3,4  }	
+	 
+		注意：
+
+			为什么for-in一般不建议用来遍历数组(伪数组)？
+
+				1、for-in遍历数组，除了遍历数组元素外，还会遍历自定义属性，甚至连数组原型链上的属性都能被访问到。
+
+				2、for-in遍历普通对象，可以遍历得到字符串类型的键(属性名)，所以 for in 一般只用来遍历对象。
+
+
+八、操作 数组/字符串 includes()方法
+
+	作用：判断一个数组是否包含一个指定的值或用于判断字符串是否包含指定的子字符串，如果是返回 true，否则false。
+
+	语法：arr/str.includes(searchEle, fromIndex)
+
+	参数：
+		searchEle：必须。需要查找的元素值/字符串。
+
+		formIndex：可选。规定开始查找的索引处，若为负数则从右到左开始。
+
+
+九、模板字符串(``)符号
+
+	语法：`${变量名}`
+
+	作用：
+
+		1、解析变量 //var name = "张三" console.log(`${name}`)//"张三"
+
+		2、模板字符串中可以换行
+
+		3、在模板字符串中可以调用函数 //`${fn()}` 
+
+	注意：跟php中的字符串内解析变量的语法不一样("{$name}")，es6中模板字符串语法为(`${name}`)
+
+十、操作字符串
+
+	------startsWidth()和endsWidth()
+		
+		概念：	
+			startsWidth()：表示参数字符串是否在原字符串的头部，返回的是布尔值
+			endsWidth()：表示参数字符串是否在原字符串的尾部，返回的是布尔值
+
+		语法：
+			str.startsWidth(searchStr,start)
+			str.endsWidth(searchStr,start)
+		
+		参数：
+			searchStr：必需，要查找的字符串。
+			start：可选，查找的开始位置，默认为 0。
+
+	------repeat()
+
+		概念：将原字符串重复n次，返回一个新字符串，即返回复制指定次数并连接在一起的新字符串，包括原字符串。
+
+		语法：str.repeat(n)
+
+		参数：
+			n：必需，设置要复制的次数。
+
+	------trim() 
+
+		概念：方法用于删除字符串的头尾空白符，空白符包括：空格、制表符 tab、换行符等其他空白符等。
+	
+		语法：str.trim()
+
+		参数：无参
+
+
+十一、系统构造函数Set（集合的数据结构）
+
+	作用：生成Set 数据结构，返回的类似于数组，没有length属性，但是成员的值都是唯一的，没有重复的值。
+
+	语法：Set本身是一个构造函数，所以需要通过new实例才能使用。
+	
+	概念：
+
+		1、集合是由一堆无序的、相关联的，且不重复的内存结构【数学中称为元素】组成的组合
+
+		2、集合是以[索引值，值]的形式存储元素
+
+	例：
+		const set = new Set([1,2,3,4,4]); //{1,2,3,4}
+
+	------实例方法
+
+			1、set.add(value)：添加某个值，返回 Set 结构本身
+
+			2、set.delete(value)：删除某个值，返回一个布尔值，表示删除是否成功
+
+			3、set.has(value)：返回一个布尔值，表示该值是否为 Set 的成员
+
+			4、set.clear()：清除所有成员，没有返回值
+
+	------遍历
+
+			1、keys()：返回键名的遍历器
+
+			2、values()：返回键值的遍历器
+
+			3、entries()：返回键值对的遍历器
+			
+			4、forEach((value, key)=>{})：使用回调函数遍历每个成员	
+
+	------场景
+
+			1、数组去重：[...new Set([3, 5, 2, 2, 5, 5])] // [3, 5, 2]
+
+			2、字符串去重：[...new Set("352255")].join('') //'352' 
+
+			3、实现并集、交集、和差集
+
+				let a = new Set([1, 2, 3]);
+
+				let b = new Set([4, 3, 2]);
+
+				// 并集
+
+					let union = new Set([...a, ...b]); // Set {1, 2, 3, 4}
+
+				// 交集
+
+					let intersect = new Set([...a].filter(x => b.has(x))); // Set {2, 3}
+
+				// （a 相对于 b 的）差集
+
+					let difference = new Set([...a].filter(x => !b.has(x))); // Set {1}
+
+十二、WeakSet
+
+	在API中WeakSet与Set有两个区别：
+
+		1、没有遍历操作的API
+
+		2、没有size属性
+
+	接受一个具有 Iterable接口的对象作为参数
+
+		 new WeakSet([[1, 2], [3, 4]]);// WeakSet {[1, 2], [3, 4]}
+
+	注意
+
+		1、WeackSet只能成员只能是引用类型，而不能是其他类型的值
+
+			例：
+
+				let ws=new WeakSet();
+
+				// 成员不是引用类型
+
+				let weakSet=new WeakSet([2,3]);// 报错
+
+				// 成员为引用类型
+
+				let obj1={name:1}
+	
+				let obj2={name:1}
+
+				let ws=new WeakSet([obj1,obj2]);  //WeakSet {{…}, {…}}
+
+		2、WeakSet里面的引用只要在外部消失，它在 WeakSet里面的引用就会自动消失
+
+
+十三、系统构造函数Map（字典的数据结构）
+
+	概念：
+			
+		1、字典是一些元素的集合。每个元素有一个称作key 的域，不同元素的key 各不相同 
+
+		2、字典是以[键，值]的形式存储
+
+	语法
+			
+		new Map([ [key,value] ])
+
+	方法
+
+		set()
+
+			概念：
+
+				1、设置键名key对应的键值为value，然后返回整个 Map 结构
+
+				2、如果key已经有值，则键值会被更新，否则就新生成该键
+
+				3、同时返回的是当前Map对象，可采用链式写法
+
+			例：
+
+				const m = new Map();
+
+				m.set('edition', 6)        // 键是字符串
+
+				m.set(262, 'standard')     // 键是数值
+
+				m.set(undefined, 'nah')    // 键是 undefined
+
+				m.set(1, 'a').set(2, 'b').set(3, 'c') // 链式操作
+
+
+		size
+
+			概念：
+
+				返回 Map 结构的成员总数。
+			
+			例：
+
+				new Map().set('foo', true).size //1
+
+		get()
+
+			概念：
+
+				读取key对应的键值，如果找不到key，返回undefined
+
+			例：
+
+				const m = new Map();
+
+				const hello = function() {console.log('hello');};
+
+				m.set(hello, 'Hello ES6!') // 键是函数
+
+				m.get(hello)  // Hello ES6!
+
+		has()
+			
+			概念：
+
+				返回一个布尔值，表示某个键是否在当前 Map 对象之中
+
+			例：
+
+				const m = new Map();
+
+				m.set('edition', 6);
+
+				m.has('edition')     // true
+
+				m.has('years')       // false
+
+		delete()
+
+			概念：
+
+				删除某个键，返回true。如果删除失败，返回false
+
+			例：
+
+				const m = new Map();
+
+				m.set(undefined, 'nah');
+
+				m.has(undefined)     // true
+
+				m.delete(undefined)
+
+				m.has(undefined)       // false
+
+		clear()
+
+			概念：
+
+				清除所有成员，没有返回值
+
+			例：
+
+				let map = new Map();
+
+				map.set('foo', true);
+			
+				map.size // 1
+				
+				map.clear()
+
+				map.size // 0
+
+	遍历
+
+		同上(Set)
+
+十四、WeakMap
+
+	在API中WeakMap与Map有两个区别：
+	
+		1、没有遍历操作的API
+
+		2、没有clear清空方法
+	
+	WeakMap 可以使用 set 方法添加成员
+
+		const wm1 = new WeakMap();
+
+		const key = {foo: 1};
+
+		wm1.set(key, 2);
+
+		wm1.get(key) // 2
+
+	 WeakMap 也可以接受一个数组，作为构造函数的参数
+
+		const k1 = [1, 2, 3];
+	
+		const k2 = [4, 5, 6];
+
+		const wm2 = new WeakMap([[k1, 'foo'], [k2, 'bar']]);
+
+		wm2.get(k2) // "bar"
+
+	注意
+		
+		1、WeakMap只接受对象作为键名（null除外），不接受其他类型的值作为键名
+
+			例
+
+				const map = new WeakMap();
+			
+				map.set(1, 2)// TypeError: 1 is not an object!
+
+				map.set(Symbol(), 2)// TypeError: Invalid value used as weak map key
+
+				map.set(null, 2)// TypeError: Invalid value used as weak map key
+
+
+		2、WeakMap的键名所指向的对象，一旦不再需要，里面的键名对象和所对应的键值对会自动消失，不用手动删除引用
+
+			例：
+
+				在网页的 DOM 元素上添加数据，就可以使用WeakMap结构，当该 DOM 元素被清除，其所对应的WeakMap记录就会自动被移除
+
+					const wm = new WeakMap();
+
+					const element = document.getElementById('example');
+
+					wm.set(element, 'some information');
+
+					wm.get(element) // "some information"
+
+		3、WeakMap 弱引用的只是键名，而不是键值。键值依然是正常引用
+
+			例：
+
+				键值obj会在WeakMap产生新的引用，当你修改obj不会影响到内部
+
+				const wm = new WeakMap();
+
+				let key = {};
+
+				let obj = {foo: 1};
+
+				wm.set(key, obj);
+
+				obj = null;
+
+				wm.get(key)// Object {foo: 1}
+
+十三、系统构造函数Object的方法：
+
+	------keys()
+
+			概念：返回对象自身所有的键值,返回的是一个由对象的键值组成的数组
+		
+			语法：Object.keys(obj)
+		
+			参数：obj为一个对象
+		
+			例：console.log( Object.keys( { name:1 } ) ) // [ 'name' ]
+
+	
+	------defineProperty()
+
+			概念：定义对象的新属性或修改对象原有的属性
+
+			语法：Object.defineProperty(obj,prop,{
+				
+					value:"要添加或修改属性的属性值",
+
+					writable:false，//
+
+					enumerable:false,//
+					
+					configurable:false
+									
+	
+			      })
+
+			参数：
+
+				obj：要添加或修改的属性的对象。
+
+				prop：添加或修改的属性的名称。
+
+			注意参数：
+
+				writable：false，默认。表示该属性值不允许被修改
+
+				enumerable: false，默认。表示不允许遍历, 即遍历该对象是获取不到该属性的。
+
+				configurable：false，默认。表示不允许删除这个属性。
+
+
+
+十四、额外
+
+	------for in 遍历对象，参数为对象的键，类型为String，可通过对象[key]来获得每个对象的键值。
+
+	------delete 
+
+		作用：只适用于删除对象属性
+
+		语法：delete obj.atr 
+		
+		参数：obj.atr为对象的属性
+
+	------padStart() 和 padEnd()
+	
+		概念：ES8引入了字符串补全长度的功能。如果某个字符串不够指定长度，会在头部或尾部补全。padStart()用于头部补全，padEnd()用于尾部
+
+	补全。
+
+		语法：	
+
+			str.padStart( minLength,mendString )
+
+			str.padEnd( minLength,mendString )
+
+		参数：
+			
+			minLength：指定字符串的最小长度
+
+			mendString：补全的字符串。
+
+		例：
+		
+			'abc'.padStart(10, '0123456789') //'0123456abc'
+
+		注意：
+
+			如果用来补全的字符串与原字符串，两者的长度之和超过了指定的最小长度，则会截去超出位数的补全字符串。
+
+
+
+
+			
+				
+			

@@ -1,0 +1,28 @@
+
+
+	background：bg-color bg-image position/bg-size bg-repeat bg-origin bg-clip bg-attachment
+
+	background-attachment：
+
+		概念：设置背景图像是否固定或者随着页面的其余部分滚动。
+
+		参数：
+
+			scroll：随着页面滚动，默认。
+
+			fixed：不会。local：随着元素内容滚动。 
+
+css3新增属性：
+	
+	background-size：规定背景图片大小	
+	background-clip：规定背景图片的绘制区域
+	background-origin：规定背景图片的定位区域
+	
+
+	background-size的值分四种类型： //第一个值和第二个值分别设置的是宽度和高度。若只给出一个值，则第二个值为auto
+
+		length：设置背景图片高度和宽度。
+		percentage：将计算相对于背景定位区域的百分比。
+		
+		cover：此时会保持图像的纵横比并将图像缩放成将完全覆盖背景定位区域的最小大小。
+		contain：此时会保持图像的纵横比并将图像缩放成适合背景定位区域的最大大小。

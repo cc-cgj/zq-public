@@ -1,0 +1,35 @@
+
+
+	条件
+
+		1、image的mode属性为widthFix
+
+		2、通过image的bindload事件获取image组件的高度
+
+	 函数
+
+		handleSwiperImageLoded(){
+
+			const query = wx.createSelectorQuery()
+	
+					.select('.swiper-image')
+
+					.boundingClientRect()
+
+					.exec((res)=>{
+
+						const rect = res[0]
+
+						this.setData( { swiperHeight: rect.height } )
+			
+
+					})
+
+
+		}
+
+
+	注意
+
+		第一个组件image触发的bindload有可能此时图片的高度不为widthFix计算得出的高度，为270px，最好通过最后一张图片来触发bindload
+

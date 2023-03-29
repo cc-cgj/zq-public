@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>02-线形图</title>
+	</head>
+	<script src="lib/echarts.min.js" type="text/javascript" charset="utf-8"></script>
+	<body>
+		<div class="box" style="width: 600px;height: 400px;margin: 100px auto;"></div>
+	</body>
+	<script type="text/javascript">
+		const myEcharts = echarts.init(document.querySelector(".box"))
+		
+		var xDataArr = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', 
+		'10月', '11月', '12月']
+		
+		var yDataArr1 = [3000, 2800, 900, 1000, 800, 700, 1400, 1300, 900, 1000, 800, 
+		600]
+		
+		 var yDataArr2 = [1000, 1800, 900, 1000, 800, 700, 2400, 1300, 1900, 2000, 800, 
+		1600]
+		
+		const options = {
+			xAxis:{
+				type:"category",
+				data:xDataArr,
+				// 紧挨边缘，是设置给 x 轴的, 让起点从 x 轴的0坐标开始
+				boundaryGap:false
+			},
+			yAxis:{
+				type:"value",
+				// 摆脱0比例,适用于数值较接近
+				scale:true
+			},
+			series:[
+				{
+					type:"line",
+					data:yDataArr2,
+					// 堆叠图指的是, 同个类目轴上系列配置相同的 stack 值后，后一个系列的值会在前一个系列的值上相加
+					// 当有一个图表中有两个或者多个折线图时，此时折线图之间若有相同的值时会发生相交，通过相同的stack值来设置为堆叠图
+					stack:"aa",
+					markPoint:{
+						data:[
+							{
+								type:"max",
+								name:"最大值"
+							},
+							{
+								type:"min",
+								name:"最小值"
+							}
+						]
+					},
+					markLine:{
+						data:[
+							{
+								type:"average",
+								name:"平均值"
+							}
+						]
+					},
+					// 线条区域
+					markArea:{
+						data:[
+							[
+								{
+									xAxis:"3月"
+								},
+								{
+									xAxis:"8月"
+								}
+							]
+						]
+					},
+					// 平滑线条
+					smooth:true,
+					// 线条样式
+					lineStyle:{
+						color:"red",
+						type:"dotted"
+					},
+					// 填充风格
+					areaStyle:{
+						color:"green"
+					}
+				},
+				{
+					type:"line",
+					data:yDataArr1,
+					stack:"aa"
+				}
+			],
+			
+		}
+		
+		myEcharts.setOption(options)
+	</script>
+</html>

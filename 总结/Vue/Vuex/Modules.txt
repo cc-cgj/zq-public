@@ -1,0 +1,195 @@
+
+
+	一、基础
+		
+		概念：
+
+			1、由于使用单一状态树，应用的所有状态会集中到一个比较大的对象。当应用变得非常复杂时，store 对象就有可能变得相当臃肿。
+
+			2、为了解决以上问题，Vuex 允许我们将 store 分割成模块（module）。每个模块拥有自己的 state、mutation、action、getter、modules、
+	
+		甚至是嵌套子模块——从上至下进行同样方式的分割
+		
+		例：
+
+			const moduleA = { state: () => ({ ... }), mutations: { ... }, actions: { ... },getters: { ... } }
+
+			const moduleB = {state: () => ({ ... }),mutations: { ... },actions: { ... } }
+		
+			const store = new Vuex.Store({ modules: { a: moduleA, b: moduleB }})
+
+			store.state.a // -> moduleA 的状态
+
+			store.state.b // -> moduleB 的状态
+		
+	二、namespaced
+
+		概念：
+			
+			namespaced: true 的方式使其成为带命名空间的模块。当模块被注册后，它的所有 getter、action 及 mutation 都会自动根据模块注册的
+
+		路径调整命名。
+
+		例：
+
+			modules: { 
+
+				account: { 
+
+					namespaced: true，
+
+      					state: () => ({ ... }), // 模块内的状态已经是嵌套的了，使用 `namespaced` 属性不会对其产生影响
+      
+					getters: { isAdmin () { ... } // -> getters['account/isAdmin'] },
+      
+					actions: { login () { ... } // -> dispatch('account/login') },
+      
+					mutations: { login () { ... } // -> commit('account/login') },
+
+				} 
+
+			} 
+
+
+	三、在带命名空间的模块内访问全局内容
+
+		概念：
+
+			1、如果你希望使用全局 state 和 getter，rootState 和 rootGetters 会作为第三和第四参数传入 getter，也会通过 context 对象的属性传入 action。
+
+			2、若需要在全局命名空间内分发 action 或提交 mutation，将 { root: true } 作为第三参数传给 dispatch 或 commit 即可。
+	即通过`root`属性来访问根 dispatch 或 commit
+
+		https://vuex.vuejs.org/zh/guide/modules.html#%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4
+
+
+	四、在带命名空间的模块注册全局 action
+
+		若需要在带命名空间的模块注册全局 action，你可添加 root: true，并将这个 action 的定义放在函数 handler 中。
+
+		例如：
+
+			{
+  
+				actions: { someOtherAction ({dispatch}) { dispatch('someAction') } },
+  
+				modules: {
+    
+					foo: {
+      
+						namespaced: true,
+					
+						actions: {
+        
+							someAction: { root: true, handler (namespacedContext, payload) { ... } // -> 'someAction' }
+      
+						}
+    					}
+  
+				}
+			}
+
+
+	五、带命名空间的绑定函数
+
+		1、
+
+		computed: {
+  
+			...mapState('some/nested/module', {
+    
+					a: state => state.a,
+				
+					 b: state => state.b
+  			})
+		},
+
+		methods: {
+  
+			...mapActions('some/nested/module', [
+    
+				'foo', // -> this.foo()
+    				
+				'bar' // -> this.bar()
+  			
+			])
+		}
+
+		2、你可以通过使用 createNamespacedHelpers 创建基于某个命名空间辅助函数。它返回一个对象，对象里有新的绑定在给定命名空间值上的组件绑定
+
+	辅助函数：
+
+		import { createNamespacedHelpers } from 'vuex'
+
+		const { mapState, mapActions } = createNamespacedHelpers('some/nested/module')
+
+		export default {
+  
+			computed: {
+    
+				// 在 `some/nested/module` 中查找
+    
+				...mapState({ a: state => state.a, b: state => state.b })
+  
+			},
+
+ 	 		methods: {
+    
+				// 在 `some/nested/module` 中查找
+    			
+				...mapActions([ 'foo','bar'])
+
+			}
+
+		}
+	
+	六、模块动态注册
+
+		import Vuex from 'vuex'
+
+		const store = new Vuex.Store({ /* 选项 */ })	
+	
+		// 注册模块 `myModule`
+
+		store.registerModule('myModule', { })
+
+		// 注册嵌套模块 `nested/myModule`
+
+		store.registerModule(['nested', 'myModule'], { })
+
+		之后就可以通过 store.state.myModule 和 store.state.nested.myModule 访问模块的状态。
+
+		注意：
+
+			1、你也可以使用 store.unregisterModule(moduleName) 来动态卸载模块。注意，你不能使用此方法卸载静态模块（即创建 store 时声明的模块）。
+
+			2、注意，你可以通过 store.hasModule(moduleName) 方法检查该模块是否已经被注册到 store。
+
+
+	七、保留 state
+
+		概念：
+			
+			在注册一个新 module 时，你很有可能想保留过去的 state，例如从一个服务端渲染的应用保留 state。你可以通过 preserveState 选项将
+	
+		其归档：store.registerModule('a', module, { preserveState: true })。当你设置 preserveState: true 时，该模块会被注册，action、mutation 
+
+		和 getter 会被添加到 store 中，但是 state 不会。这里假设 store 的 state 已经包含了这个 module 的 state 并且你不希望将其覆写。
+
+	八、模块重用
+
+		概念：
+		
+			创建多个 store，他们公用同一个模块。使用一个函数来声明模块状态（仅 2.3.0+ 支持）
+		例：
+
+			const MyReusableModule = {
+  
+				state: () => ({
+    			
+					foo: 'bar'
+  
+				}),
+  
+				// mutation, action 和 getter 等等...
+			}

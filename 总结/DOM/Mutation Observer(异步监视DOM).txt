@@ -1,0 +1,32 @@
+
+	一、概念：// https://www.cnblogs.com/jscode/p/3600060.html
+
+		1、Mutation Observer（变动观察器）是监视DOM变动的接口。当DOM对象树发生任何变动时，Mutation Observer会得到通知。
+
+		2、这样设计是为了应付DOM变动频繁的情况。举例来说，如果在文档中连续插入1000个段落（p元素），会连续触发1000个插入事件，
+
+	执行每个事件的回调函数，这很可能造成浏览器的卡顿；而Mutation Observer完全不同，只在1000个段落都插入结束后才会触发，而且只触
+
+	发一次。
+
+	二、特点：
+
+		1、它等待所有脚本任务完成后，才会运行，即采用异步方式
+
+		2、它把DOM变动记录封装成一个数组进行处理，而不是一条条地个别处理DOM变动。
+
+		3、它即可以观察发生在DOM节点的所有变动，也可以观察某一类变动
+
+	三、兼容性
+
+		目前，Firefox(14+)、Chrome(26+)、Opera(15+)、IE(11+)和Safari(6.1+)支持这个API。Safari 6.0和Chrome 18-25使用这个API的
+
+	时候，需要加上WebKit前缀（WebKitMutationObserver）。
+
+		可以使用下面的表达式检查浏览器是否支持这个API。
+
+			var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver
+
+			var mutationObserverSupport = !!MutationObserver;
+
+

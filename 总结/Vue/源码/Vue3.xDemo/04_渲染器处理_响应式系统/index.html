@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="./reactive.js"></script>
+    <script>
+        // 测试代码
+        const data1 = reactive({
+            count1: 1,
+            count2: 2,
+            foo:{
+                msg:"hello"
+            },
+            bar:[]
+        })
+        const foo = reactive({
+            bar:[]
+        })
+        const data2 = reactive({
+            count1: 1
+        })
+        watchEffect(function () {
+            console.log("data1.count1: ", data1.count1);
+        })
+        watchEffect(function () {
+            console.log("data1.foo.msg: ", data1.foo.msg);
+        })
+        watchEffect(function () {
+            console.log("data1.bar: ", data1.bar);
+        })
+        // watchEffect(function () {
+        //     console.log("foo.bar: ", foo.bar);
+        // })
+
+        // watchEffect(function () {
+        //     console.log("data1.count2: ", data1.count2);
+        // })
+
+        // watchEffect(function () {
+        //     console.log("data2.count1: ", data2.count1);
+        // })
+
+        data1.count1 = 2
+        // data1.count1++
+        // data1.count2++
+        data1.foo.msg += ' world'
+        data1.bar = 'qwer'
+        // foo.bar[0] = 'foo.bar'
+        // data2.count1++
+        console.log(111,targetWeakMap);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,9 @@
+
+
+	一、transitionend
+
+		概念：transitionend 事件在 CSS 完成过渡后触发。	
+
+		语法：ele.addEventListener( "transitionend" ,function( e ){ console.log( e ) })
+
+		注意：如果过渡在完成前移除，例如 transition-property 属性被移除，过渡事件将不被触发。	

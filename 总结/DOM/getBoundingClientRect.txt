@@ -1,0 +1,6 @@
+
+
+	返回值是一个 DOMRect对象，拥有left, top, right, bottom, x, y, width, 和 height属性
+
+
+	el.getBoundingClientRect()

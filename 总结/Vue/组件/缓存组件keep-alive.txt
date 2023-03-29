@@ -1,0 +1,53 @@
+
+
+	一、概念
+
+		keep-alive是一个抽象组件。它自身不会渲染一个DOM元素，也不会出现在父组件链中；使用keep-alive包裹动态组件时，会缓存不活动的组件
+
+	实例，而不是销毁它们。
+
+		优点：可以避免组件反复创建和渲染，有效提升系统性能。
+
+		应用：切换回列表页面后，可以保留用户的筛选（或选中）状态。
+
+	二、语法
+
+		<keep-alive :include="whiteList" :exclude="blackList" :max="amount">
+			
+			//动态组件,currentComponent为data内的属性，值为注册的组件名，通过修改变量的值来切换所显示的组件
+     
+			<component :is="currentComponent"></component>
+
+		</keep-alive>
+
+		export default{
+
+			data(){ return { whiteList:"com1(组件名)" || "/a|b/" } }
+
+		}
+
+		注意：组件名由组件的name属性决定。例：vue文件中export default{ name:"com1" }
+
+
+	三、参数
+
+		include：定义缓存白名单，keep-alive会缓存命中的组件
+
+		exclude：定义缓存黑名单，被命中的组件将不会被缓存
+
+		max：定义缓存组件上限，超出上限使用LRU的策略置换缓存数据。
+
+			//对于在内存中但又不用的数据块（内存块）叫做LRU，操作系统会根据哪些数据属于LRU而将其移出内存而腾出空间来加载另外的数据。
+	
+	四、注意
+
+		1、创建和编辑页面是不能被 keep-alive 缓存的，因为keep-alive 的 include 目前不支持根据路由来缓存，所以目前都是基于component name 来
+
+	进行缓存的。如果你想类似的实现缓存效果，可以使用 localStorage 等浏览器缓存方案。或者不要使用 keep-alive 的 include，直接缓存所有页面。
+
+		2、当组件在 <keep-alive> 内被切换时，它的 mounted 和 unmounted 生命周期钩子不会被调用，取而代之的是 activated 和 deactivated。(这会运
+		
+	用在 <keep-alive> 的直接子节点及其所有子孙节点。)
+
+		3、<keep-alive> 不会在函数式组件中正常工作，因为它们没有缓存实例。
+		

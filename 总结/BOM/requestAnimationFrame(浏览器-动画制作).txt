@@ -1,0 +1,40 @@
+
+	一、概念
+		
+		告诉浏览器——你希望执行一个动画，并且要求浏览器在下次重绘之前调用指定的回调函数更新动画。该方法需要传入一个回调函数
+
+	作为参数，该回调函数会在浏览器下一次重绘之前执行
+
+		
+	二、注意
+
+		1、若你想在浏览器下次重绘之前继续更新下一帧动画，那么回调函数自身必须再次调用window.requestAnimationFrame()
+
+		2、为了提高性能和电池寿命，因此在大多数浏览器里，当requestAnimationFrame() 运行在后台标签页或者隐藏的<iframe> 里时，
+
+	requestAnimationFrame() 会被暂停调用以提升性能和电池寿命。
+
+
+	三、语法
+
+		window.requestAnimationFrame( callback );
+
+		兼容写法：
+
+			window.requestAnimationFrame() || window.webkitRequestAnimationFrame() || window.mozRequestAnimationFrame()
+
+			|| function( callback ){ window.setTimeout(callback, 1000 / 60); };
+
+			//setTimeout的定时器值推荐最小使用16.7ms（16.7 = 1000 / 60, 即每秒60帧）
+
+	四、参数
+
+		callback：
+
+			下一次重绘之前更新动画帧所调用的函数(即上面所说的回调函数)。该回调函数会被传入DOMHighResTimeStamp参数，
+
+	该参数与performance.now()的返回值相同，它表示requestAnimationFrame() 开始去执行回调函数的时刻。
+
+	五、常见场景
+
+		1、滚动指定位置的过渡效果

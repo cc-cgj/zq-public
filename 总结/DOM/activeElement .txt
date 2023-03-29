@@ -1,0 +1,13 @@
+
+	一、概念
+
+		document.activeElement 属性返回文档中当前获得焦点的元素。
+
+
+	方法
+
+		1、Element.scrollIntoView()方法让当前的元素滚动到浏览器窗口的可视区域内。// document.activeElement.scrollIntoView();
+
+		2、Element.scrollIntoViewIfNeeded()方法也是用来将不在浏览器窗口的可见区域内的元素滚动到浏览器窗口的可见区域。但如果该元素已
+
+	经在浏览器窗口的可见区域内，则不会发生滚动//  document.activeElement.scrollIntoViewIfNeeded();

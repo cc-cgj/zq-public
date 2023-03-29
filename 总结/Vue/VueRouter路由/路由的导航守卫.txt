@@ -1,0 +1,54 @@
+
+
+一、概念
+
+	1、“导航”表示路由正在发生改变。
+
+	2、vue-router 提供的导航守卫主要用来通过跳转或取消的方式守卫导航。有多种机会植入路由导航过程中：全局的, 单个路由独享的, 或者组件级的。
+
+	注意：记住参数或查询的改变并不会触发进入/离开的导航守卫。
+
+二、全局前置守卫（beforeEach）
+
+	概念：路由即将改变前触发的钩子函数
+
+	语法：
+
+		const router = new VueRouter()
+
+		router.beforeEach(function(to,from,next){
+	
+			to:即将要进入的目标的路由对象
+
+			from：当前导航即将要离开的路由对象
+
+			next：调用该方法后，才能发生跳转
+
+			// 触发重定向
+    
+			return to.fullPath
+
+		})
+
+三、全局后置守卫（afterEach）
+	
+	概念：路由即将改变后触发的钩子函数
+
+	语法：
+
+		const router = new VueRouter()
+
+		router.afterEach(function(to,from,next){
+	
+			to:即将要进入的目标的路由对象
+
+			from：当前导航即将要离开的路由对象
+
+			next：调用该方法后，才能发生跳转
+
+		})
+
+
+
+
+document.title：返回或修改当前页面的标题

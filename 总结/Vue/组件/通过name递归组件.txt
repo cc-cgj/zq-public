@@ -1,0 +1,62 @@
+
+
+
+	<template>
+
+		<div>
+    
+			<div v-for="ele of column" :key="ele.cusTomKey || ele.field">
+      
+				<template v-if="ele.hasOwnProperty('children') && ele.children.length !== 0" >
+        
+					<vxe-colgroup
+          
+						:title="ele.title"
+          
+						:min-width="ele['min-width'] || 150"
+          
+						:width="ele.width"
+          
+						:align="ele.align"
+          
+						:field="ele.field"
+        				>
+          
+						<slot :children="ele.children" />
+        
+					</vxe-colgroup>
+       		 				
+					<make-vxe-column-group :column="ele.children" />
+      
+				</template>
+      
+				<template v-else>
+       
+					<slot :children="[ele]" />
+      
+				</template>
+    
+			</div>
+  		</div>
+
+
+	</template>
+
+	<script>
+
+		export default {
+  
+			name: 'make-vxe-column-group',
+  
+			props: {
+    
+				column: {
+      
+					type: Array,
+      
+					default: () => []
+    				}
+  			},
+		}
+	
+	</script>

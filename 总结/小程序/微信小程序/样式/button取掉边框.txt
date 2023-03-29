@@ -1,0 +1,33 @@
+
+
+	//如果仅仅是<Button />
+
+	button::after {
+    
+		border-style: none;
+
+	}
+
+	//如果给Button添加了type=primary属性
+
+	button[type=primary]{
+    
+		border-style: none;
+	}
+
+	//如果给Button添加了 plain 的属性
+
+	button[plain]{
+    
+		border-style: none;
+	
+	}
+
+	//如果给Button添加了 type=primary 和 plain
+		
+	button[type=primary][plain]{
+    
+		border-style: none;
+	}
+
+	

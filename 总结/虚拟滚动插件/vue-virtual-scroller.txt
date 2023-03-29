@@ -1,0 +1,25 @@
+
+
+// 安装插件
+npm install vue-virtual-scroller
+
+// main.js
+import VueVirtualScroller from 'vue-virtual-scroller'
+import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
+
+Vue.use(VueVirtualScroller)
+
+// 使用
+<template> 
+  <RecycleScroller 
+    class="scroller" 
+    :items="list" 
+    :item-size="32" 
+    key-field="id" 
+    v-slot="{ item }"> 
+      <div class="user"> {{ item.name }} </div>
+  </RecycleScroller> 
+</template>
+
+
+该插件主要有 RecycleScroller.vue、DynamicScroller.vue 这两个组件，其中 RecycleScroller 需要 item 的高度为静态的，也就是列表每个 item 的高度都是一致的，而 DynamicScroller 可以兼容 item 的高度为动态的情况

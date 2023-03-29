@@ -1,0 +1,14 @@
+
+	分包的作用
+
+		按需编译，降低首页加载速度
+
+	通过import函数动态导入
+
+		import ("./utils/index.js").then(res=>{ ... })
+
+		//webpack默认会将所有依赖文件都打包在app.hash(8).js中
+		
+		//import()异步导入会进行分包，打包之后，动态导入的模块包含在chunk.hash(16).js
+
+	chunk-vendors.hash.js //第三方库		

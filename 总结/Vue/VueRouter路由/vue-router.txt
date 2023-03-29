@@ -1,0 +1,414 @@
+
+onhashchange 事件在页面的URL的锚部分(以 '#' 号为开始) 发生改变时触发 。//可通过location.hash来修改锚部分。
+
+
+------------------------- vue-router ------------------------
+
+一、什么是vue-router
+
+	------概念
+
+		vue-router是Vue.js官方的路由插件，它和vue.js是深度集成的，适合用于构建单页面应用。vue的单页面应用是基于路由和组件的，路由用于
+
+设定访问路径，并将路径和组件映射起来。传统的页面应用，是用一些a标签来实现页面切换和跳转的。在vue-router单页面应用(SPA)中，则是路径之间的切换，
+
+也就是组件的切换。
+
+
+	------为什么不使用a标签
+
+		为啥不能用a标签，这是因为用Vue做的都是单页应用（当你的项目准备打包时，运行npm run build时，就会生成dist文件夹，这里面只有静态
+
+资源和一个index.html页面），所以你写的<a></a>标签是不起作用的，你必须使用vue-router来进行管理。
+
+
+	------实现原理
+
+		单页面应用(SPA)：单一页面应用程序，只有一个完整的页面；它在加载页面时，不会加载整个页面，而是只更新某个指定的容器中内容。单页
+
+面应用(SPA)的核心之一是: 更新视图而不重新请求页面;vue-router在实现单页面前端路由时，提供了两种方式：Hash模式和History模式；根据mode参数来决定
+
+采用哪一种方式。
+
+
+二、Hash模式
+
+	vue-router 默认 hash 模式 —— 使用 URL 的 hash 来模拟一个完整的 URL，于是当 URL 改变时，页面不会重新加载。 hash（#）是URL 的锚点，代
+
+表的是网页中的一个位置，单单改变#后的部分，浏览器只会滚动到相应位置，不会重新加载网页，也就是说hash 出现在 URL 中，但不会被包含在 http 请求中，
+
+对后端完全没有影响，因此改变 hash 不会重新加载页面；同时每一次改变#后的部分，都会在浏览器的访问历史中增加一个记录，使用”后退”按钮，就可以回
+
+到上一个位置；所以说Hash模式通过锚点值的改变，根据不同的值，渲染指定DOM位置的不同数据。hash 模式的原理是 onhashchange 事件(监测hash值变化)，
+
+可以在 window 对象上监听这个事件。
+
+
+三、History模式
+
+	由于hash模式会在url中自带#，如果不想要很丑的 hash，我们可以用路由的 history 模式，只需要在配置路由规则时，加入mode: 'history'，但注意的
+
+的是还需要后台配置支持
+
+	如：new VueRouter({
+
+		mode:"history",
+		
+		routes:[{}]
+			
+	    })
+
+
+四、基本使用
+
+	1、分别导入vue.js和vue-router.js库，注意vue.js在前vue-router.js在后
+
+	2、实例构造函数VueRouter并配置路由规则，如设置路由模式和路径对应显示的组件
+
+		const router = new VueRouter({
+		
+			mode:"history",
+				
+			routes:[
+				
+				{ path:"/锚后面的内容",components:{ template:`<div>hello<div>` } },  -----注意必须加 /
+			
+				{ path:"/路由地址",components:{ template:`<div>world<div>` } }
+
+			]
+				
+		})
+
+
+	3、将其路由对象传递给以挂载DOM元素的Vue的实例,来指定控制的区域
+
+		如：
+
+			new Vue({
+					
+				el:"#app",
+
+				router:router	
+
+			})
+
+
+	4、在挂载的DOM元素中使用
+
+		<div id = "app">
+
+			<router-link :to = "路由地址"></router-link> //在浏览器中解析为a标签，点击时浏览器的URL最后面会自动添加#参数
+
+			<router‐view></router‐view>//显示当前#后面的参数对应的组件
+
+		</div>
+
+
+五、路由重定向	
+
+	概念：页面加载默认显示的路由
+
+	语法：
+
+		1、注册路由
+
+
+		   var router = new VueRouter({ 
+
+				routes:[ 
+
+					{ path:"/",redirect:"user" }//设置默认路径为user，即显示path为user的组件
+
+					{ path:"/user",components:{ template:`<div>world<div>` } }			
+		
+				] 
+
+
+		   })
+
+		2、将其路由对象传递给以挂载DOM元素的Vue的实例,来指定控制的区域
+
+			new Vue({
+
+				el:"#app",
+
+				router:router
+			
+			})
+
+
+六、嵌套路由
+
+	概念：一个路由包含多个路由，它们呈父子关系
+
+	语法：
+
+		1、注册路由
+
+		 var router = new VueRouter({ 
+
+				routes:[ 
+
+					{ path:"/",redirect:"user" }//设置默认路径为user，即显示path为user的组件
+
+					{ path:"/user",components:{ 
+
+							template:`<div>
+
+								<router-link :to="/user/child"></router>	
+
+								<router-view></router-view>							
+	
+								<div>` },
+
+
+						children:[ { path:"/user/child",components:` <div>我是子路由</div> ` } ]
+
+					 }			
+		
+				] 
+
+
+		   })
+
+
+		2、将其路由对象传递给以挂载DOM元素的Vue的实例,来指定控制的区域
+
+			new Vue({
+
+				el:"#app",
+
+				router:router
+			
+			})
+
+七、路由传参
+
+	概念：将路径中的参数或自定义参数传递给路由对应的组件，类似于组件通信中的父传子。
+
+	第一种
+
+		<router-link to="/user/20">用户</router-link>
+
+		<router-view></router-view>
+
+		new VueRouter({ 
+
+			routes:[ { path:"/user/:id",component:{ template:`<div> {{this.$route.params.id}} </div>` } } ] 
+
+		})
+
+		注意：
+
+			传递路径中的值，即传递<router-link to="/user/20">标签中的值时，必须在注册路由的path属性值中添加动态参数用来接收传递
+
+		的值，否则就当路径名解析了。例：path:'/user/:id' --------- id 为动态参数名。
+
+	
+	
+	第二种
+
+		<router-link to="/user/20/zs">用户</router-link>
+
+		<router-view></router-view>
+
+		new VueRouter({
+
+			routes:[ { 
+
+				path:"user/:id/:name",
+
+				props:true,
+
+				component:props:[ 'id','name' ],template:`<div> {{ id }}----{{ name }} </div>` 
+
+			} ]
+		
+		})
+
+	第三种 //路由的props为一个对象
+
+		<router-link to="/user/20">用户</router-link>
+
+		<router-view></router-view>
+
+		new VueRouter({
+
+			routes:[ {
+
+				path:"/user/:id",
+
+				props:{ name:"张三" },
+	
+				component:{ props:['id','name'],template:`<div> {{id}}-----{{name}} </div>` }
+
+			} ]
+
+		})
+
+		注意：
+
+			1、注册路由使用props对象传值时在component中只能接收props传递的值，而路由的动态参数在组件中接收不到，即id为空
+
+			2、若想传递路径的值，只能在注册路由时在props对象添加id属性，值为this.$route.params.id
+
+	第四种 //路由的props为一个函数
+
+		<router-link to="/user/20">用户</router-link>
+
+		<router-view></router-view>
+
+		new VueRouter({
+
+			routes:[ {
+			
+				path:"/user/:id",
+
+				props: (route)=> return ({ id:route.params.id,name:'张三' }) //形参route 相当于 this.$route
+
+				component:{
+			
+					props:[ 'id','name' ]						
+
+					template:` <div> {{id}}---{name} </div> `	
+	
+				}
+
+			} ]
+
+		})
+
+		注意： 
+
+			1、注册路由使用props函数传值时中返回值为一个(),里面为一个对象
+
+			2、注册路由使用props函数传值时在component中只能接收props传递的值，而路由的动态参数在组件中接收不到，即id为空
+
+			3、若想传递动态参数，只能在注册路由时在props函数的返回值对象中添加id属性，值为route.params.id
+
+八、命名路由及传参
+
+	<router-link :to = "{ name:'user',params:{ id:3 } }">用户</router-link>
+	
+	<router-view></router-view>
+
+	new VueRouter({
+
+		routes:[ {
+		
+			name:'user'
+			
+			path:"/user:id",
+
+			component:{
+
+				props:['id'],
+					
+				template:` <div> {{id}} </div> `
+			
+			}	
+
+		} ]	
+
+	})
+
+	注意：
+
+		1、在命名路由中，标签router-link的to的值为一个对象，name属性用来指定跳转的路由，params则用来传递参数
+
+		2、命名路由不会在浏览器的URL上显示，即当前路由的路径不会在 #/后 显示
+
+		3、注册路由的path中声明的动态参数不能为空且跟标签router-link的params中的属性名必须相同，否则无法接收，即表现为id为空
+
+
+九、编程式路由跳转及传参
+
+	1、直接跳转：this.$router.push( '路径' )
+	
+	2、params传值
+
+		语法：
+
+			this.$router.push({
+
+				name:'user',
+		
+				params:{
+
+					name:'张三'
+
+				}
+		
+			})
+
+		注意：
+			
+			1、this.$router.push()方法中path不能与params同用，否则params会失效
+
+			2、传递的参数不会出现在路径中
+		
+			3、使用this.$route.params获取传递的参数
+
+			4、name来指定页面，所以在注册路由时添加name属性,否则指定的路由不会显示，例：
+
+					new VueRouter({
+
+						routes:[ { path:'./user',name:'user',component:{ template:'' } } ]
+		
+					})
+
+			
+	3、query传值
+
+		语法：
+
+			this.$router.push({
+
+				path:'/user',
+	
+				query:{
+
+					name："张三"					
+
+				}
+	
+			})
+
+		注意：
+
+			1、传递的参数会显示在路径上
+
+			2、使用this.$router.query来获取传递的参数
+
+
+--------------------------------------------------------------------------------
+
+一、$router和$route的区别
+
+	$router为VueRouter的实例，相当于一个全局的路由器对象，里面含有很多属性和子对象。经常用的编程式跳转链接就可以用this.$router.push
+
+	$route相当于当前正在跳转的路由对象。里面包含path、params等属性和对象
+
+	$route.params //获取路径中动态绑定的参数或编程式跳转路由时传递的参数，返回的是一个对象
+
+二、路由的路径值必须加/，表示根路径，否则无法切换到指定的路由。
+
+	例：
+
+		<router-link to="user">用户</router-link>
+
+		<router-link to="list/aa">列表</router-link>
+
+		
+
+		注意：
+	
+			1、用户路由切换为列表路由时是可以的，即 /#/user -----> /#/list/aa
+
+			2、列表路由切换为用户路由时会出错，即 /#/list/aa ------> /#/list/user
+
+			3、所以需要加 / ,即<router-link to="/user">用户</router-link>来解决。
+
+			4、在vm.$router.push('/user')中也是
+
+

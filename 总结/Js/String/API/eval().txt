@@ -1,0 +1,7 @@
+
+
+	eval() 函数计算 JavaScript 字符串，并把它作为脚本代码来执行。
+
+	eval("x=10;y=20;document.write(x*y)");//200
+
+	eval("2+2");//4
